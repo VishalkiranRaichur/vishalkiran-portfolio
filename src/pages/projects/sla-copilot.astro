@@ -1,0 +1,480 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title='SLA Copilot · Vishalkiran Raichur' description='A hackathon AI agent that turns incidents into verified service credits.' active="projects">
+<style is:global>
+
+
+
+
+.vf{position:relative;border:1px solid var(--ink);background:var(--paper)}
+.vf .c{position:absolute;width:16px;height:16px;border-color:var(--ink);border-style:solid;z-index:2}
+.vf .tl{left:10px;top:10px;border-width:1px 0 0 1px}.vf .tr{right:10px;top:10px;border-width:1px 1px 0 0}.vf .bl{left:10px;bottom:10px;border-width:0 0 1px 1px}.vf .br{right:10px;bottom:10px;border-width:0 1px 1px 0}
+.vf .hd,.vf .ft{display:flex;justify-content:space-between;gap:20px;padding:16px 34px;font-family:PM;font-size:10px;letter-spacing:.16em}
+.vf .ft{color:var(--mut)}
+.back{display:inline-flex;gap:10px;margin-top:56px;font-size:12px;letter-spacing:.2em;text-transform:uppercase}
+.meta{display:flex;gap:14px;align-items:center;margin-top:40px;flex-wrap:wrap}
+.meta .ln{width:34px;height:1px;background:var(--line)}
+.rec{width:6px;height:6px;border-radius:50%;background:var(--or);display:inline-block;margin-right:8px;animation:rec 1.6s steps(1) infinite}
+@keyframes rec{50%{opacity:.2}}
+h1{font-weight:300;font-size:clamp(90px,14vw,210px);line-height:.86;text-transform:uppercase;margin-top:18px}
+h1 .o{display:inline-block;width:.74em;height:.74em;border:.035em solid var(--ink);border-radius:50%;position:relative;vertical-align:-.02em}
+h1 .o::after{content:"";position:absolute;left:50%;top:50%;width:.12em;height:.12em;margin:-.06em;border-radius:50%;background:var(--or)}
+.top{display:grid;grid-template-columns:1fr 400px;gap:60px;align-items:end}
+.kick{font-weight:300;font-size:clamp(30px,3vw,44px);line-height:1.12;text-transform:uppercase;margin-top:30px;max-width:820px}
+.kick span{color:var(--mut)}
+.lede{font-size:20px;line-height:1.6;color:#2b2a28;margin-top:22px;max-width:720px}
+.acts{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+.facts{border-top:1px solid var(--ink)}
+.facts div{display:flex;justify-content:space-between;gap:20px;padding:13px 0;border-bottom:1px solid var(--line);font-size:15px;text-align:right}
+.facts div span:first-child{font-family:PM;font-size:10.5px;letter-spacing:.14em;color:var(--mut);text-transform:uppercase;padding-top:3px;text-align:left}
+/* section frame */
+.sec{margin-top:150px}
+.sl{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--ink);padding-top:16px}
+.sl .n{color:var(--or)}
+.sh{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:34px;align-items:end}
+.sh h2{font-weight:300;font-size:clamp(42px,4.8vw,72px);line-height:1;text-transform:uppercase}
+.sh p{font-size:18px;line-height:1.65;color:#2b2a28}
+.sh p b{font-weight:500}
+/* problem */
+.prob{display:grid;grid-template-columns:1.2fr 1fr;margin-top:50px;border:1px solid var(--ink)}
+.prob svg{width:100%;height:auto;display:block}
+.prob .r{border-left:1px solid var(--ink);padding:36px;display:flex;flex-direction:column;justify-content:space-between;background:#f6f2ea}
+.prob .q{font-weight:300;font-size:30px;line-height:1.2;margin-top:16px}
+.ppl{border-top:1px solid var(--line);margin-top:26px}
+.ppl div{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line);font-size:15px}
+.ppl div span:last-child{font-family:PM;font-size:10.5px;letter-spacing:.12em;color:var(--mut)}
+.prob .then{font-size:17px;line-height:1.6;margin-top:24px}
+.prob .then b{font-weight:500;border-bottom:1px solid var(--or)}
+/* product tabs */
+.tabs{display:flex;gap:0;margin-top:50px;border:1px solid var(--ink);border-bottom:0;width:max-content}
+.tabs button{all:unset;cursor:pointer;padding:14px 26px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;border-right:1px solid var(--ink);display:flex;gap:10px;align-items:center;transition:background .25s,color .25s}
+.tabs button:last-child{border-right:0}
+.tabs button sup{font-family:PM;font-size:9px;color:var(--dim)}
+.tabs button.on{background:var(--ink);color:var(--paper)}
+.tabs button.on sup{color:var(--or)}
+.screen{border:1px solid var(--ink);position:relative;background:var(--paper)}
+.screen .hd{border-bottom:1px solid var(--line)}
+.pane{display:none;padding:30px 34px 34px;min-height:520px;animation:fd .5s cubic-bezier(.2,.8,.2,1)}
+.pane.on{display:block}
+@keyframes fd{from{opacity:0;transform:translateY(10px)}}
+.cap{display:grid;grid-template-columns:1fr 1.4fr;gap:40px;margin-top:22px;align-items:start}
+.cap h4{font-weight:300;font-size:30px;text-transform:uppercase}
+.cap p{font-size:16.5px;line-height:1.6;color:#2b2a28}
+/* concept UI pieces */
+.ui{border:1px solid var(--line);background:#fff;border-radius:2px}
+.ui .bar{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);font-family:PM;font-size:10px;letter-spacing:.12em;color:var(--mut)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr)}
+.kpi{padding:18px 16px;border-right:1px solid var(--line)}.kpi:last-child{border:0}
+.kpi small{font-family:PM;font-size:9.5px;letter-spacing:.12em;color:var(--mut)}
+.kpi b{display:block;font-weight:300;font-size:32px;margin-top:8px}
+.kpi em{font-style:normal;font-family:PM;font-size:10.5px}
+.dn{color:var(--or)}.up{color:#1f7a4d}
+.dgrid{display:grid;grid-template-columns:1.6fr 1fr;border-top:1px solid var(--line)}
+.dgrid>div{padding:16px}
+.dgrid>div+div{border-left:1px solid var(--line)}
+.ins{border:1px solid var(--line);padding:12px;margin-top:10px;font-size:13.5px;line-height:1.5}
+.ins .t{font-family:PM;font-size:9.5px;letter-spacing:.12em;color:var(--or)}
+.ins b{font-weight:500}
+.askbox{border:1px solid var(--ink);padding:16px 18px;font-size:16px;display:flex;justify-content:space-between;align-items:center}
+.askbox .k{font-family:PM;font-size:10px;border:1px solid var(--ink);padding:6px 10px;background:var(--ink);color:#fff}
+.ans{display:grid;grid-template-columns:1.5fr 1fr;gap:0;margin-top:14px;border:1px solid var(--line)}
+.ans>div{padding:18px}.ans>div+div{border-left:1px solid var(--line);background:#faf8f3}
+.ans p{font-size:14.5px;line-height:1.65;color:#2b2a28}
+.ans sup{font-family:PM;font-size:9px;color:var(--or);margin-left:2px}
+.ans ul{list-style:none;margin-top:10px}
+.ans li{font-size:14px;padding:8px 0;border-top:1px solid var(--line);line-height:1.5}
+.src{display:flex;gap:10px;padding:10px 0;border-top:1px solid var(--line);font-size:13px;line-height:1.45}
+.src i{font-style:normal;font-family:PM;font-size:9.5px;color:var(--or);min-width:16px}
+.src small{display:block;font-family:PM;font-size:9.5px;color:var(--mut);letter-spacing:.06em}
+.conf{display:flex;gap:10px;align-items:center;margin-top:14px;font-family:PM;font-size:10px;letter-spacing:.12em;color:var(--mut)}
+.conf i{flex:1;height:4px;background:rgba(17,17,17,.1);position:relative}.conf i b{position:absolute;inset:0 auto 0 0;background:var(--ink)}
+.inv{display:grid;grid-template-columns:1fr 1.2fr;border:1px solid var(--line);margin-top:14px}
+.inv>div{padding:18px}.inv>div+div{border-left:1px solid var(--line);background:#faf8f3}
+.stp{display:grid;grid-template-columns:26px 1fr auto;gap:10px;padding:11px 0;border-top:1px solid var(--line);font-size:14px;align-items:center}
+.stp:first-of-type{border-top:0}
+.stp .n{font-family:PM;font-size:10px;color:var(--mut)}
+.stp .s{font-family:PM;font-size:9.5px;letter-spacing:.1em}
+.stp.dn2 .s{color:#1f7a4d}.stp.now .s{color:var(--or)}
+.stp.now{font-weight:500}
+.brf .r{display:grid;grid-template-columns:110px 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--line);font-size:14px;line-height:1.5}
+.brf .r small{font-family:PM;font-size:9px;letter-spacing:.12em;color:var(--mut);padding-top:3px}
+.brf .r b{font-weight:500}
+.lbl{font-family:PM;font-size:9.5px;letter-spacing:.14em;border:1px solid var(--or);color:var(--or);padding:3px 7px}
+/* built vs vision */
+.board{display:grid;grid-template-columns:1fr 1fr;margin-top:50px;border:1px solid var(--ink)}
+.board>div{padding:30px 34px}
+.board>div+div{border-left:1px solid var(--ink);background:#f6f2ea}
+.board h4{display:flex;justify-content:space-between;align-items:center;font-weight:300;font-size:30px;text-transform:uppercase}
+.board h4 span{font-family:PM;font-size:11px;letter-spacing:.14em;color:var(--mut)}
+.it{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:14px 0;border-top:1px solid var(--line);font-size:16.5px}
+.it:first-of-type{margin-top:20px}
+.it .s{font-family:PM;font-size:10px;letter-spacing:.12em;white-space:nowrap}
+.it .s.b::before{content:"● ";color:var(--or)}
+.it .s.p::before{content:"○ ";color:var(--mut)}
+.proof{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--ink);border-top:0}
+.proof div{padding:26px 28px;border-right:1px solid var(--line)}.proof div:last-child{border:0}
+.proof b{display:block;font-weight:300;font-size:54px;line-height:1}
+.proof b em{font-style:normal;color:var(--or)}
+.proof small{display:block;font-size:14.5px;color:#3a3936;margin-top:10px;line-height:1.45}
+/* control */
+.duo{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}
+.brief{padding:26px 34px 30px}
+.brief+.brief{border-left:1px solid var(--line);background:#f6f2ea}
+.brief .q{font-size:21px;margin-top:10px}
+.brief .r{display:grid;grid-template-columns:130px 1fr;gap:14px;padding:12px 0;border-top:1px solid var(--line);font-size:15px;line-height:1.5;color:#2b2a28}
+.brief .r:first-of-type{margin-top:16px}
+.brief .r small{font-family:PM;font-size:9.5px;letter-spacing:.14em;color:var(--mut);padding-top:4px}
+.brief .r b{font-weight:500;color:var(--ink)}
+.brief .x{color:var(--or)}
+.mtr{display:flex;align-items:center;gap:12px}.mtr i{flex:1;height:4px;background:rgba(17,17,17,.1);position:relative}.mtr i b{position:absolute;inset:0 auto 0 0;background:var(--ink)}
+.brief+.brief .mtr i b{background:var(--or)}
+.note{margin-top:22px;display:grid;grid-template-columns:200px 1fr;gap:40px;border-top:1px solid var(--line);padding-top:20px}
+.note p{font-size:16.5px;line-height:1.65;color:#2b2a28;max-width:820px}
+.note p b{font-weight:500}
+/* six capabilities */
+.six{display:grid;grid-template-columns:repeat(3,1fr);margin-top:50px;border-top:1px solid var(--ink);border-left:1px solid var(--ink)}
+.cp{border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:26px 26px 30px;min-height:300px;display:flex;flex-direction:column;transition:background .3s}
+.cp:hover{background:#f6f2ea}
+.cp .h{display:flex;justify-content:space-between;align-items:center}
+.cp .h .n{font-family:PM;font-size:11px;color:var(--or);letter-spacing:.1em}
+.st{font-family:PM;font-size:9.5px;letter-spacing:.12em;padding:4px 8px;border:1px solid var(--ink)}
+.st.b{background:var(--ink);color:var(--paper)}
+.st.f{border-style:dashed;color:var(--mut);border-color:var(--dim)}
+.cp h4{font-weight:300;font-size:30px;text-transform:uppercase;margin-top:44px;line-height:1.05}
+.cp p{font-size:15.5px;line-height:1.6;color:#3a3936;margin-top:12px}
+.cp .ex{margin-top:auto;padding-top:18px;font-family:PM;font-size:11px;color:var(--mut);line-height:1.55}
+.cp .ex b{color:var(--ink);font-weight:400}
+.alert{border:1px solid var(--or);padding:12px 14px;margin-top:18px;background:#fff}
+.alert .t{display:flex;justify-content:space-between;font-family:PM;font-size:9.5px;letter-spacing:.12em;color:var(--or)}
+.alert b{display:block;font-weight:500;font-size:15px;margin-top:6px}
+.alert p{font-size:13px!important;margin-top:4px!important}
+/* arch */
+.arch{display:grid;grid-template-columns:1.3fr 1fr;gap:60px;margin-top:50px;align-items:start}
+.layers{border:1px solid var(--ink)}
+.ly{display:grid;grid-template-columns:44px 1fr auto;gap:16px;align-items:center;padding:20px 22px;border-bottom:1px solid var(--line);position:relative}
+.ly:last-child{border:0}
+.ly .n{font-family:PM;font-size:10.5px;color:var(--mut)}
+.ly h5{font-weight:400;font-size:19px;text-transform:uppercase;letter-spacing:.03em}
+.ly p{font-family:PM;font-size:11px;color:var(--mut);margin-top:4px;letter-spacing:.02em}
+.ly.core{background:#f6f2ea}
+.surf{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--ink)}
+.surf div{padding:16px;text-align:center;font-size:14px;letter-spacing:.16em;text-transform:uppercase;border-right:1px solid var(--line)}.surf div:last-child{border:0;color:var(--mut)}
+.prin{border-top:1px solid var(--ink)}
+.prin div{display:grid;grid-template-columns:34px 1fr;padding:16px 0;border-bottom:1px solid var(--line);font-size:17px}
+.prin span{font-family:PM;font-size:10.5px;color:var(--or);padding-top:4px}
+/* users + chatgpt */
+.users{display:grid;grid-template-columns:repeat(5,1fr);margin-top:50px;border-top:1px solid var(--ink)}
+.users div{padding:22px 20px 0 0}
+.users h5{font-weight:400;font-size:18px;text-transform:uppercase;letter-spacing:.03em}
+.users p{font-size:14.5px;line-height:1.55;color:#3a3936;margin-top:8px}
+.vs{display:grid;grid-template-columns:1fr 1fr;margin-top:50px;border:1px solid var(--ink)}
+.vs>div{padding:30px 34px}.vs>div+div{border-left:1px solid var(--ink);background:var(--ink);color:var(--paper)}
+.vs h5{font-family:PM;font-size:10.5px;letter-spacing:.16em;font-weight:400;color:var(--mut)}
+.vs>div+div h5{color:var(--or)}
+.vs ul{list-style:none;margin-top:16px}
+.vs li{padding:12px 0;border-top:1px solid var(--line);font-size:16px}
+.vs>div+div li{border-color:rgba(255,255,255,.15)}
+.claim{margin-top:60px;text-align:center;font-weight:300;font-size:clamp(34px,4vw,58px);line-height:1.1;text-transform:uppercase;max-width:1100px;margin-left:auto;margin-right:auto}
+.claim span{color:var(--or)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:30px;justify-content:center}
+.chips span{font-family:PM;font-size:11px;border:1px solid var(--line);border-radius:999px;padding:6px 12px;color:#3a3936}
+.next{display:grid;grid-template-columns:1fr auto;align-items:end;margin-top:140px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:44px 0;transition:padding .4s}
+.next:hover{padding-left:16px}
+.next h2{font-weight:300;font-size:clamp(56px,9vw,140px);line-height:.9;text-transform:uppercase;margin-top:16px}
+.next p{font-family:PM;font-size:13px;color:var(--mut);margin-top:14px}
+.bigarr{width:84px;height:84px;border:1px solid var(--ink);border-radius:50%;display:grid;place-items:center;transition:.3s}
+.next:hover .bigarr{background:var(--ink);color:var(--paper)}
+.foot{border-top:1px solid var(--ink);display:grid;grid-template-columns:repeat(4,1fr);gap:40px;padding:40px 0 60px;margin-top:100px}
+.foot b{display:block;font-weight:400;font-size:15px;margin-top:12px;line-height:1.8}
+.rv{opacity:0;transform:translateY(24px);transition:opacity 1s cubic-bezier(.2,.8,.2,1),transform 1s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}.d1{transition-delay:.1s}.d2{transition-delay:.2s}
+@media (max-width:960px){
+ .wrap{padding:0 18px}.links,.srch .t{display:none}.srch{gap:6px;padding:8px 10px}.nr .pillb{display:none}
+ h1{font-size:76px}.top,.sh,.prob,.cap,.board,.arch,.vs,.note{grid-template-columns:1fr;gap:28px}
+ .prob .r,.board>div+div,.vs>div+div{border-left:0;border-top:1px solid var(--ink)}
+ .tabs{width:100%}.tabs button{flex:1;justify-content:center;padding:12px 8px;font-size:10.5px;letter-spacing:.1em}.tabs button sup{display:none}
+ .pane{padding:18px}.kpis{grid-template-columns:1fr 1fr}.kpi:nth-child(2){border:0}.dgrid,.ans,.inv{grid-template-columns:1fr}.dgrid>div+div,.ans>div+div,.inv>div+div{border-left:0;border-top:1px solid var(--line)}
+ .proof{grid-template-columns:1fr 1fr}.duo{grid-template-columns:1fr}.brief+.brief{border-left:0}.brief{padding:20px 18px}.brief .r{grid-template-columns:1fr;gap:4px}
+ .six{grid-template-columns:1fr}.cp{min-height:0}.users{grid-template-columns:1fr 1fr;gap:10px}
+ .next{grid-template-columns:1fr;gap:20px}.bigarr{width:56px;height:56px}.foot{grid-template-columns:1fr 1fr}.vf .hd,.vf .ft{padding:14px 18px;flex-wrap:wrap}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+
+/* question split */
+.qs{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--ink);margin-top:50px}
+.qs>div{padding:30px 34px}
+.qs>div+div{border-left:1px solid var(--ink);background:var(--ink);color:var(--paper)}
+.qs h5{font-family:PM;font-weight:400;font-size:10.5px;letter-spacing:.16em;color:var(--mut)}
+.qs>div+div h5{color:var(--or)}
+.qs ul{list-style:none;margin-top:16px}
+.qs li{padding:13px 0;border-top:1px solid var(--line);font-size:18px;display:flex;justify-content:space-between}
+.qs li small{font-family:PM;font-size:10px;letter-spacing:.12em;color:#1f7a4d;padding-top:5px}
+.qs .big{font-weight:300;font-size:clamp(30px,3vw,44px);line-height:1.1;text-transform:uppercase;margin-top:18px}
+.qs .big+p{font-size:15px;color:#bdbab3;margin-top:16px;line-height:1.6}
+/* gaps */
+.gaps{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--ink);border-left:1px solid var(--ink);margin-top:50px}
+.gp{border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:24px 24px 28px}
+.gp .a{font-size:17px}.gp .a b{font-weight:500}
+.gp .ne{font-family:system-ui,sans-serif;font-size:34px;line-height:1;color:var(--or);margin:12px 0}
+.gp .c{font-size:17px;color:var(--mut)}
+.join{border:1px solid var(--ink);border-top:0;padding:20px 26px;display:flex;justify-content:space-between;align-items:center;gap:20px;background:#f6f2ea}
+.join b{font-weight:300;font-size:26px;text-transform:uppercase}
+.join b em{font-style:normal;color:var(--or)}
+.join span{font-family:PM;font-size:10.5px;letter-spacing:.12em;color:var(--mut)}
+/* sim */
+.sim{display:grid;grid-template-columns:340px 1fr;border:1px solid var(--ink);margin-top:50px;min-height:600px}
+.sl2{border-right:1px solid var(--ink);display:flex;flex-direction:column}
+.inc{padding:22px 24px;border-bottom:1px solid var(--ink);background:#f6f2ea}
+.inc .t{display:flex;justify-content:space-between;font-family:PM;font-size:10px;letter-spacing:.12em}
+.inc .t .sev{background:var(--or);color:#fff;padding:2px 6px}
+.inc h5{font-weight:400;font-size:22px;margin-top:14px}
+.inc .kv{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.inc .kv div{font-family:PM;font-size:10px;letter-spacing:.1em;color:var(--mut)}
+.inc .kv b{display:block;font-family:JO;font-weight:400;font-size:17px;color:var(--ink);letter-spacing:0;margin-top:3px}
+.states{padding:12px 24px;flex:1}
+.stt{display:grid;grid-template-columns:18px 1fr;gap:10px;align-items:center;padding:8px 0;font-family:PM;font-size:11px;letter-spacing:.08em;color:var(--dim);transition:color .3s}
+.stt i{width:10px;height:10px;border-radius:50%;border:1px solid var(--dim);transition:all .3s}
+.stt.done{color:var(--ink)}.stt.done i{background:var(--ink);border-color:var(--ink)}
+.stt.cur{color:var(--or)}.stt.cur i{background:var(--or);border-color:var(--or);box-shadow:0 0 0 4px rgba(255,90,31,.15)}
+.stt.warn{color:var(--or)}.stt.warn i{border-color:var(--or);background:#fff}
+.ctl{padding:18px 24px;border-top:1px solid var(--ink);display:flex;flex-direction:column;gap:10px}
+.ctl button{all:unset;cursor:pointer;text-align:center;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;border:1px solid var(--ink);border-radius:999px;padding:12px 16px;transition:.25s}
+.ctl button.p{background:var(--ink);color:var(--paper)}
+.ctl button:disabled,.ctl button[disabled]{opacity:.35;cursor:default}
+.ctl .x{border-color:var(--or);color:var(--or)}
+.sr{padding:28px 32px;display:flex;flex-direction:column}
+.sr .hdr{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:14px}
+.sr .hdr b{font-weight:300;font-size:30px;text-transform:uppercase}
+.sr .hdr span{font-family:PM;font-size:10px;letter-spacing:.12em;color:var(--mut)}
+.pane2{margin-top:18px;animation:fd .4s cubic-bezier(.2,.8,.2,1)}
+.idle{display:grid;place-items:center;text-align:center;flex:1;color:var(--mut);font-size:16px;line-height:1.6}
+.idle b{display:block;font-weight:300;font-size:34px;color:var(--ink);text-transform:uppercase;margin-bottom:8px}
+.tbl{border:1px solid var(--line);background:#fff}
+.tr{display:grid;grid-template-columns:1.2fr 1fr 1fr 1.5fr;gap:12px;padding:14px 18px;border-top:1px solid var(--line);font-size:15px;align-items:center}
+.tr:first-child{border:0;font-family:PM;font-size:9.5px;letter-spacing:.12em;color:var(--mut)}
+.tr b{font-weight:500}
+.ok{color:#1f7a4d;font-family:PM;font-size:11px;letter-spacing:.06em}
+.no{color:var(--mut);font-family:PM;font-size:11px;letter-spacing:.06em}
+.hi{color:var(--or);font-family:PM;font-size:11px;letter-spacing:.06em}
+.why{margin-top:14px;font-size:15px;line-height:1.6;color:#3a3936}
+.why b{font-weight:500}
+.card{border:1px solid var(--ink);background:#fff;padding:20px 22px;margin-top:4px}
+.card .r{display:grid;grid-template-columns:150px 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--line);font-size:15px}
+.card .r:first-of-type{border:0}
+.card .r small{font-family:PM;font-size:9.5px;letter-spacing:.12em;color:var(--mut);padding-top:4px}
+.card code{font-family:PM;font-size:13px}
+.apr{display:flex;gap:10px;margin-top:16px}
+.apr button{all:unset;cursor:pointer;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;border:1px solid var(--ink);border-radius:999px;padding:11px 18px}
+.apr .y{background:var(--or);border-color:var(--or);color:#fff}
+.log{margin-top:14px;font-family:PM;font-size:12.5px;line-height:1.85;background:#14130f;color:#e9e6df;padding:16px 18px;min-height:120px}
+.log .g{color:#7fd19b}.log .o{color:#ff8a5c}.log .d{color:#8f8b82}
+.vt{display:grid;grid-template-columns:1fr 1fr 1fr 60px;gap:10px;padding:11px 18px;border-top:1px solid var(--line);font-size:14px;align-items:center}
+.vt:first-child{border:0;font-family:PM;font-size:9.5px;letter-spacing:.12em;color:var(--mut)}
+.vt code{font-family:PM;font-size:12px}
+.closer{margin-top:18px;padding:16px 18px;border-left:2px solid var(--or);font-size:16px;line-height:1.6;background:#f6f2ea}
+/* transport vs semantic */
+.ts{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--ink);margin-top:50px}
+.ts>div{padding:30px 34px}.ts>div+div{border-left:1px solid var(--ink);background:#f6f2ea}
+.ts h5{font-family:PM;font-weight:400;font-size:10.5px;letter-spacing:.16em;color:var(--mut)}
+.ts>div+div h5{color:var(--or)}
+.ts .big{font-weight:300;font-size:30px;text-transform:uppercase;margin-top:14px;line-height:1.1}
+.ts ul{list-style:none;margin-top:16px}
+.ts li{padding:11px 0;border-top:1px solid var(--line);font-size:15.5px;display:flex;gap:10px}
+.ts li i{font-style:normal;font-family:PM;font-size:12px;padding-top:2px}
+/* model vs code */
+.mc2{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--ink);margin-top:50px}
+.mc2>div{padding:28px 32px}.mc2>div+div{border-left:1px solid var(--ink);background:var(--ink);color:var(--paper)}
+.mc2 h5{font-family:PM;font-weight:400;font-size:10.5px;letter-spacing:.16em;color:var(--mut)}
+.mc2>div+div h5{color:var(--or)}
+.mc2 .big{font-weight:300;font-size:30px;text-transform:uppercase;margin-top:12px}
+.mc2 li{list-style:none;padding:12px 0;border-top:1px solid var(--line);font-size:15.5px}
+.mc2>div+div li{border-color:rgba(255,255,255,.15)}
+.mc2 ul{margin-top:14px}
+/* systems */
+.sys{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--ink);border-left:1px solid var(--ink);margin-top:50px}
+.sy{border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:22px 20px 24px;min-height:220px;display:flex;flex-direction:column}
+.sy .h{display:flex;justify-content:space-between;align-items:center}
+.sy .h span{font-family:PM;font-size:10px;letter-spacing:.1em;color:var(--mut)}
+.sy h5{font-weight:400;font-size:21px;text-transform:uppercase;letter-spacing:.03em;margin-top:30px}
+.sy p{font-size:14px;line-height:1.5;color:#3a3936;margin-top:8px}
+/* alternatives */
+.alt{border-top:1px solid var(--ink);margin-top:50px}
+.ar{display:grid;grid-template-columns:240px 1fr 120px;gap:24px;padding:18px 0;border-bottom:1px solid var(--line);align-items:center;font-size:15.5px}
+.ar h5{font-weight:400;font-size:18px;text-transform:uppercase;letter-spacing:.03em}
+.ar .s{font-family:PM;font-size:10px;letter-spacing:.12em;text-align:right;color:var(--mut)}
+.ar.win{background:var(--ink);color:var(--paper);padding:20px 18px;border:0}
+.ar.win .s{color:var(--or)}
+/* limits */
+.lim{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--ink);margin-top:50px}
+.lim div{padding:22px 22px 26px;border-right:1px solid var(--line)}.lim div:last-child{border:0}
+.lim small{font-family:PM;font-size:10px;letter-spacing:.12em;color:var(--or)}
+.lim h5{font-weight:400;font-size:18px;text-transform:uppercase;letter-spacing:.03em;margin-top:14px}
+.lim p{font-size:14px;line-height:1.55;color:#3a3936;margin-top:8px}
+@media (max-width:960px){
+ .qs,.ts,.mc2,.sim{grid-template-columns:1fr}.qs>div+div,.ts>div+div,.mc2>div+div{border-left:0;border-top:1px solid var(--ink)}.qs>div,.ts>div,.mc2>div{padding:20px 18px}
+ .gaps,.lim{grid-template-columns:1fr}.lim div{border-right:0;border-bottom:1px solid var(--line)}.join{flex-direction:column;align-items:flex-start}
+ .sl2{border-right:0;border-bottom:1px solid var(--ink)}.sr{padding:20px 16px}.states{display:grid;grid-template-columns:1fr 1fr}
+ .tr{grid-template-columns:1fr 1fr;font-size:14px}.tr>*:nth-child(4){grid-column:1/-1}.vt{grid-template-columns:1fr 1fr;font-size:13px}.card .r{grid-template-columns:1fr;gap:2px}
+ .sys{grid-template-columns:1fr 1fr}.sy{min-height:0}.sy h5{margin-top:14px}.ar{grid-template-columns:1fr;gap:6px}.ar .s{text-align:left}
+}
+
+</style>
+
+
+
+
+<main class="wrap">
+ <a class="back" href="/projects">← All projects</a>
+ <div class="meta m"><span style="color:var(--ink)">Build 05</span><span class="ln"></span><span>AI agent for service credits</span><span class="ln"></span><span><span class="rec"></span>Hackathon build</span></div>
+
+ <section class="top">
+  <div>
+   <h1 style="font-size:clamp(70px,10.5vw,164px)">SLA Copilot</h1>
+   <div class="kick">The site went down. Who do you owe money to? <span>And can you prove it landed?</span></div>
+   <p class="lede">SLA Copilot turns a resolved production incident into verified service credits for the customers who were <b style="font-weight:500">actually</b> affected and contractually qualify. It joins incident, usage, plan and billing evidence, applies a policy gate, issues the credit in Stripe test mode, and independently checks the result.</p>
+   <div class="acts"><a class="pillb solid" href="#run">Run the incident <span class="arr"></span></a><a class="pillb" href="#semantic">Why “200 OK” isn't enough</a></div>
+  </div>
+  <div class="facts rv">
+   <div><span>Built at</span><span>A hackathon</span></div>
+   <div><span>Role</span><span>Idea, pitch &amp; system design</span></div>
+   <div><span>Systems</span><span>PagerDuty · PostHog · Stripe · Linear</span></div>
+   <div><span>Policy</span><span>Deterministic, in YAML/JSON</span></div>
+   <div><span>Safety</span><span>Stripe test mode · in-app approval</span></div>
+  </div>
+ </section>
+
+ <!-- 01 -->
+ <section class="sec">
+  <div class="sl m"><span><span class="n">01</span> · The problem</span><span>The question after the outage</span></div>
+  <div class="sh"><h2 class="rv">Engineering knows what broke. Finance doesn't know who's owed.</h2><p class="rv d1">After an incident, teams answer the technical questions in minutes. The commercial one takes days, if anyone asks it at all. <b>SLA Copilot answers one narrow question with real money attached.</b></p></div>
+  <div class="qs rv">
+   <div><h5>EASY · ANSWERED IN MINUTES</h5><ul><li>What broke?<small>✓ KNOWN</small></li><li>When did it break?<small>✓ KNOWN</small></li><li>When did it recover?<small>✓ KNOWN</small></li></ul></div>
+   <div><h5>HARD · USUALLY NOBODY ASKS</h5><div class="big">Which customers do we now owe something to?</div><p>And can we prove the credit reached the right customer, for the right amount, exactly once? SLA Copilot is proactive: it finds the obligation before an angry customer has to ask.</p></div>
+  </div>
+ </section>
+
+ <!-- 02 -->
+ <section class="sec">
+  <div class="sl m"><span><span class="n">02</span> · The key word</span><span>“Actually”</span></div>
+  <div class="sh"><h2 class="rv">No single system knows the answer.</h2><p class="rv d1">Every tool holds one piece of the truth, and each piece on its own leads to the wrong decision. <b>The answer only exists once they're joined.</b></p></div>
+  <div class="gaps">
+   <div class="gp rv"><div class="a">An <b>outage</b> happened</div><div class="ne">≠</div><div class="c">which customers tried the broken feature</div></div>
+   <div class="gp rv d1"><div class="a">A customer's <b>plan</b></div><div class="ne">≠</div><div class="c">whether this outage triggers their SLA credit</div></div>
+   <div class="gp rv d2"><div class="a">A <b>successful Stripe call</b></div><div class="ne">≠</div><div class="c">the right customer got the right credit</div></div>
+  </div>
+  <div class="join rv"><b>Operational events become customer decisions <em>only when joined with customer behavior.</em></b><span>THE CORE INSIGHT</span></div>
+ </section>
+
+ <!-- 03 SIM -->
+ <section class="sec" id="run">
+  <div class="sl m"><span><span class="n">03</span> · Run it</span><span>The hackathon demo, interactive</span></div>
+  <div class="sh"><h2 class="rv">Run the incident yourself.</h2><p class="rv d1">This replays the demo scenario: a 47-minute SEV-1 outage of the exports service and three customers. Step through the state machine, approve the credit, then <b>replay it with a network timeout</b> to see why the verifier matters.</p></div>
+  <div class="sim rv">
+   <div class="sl2">
+    <div class="inc"><div class="t"><span>PAGERDUTY · RESOLVED</span><span class="sev">SEV-1</span></div><h5>exports-api outage</h5>
+     <div class="kv"><div>DURATION<b>47 min</b></div><div>SERVICE<b>exports-api</b></div></div></div>
+    <div class="states" id="states"></div>
+    <div class="ctl"><button class="p" id="next">Run SLA Copilot →</button><button class="x" id="chaos">Replay with a timeout</button><button id="reset">Reset</button></div>
+   </div>
+   <div class="sr"><div class="hdr"><b id="title">Ready</b><span id="sys">DEMO DATA · STRIPE TEST MODE</span></div><div id="pane" style="flex:1;display:flex;flex-direction:column"></div></div>
+  </div>
+ </section>
+
+ <!-- 04 -->
+ <section class="sec" id="semantic">
+  <div class="sl m"><span><span class="n">04</span> · Reliability</span><span>Transport vs. semantic success</span></div>
+  <div class="sh"><h2 class="rv">A 200 OK can still be wrong.</h2><p class="rv d1">An agent can call every API successfully and still credit the wrong account, or credit the right one twice. So the success test is <b>the observed state of the systems</b>, not the agent's own trace.</p></div>
+  <div class="ts rv">
+   <div><h5>TRANSPORT SUCCESS</h5><div class="big">“Stripe returned 200.”</div><ul><li><i>?</i>Was it the right customer?</li><li><i>?</i>The authorized amount?</li><li><i>?</i>Under the right policy version?</li><li><i>?</i>Only once, even after a retry?</li></ul></div>
+   <div><h5>SEMANTIC SUCCESS</h5><div class="big">“The state is correct.”</div><ul><li><i class="or">✓</i>Exact Stripe customer, from a stable mapping</li><li><i class="or">✓</i>Exact amount from the policy formula</li><li><i class="or">✓</i>Case and policy IDs in the metadata</li><li><i class="or">✓</i>Exactly one matching credit exists</li></ul></div>
+  </div>
+  <p class="claim rv">We don't close the case because the agent says it finished. <span>We close it when PagerDuty, PostHog, policy and Stripe agree.</span></p>
+ </section>
+
+ <!-- 05 -->
+ <section class="sec">
+  <div class="sl m"><span><span class="n">05</span> · Where the AI fits</span><span>Interpret, never decide money</span></div>
+  <div class="sh"><h2 class="rv">The model explains. Code decides the money.</h2><p class="rv d1">A language model is good at reading messy incident text and writing clear summaries. It should never be the thing that <b>picks the account or computes the credit</b>.</p></div>
+  <div class="mc2 rv">
+   <div><h5>THE MODEL CAN</h5><div class="big">Interpret &amp; explain</div><ul><li>Read the incident and name the affected feature</li><li>Summarize the evidence for a reviewer</li><li>Write a short audit explanation</li><li>Flag ambiguity and ask a human</li></ul></div>
+   <div><h5>DETERMINISTIC CODE MUST</h5><div class="big">Decide &amp; act</div><ul><li>Map each account to its exact Stripe customer</li><li>Evaluate policy rules and compute the credit</li><li>Enforce approval limits and idempotency</li><li>Make the Stripe write, then verify it</li></ul></div>
+  </div>
+ </section>
+
+ <!-- 06 -->
+ <section class="sec">
+  <div class="sl m"><span><span class="n">06</span> · The systems</span><span>Each one holds a piece</span></div>
+  <div class="sh"><h2 class="rv">Five tools, one decision.</h2><p class="rv d1">The core loop runs on three systems. Linear and Slack were <b>scoped as bonuses</b>, so the demo couldn't break on an integration that wasn't essential.</p></div>
+  <div class="sys">
+   <div class="sy rv"><div class="h"><span>01</span><span class="st b">CORE</span></div><h5>PagerDuty</h5><p>Incident facts: service, severity, start, end and status.</p></div>
+   <div class="sy rv d1"><div class="h"><span>02</span><span class="st b">CORE</span></div><h5>PostHog</h5><p>Which accounts actually hit the broken feature during the window.</p></div>
+   <div class="sy rv d2"><div class="h"><span>03</span><span class="st b">CORE</span></div><h5>Stripe</h5><p>Customer and plan lookup, then the credit, in test mode.</p></div>
+   <div class="sy rv"><div class="h"><span>04</span><span class="st">BONUS</span></div><h5>Linear</h5><p>One audit issue per incident with every decision linked.</p></div>
+   <div class="sy rv d1"><div class="h"><span>05</span><span class="st f">DEFERRED</span></div><h5>Slack</h5><p>Approval for large credits. In-app approval used instead.</p></div>
+  </div>
+ </section>
+
+ <!-- 07 -->
+ <section class="sec">
+  <div class="sl m"><span><span class="n">07</span> · Picking the idea</span><span>Narrow beats generic</span></div>
+  <div class="sh"><h2 class="rv">Why this idea, and not the obvious ones.</h2><p class="rv d1">I wanted a problem the hackathon's host companies actually face, with one clear, consequential decision that could be <b>explained and demoed in two minutes</b>.</p></div>
+  <div class="alt">
+   <div class="ar rv"><h5>Refund / support agent</h5><span>Too easy to shrink into an email parser that calls Stripe.</span><span class="s">PASSED</span></div>
+   <div class="ar rv"><h5>Incident commander</h5><span>Useful but broad. The demo turns into a pile of dashboards.</span><span class="s">PASSED</span></div>
+   <div class="ar rv"><h5>Coding agent</h5><span>Another “read ticket, change code” demo.</span><span class="s">PASSED</span></div>
+   <div class="ar rv"><h5>Cross-app reconciler</h5><span>Interesting, but abstract to explain fast.</span><span class="s">PASSED</span></div>
+   <div class="ar win rv"><h5>SLA Copilot</h5><span>A concrete domain, a visible financial result and an obvious definition of success.</span><span class="s">CHOSEN</span></div>
+  </div>
+ </section>
+
+ <!-- 08 -->
+ <section class="sec">
+  <div class="sl m"><span><span class="n">08</span> · Honest limits</span><span>What a real version needs</span></div>
+  <div class="sh"><h2 class="rv">A decision assistant, not an autopilot for payouts.</h2><p class="rv d1">The prototype proves a <b>safe execution loop</b>. A production version would need more, and I'd rather say so than oversell it.</p></div>
+  <div class="lim">
+   <div class="rv"><small>01 · IDENTITY</small><h5>Account mapping</h5><p>Real companies have messy IDs across tools. Production needs a trusted identity service, not string matching.</p></div>
+   <div class="rv d1"><small>02 · CONTRACTS</small><h5>SLAs vary</h5><p>Real contracts have caps, exclusions and maintenance clauses. The demo policy is illustrative.</p></div>
+   <div class="rv d2"><small>03 · EVIDENCE</small><h5>Attempt ≠ impact</h5><p>A failed event proves an attempt, not every business impact. Raw event IDs stay in the audit.</p></div>
+   <div class="rv"><small>04 · SAFETY</small><h5>Capped autonomy</h5><p>Scoped credentials, amount caps, approval thresholds and a reconciliation job.</p></div>
+  </div>
+  <div class="chips rv"><span>Python</span><span>PagerDuty MCP / API</span><span>PostHog</span><span>Stripe test mode</span><span>Linear</span><span>YAML policy engine</span><span>State machines</span><span>Idempotency</span></div>
+ </section>
+
+ <a class="next rv" href="/projects/orion"><div><div class="m">Next project · Back to the top</div><h2>ORION</h2><p>An AI analyst that refuses to guess.</p></div><span class="bigarr"><span class="arr"></span></span></a>
+</main>
+<script is:inline>
+addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('sc',scrollY>10),{passive:true});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+const $=id=>document.getElementById(id);
+// ---------- SLA simulation ----------
+const ST=['DISCOVERED','EVIDENCE_COLLECTED','POLICY_VERIFIED','AUTHORIZED','CREDIT_REQUESTED','CREDIT_VERIFIED','AUDITED','CLOSED'];
+let step=-1,chaos=false,timers=[];
+function states(cur,warn){$('states').innerHTML=ST.map((s,i)=>{let lab=s;if(chaos&&s==='CREDIT_REQUESTED'&&cur>=4)lab='CREDIT_REQUESTED · OUTCOME_UNKNOWN';return `<div class="stt ${i<cur?'done':i===cur?(warn?'warn':'cur'):''}"><i></i>${lab}</div>`}).join('')}
+function pane(title,sys,html){$('title').textContent=title;$('sys').textContent=sys;$('pane').innerHTML=`<div class="pane2">${html}</div>`}
+const ACC=[['Acme','Enterprise','12 failed exports'],['Globex','Pro','4 failed exports'],['Umbrella','Enterprise','0 attempts']];
+const VIEWS=[
+ ()=>pane('Discovered','PAGERDUTY',`<div class="card"><div class="r"><small>INCIDENT</small><span>exports-api · SEV-1 · resolved</span></div><div class="r"><small>WINDOW</small><span>47 minutes, start → recovery</span></div><div class="r"><small>AFFECTED FEATURE</small><span>Data export <span class="hi">(interpreted by the model)</span></span></div></div><p class="why">The model reads the incident description and names the affected feature. <b>Everything after this is deterministic.</b></p>`),
+ ()=>pane('Evidence collected','POSTHOG + STRIPE',`<div class="tbl"><div class="tr"><span>ACCOUNT</span><span>PLAN</span><span>IN WINDOW</span><span>STRIPE CUSTOMER</span></div>${ACC.map(a=>`<div class="tr"><b>${a[0]}</b><span>${a[1]}</span><span class="${a[2].startsWith('0')?'no':'hi'}">${a[2]}</span><code style="font-family:PM;font-size:12px">cus_${a[0].toLowerCase()}…</code></div>`).join('')}</div><p class="why">PostHog shows who actually hit the broken feature during the outage. Each account resolves to its Stripe customer through a <b>stable mapping</b>, never a guess.</p>`),
+ ()=>pane('Policy verified','DETERMINISTIC POLICY',`<div class="tbl"><div class="tr"><span>ACCOUNT</span><span>DECISION</span><span>CREDIT</span><span>REASON</span></div><div class="tr"><b>Acme</b><span class="ok">QUALIFIES</span><span>10% monthly</span><span>Enterprise SLA + affected usage</span></div><div class="tr"><b>Globex</b><span class="no">NOT ELIGIBLE</span><span>—</span><span>Plan lacks the SLA condition</span></div><div class="tr"><b>Umbrella</b><span class="no">NOT ELIGIBLE</span><span>—</span><span>No affected usage</span></div></div><p class="why">Umbrella is a big Enterprise customer, but <b>being big isn't evidence of harm</b>. The policy checks severity, duration, plan, observed usage and prior credits.</p>`),
+ ()=>pane('Waiting for approval','IN-APP APPROVAL',`<div class="card"><div class="r"><small>PROPOSED ACTION</small><span>Service credit for <b style="font-weight:500">Acme</b></span></div><div class="r"><small>AMOUNT</small><span>10% of monthly fee · <b style="font-weight:500">$420.00</b> <span class="hi">(example)</span></span></div><div class="r"><small>EVIDENCE</small><span>12 failed export events · SEV-1 · 47 min</span></div><div class="r"><small>POLICY</small><code>sla-policy v1</code></div></div><div class="apr"><button class="y" id="approve">Approve credit</button><button id="deny">Reject</button></div><p class="why">The evidence packet and policy result are shown <b>before</b> any money moves.</p>`),
+ ()=>pane(chaos?'Outcome unknown':'Credit requested','STRIPE TEST MODE',`<div class="log" id="log"></div>`),
+ ()=>pane('Credit verified','READ-AFTER-WRITE',`<div class="tbl"><div class="vt"><span>CHECK</span><span>EXPECTED</span><span>OBSERVED</span><span></span></div><div class="vt"><span>Customer</span><code>cus_acme…</code><code>cus_acme…</code><span class="ok">✓</span></div><div class="vt"><span>Amount</span><code>−$420.00</code><code>−$420.00</code><span class="ok">✓</span></div><div class="vt"><span>Metadata</span><code>case INC-47</code><code>case INC-47</code><span class="ok">✓</span></div><div class="vt"><span>Matching credits</span><code>1</code><code>1</code><span class="ok">✓</span></div></div><p class="why">${chaos?'Even after the timeout, the system of record shows <b>exactly one</b> credit. No duplicate was issued.':'The verifier reads Stripe again and compares <b>expected vs. observed</b> state, independent of what the agent reported.'}</p>`),
+ ()=>pane('Audited','LINEAR',`<div class="card"><div class="r"><small>ISSUE</small><span>INC-47 · exports-api SEV-1 · service credits</span></div><div class="r"><small>ACME</small><span class="ok">CREDIT_VERIFIED · $420.00</span></div><div class="r"><small>GLOBEX</small><span class="no">NOT_ELIGIBLE · plan</span></div><div class="r"><small>UMBRELLA</small><span class="no">NOT_ELIGIBLE · no usage</span></div><div class="r"><small>RAW EVIDENCE</small><span>Event IDs, policy version, inputs and outputs of every step</span></div></div>`),
+ ()=>pane('Closed','ALL SYSTEMS AGREE',`<div class="idle" style="padding:30px 0"><div><b>Case closed ✓</b>PagerDuty, PostHog, policy and Stripe agree on the outcome.</div></div><div class="closer">The agent didn't “complete a workflow” because it called Stripe. It completed it because <b>the correct customer received the policy-authorized credit, exactly once</b>, and we verified it from the system of record.</div>`)];
+function go(i){step=i;states(i,chaos&&i===4);VIEWS[i]();
+ const nx=$('next');nx.disabled=(i===3||i>=7);nx.textContent=i>=7?'Done':'Next step →';
+ if(i===3){$('approve').onclick=()=>go(4);$('deny').onclick=()=>pane('Rejected','IN-APP APPROVAL','<div class="idle"><div><b>No credit issued</b>A human rejected the action. Nothing touched Stripe.</div></div>')}
+ if(i===4)runLog()}
+function runLog(){const L=$('log');const lines=chaos?
+ [['d','→ POST /v1/customers/cus_acme…/balance_transactions'],['d','  idempotency_key: inc47-acme-credit'],['o','✕ request timed out after 10s'],['o','  state → OUTCOME_UNKNOWN · do NOT blindly retry'],['d','→ read Stripe: list balance transactions for cus_acme…'],['g','✓ found 1 credit with metadata case=INC-47'],['g','  the write succeeded. no second credit issued.']]:
+ [['d','→ POST /v1/customers/cus_acme…/balance_transactions'],['d','  amount: -42000 · currency: usd'],['d','  metadata: case=INC-47 policy=sla-policy-v1'],['d','  idempotency_key: inc47-acme-credit'],['g','✓ 200 OK · transport success'],['o','  …but that alone proves nothing. verifying →']];
+ timers.forEach(clearTimeout);timers=[];L.innerHTML='';lines.forEach((l,k)=>timers.push(setTimeout(()=>{L.innerHTML+=`<div class="${l[0]}">${l[1]}</div>`},k*450)));
+ $('next').disabled=true;timers.push(setTimeout(()=>{$('next').disabled=false},lines.length*450))}
+function reset(c){timers.forEach(clearTimeout);chaos=!!c;step=-1;states(-1);$('next').disabled=false;$('next').textContent='Run SLA Copilot →';
+ pane(c?'Timeout replay':'Ready',c?'CHAOS MODE · STRIPE WILL TIME OUT':'DEMO DATA · STRIPE TEST MODE',`<div class="idle"><div><b>${c?'Same incident, flaky network':'Resolved incident'}</b>${c?'This time the Stripe request times out after the write succeeds.<br>A naive agent would retry and credit Acme twice.':'Press “Run SLA Copilot” to walk through<br>evidence, policy, approval, credit and verification.'}</div></div>`)}
+$('next').onclick=()=>go(step+1);$('chaos').onclick=()=>reset(true);$('reset').onclick=()=>reset(false);reset(false);
+</script>
+
+</Layout>

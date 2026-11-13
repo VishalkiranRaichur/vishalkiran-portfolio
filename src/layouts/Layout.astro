@@ -1,0 +1,52 @@
+---
+import '../styles/global.css';
+import { SITE, SEARCH } from '../data.js';
+const { title='Vishalkiran Raichur · AI systems & backend', description='Vishalkiran Raichur builds AI systems and backend infrastructure. Data Science at San José State.', active='' } = Astro.props;
+const nav=[['00','Home','/','home'],['01','Projects','/projects','projects'],['02','Work','/work','work'],['03','About','/about','about']];
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{title}</title>
+<meta name="description" content={description}>
+<meta property="og:title" content={title}><meta property="og:description" content={description}><meta property="og:type" content="website">
+<meta name="theme-color" content="#fcfaf6">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/jost-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/jost-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+</head>
+<body>
+<header class="nav" id="nav"><div class="wrap">
+ <a class="logo" href="/"><span>Vishalkiran</span><span><i>.</i>Raichur</span></a>
+ <nav class="links">{nav.map(([n,l,h,k])=> <a class={active===k?'on':''} href={h}><sup>{n}</sup>{l}</a>)}</nav>
+ <div class="nr"><span class="srch" id="sbtn" role="button" tabindex="0"><span class="t">Search</span><span class="kbd">⌘K</span></span><a class="pillb" href="/contact">Get in touch <span class="arr"></span></a><button class="menu-btn" id="mbtn" aria-expanded="false">Menu</button></div>
+</div></header>
+<nav class="mnav" id="mnav">{nav.map(([n,l,h])=> <a href={h}><sup>{n}</sup>{l}</a>)}<a href="/resume"><sup>04</sup>Résumé</a><a href="/contact"><sup>05</sup>Contact</a></nav>
+<slot />
+<div class="wrap"><footer class="foot">
+ <div><div class="m">Pages</div><b><a href="/projects">Projects</a><br><a href="/work">Work</a><br><a href="/about">About</a><br><a href="/resume">Résumé</a></b></div>
+ <div><div class="m">Elsewhere</div><b><a href={SITE.github}>GitHub</a><br><a href={SITE.linkedin}>LinkedIn</a><br><a href={SITE.ivk}>IVK Media</a></b></div>
+ <div><div class="m">Say hi</div><b><a href={'mailto:'+SITE.email}>{SITE.email}</a><br>San José, California</b></div>
+ <div><div class="m">© 2026</div><b>Vishalkiran Raichur<br><span class="m">Press ⌘K anywhere</span></b></div>
+</footer></div>
+<div id="ck"><div class="pal"><input id="ci" placeholder="Search projects, pages, links…" autocomplete="off"><div class="ls" id="cl"></div><div class="fx"><span>↑↓ NAVIGATE</span><span>↵ OPEN</span><span>ESC CLOSE</span></div></div></div>
+<script is:inline define:vars={{items:SEARCH}}>
+(()=>{const nav=document.getElementById('nav');addEventListener('scroll',()=>nav.classList.toggle('sc',scrollY>10),{passive:true});
+const mb=document.getElementById('mbtn'),mn=document.getElementById('mnav');mb.onclick=()=>{const o=mn.classList.toggle('open');mb.setAttribute('aria-expanded',o);mb.textContent=o?'Close':'Menu'};
+const ck=document.getElementById('ck'),ci=document.getElementById('ci'),cl=document.getElementById('cl');let sel=0,vis=[];
+function render(){const q=ci.value.toLowerCase().trim();vis=items.filter(o=>!q||o.t.toLowerCase().includes(q)||(o.s||'').includes(q)||o.k.toLowerCase().includes(q));sel=Math.min(sel,Math.max(0,vis.length-1));let g='',h='';
+ vis.forEach((o,i)=>{if(o.g!==g){g=o.g;h+=`<div class="gh">${g.toUpperCase()}</div>`}h+=`<div class="o ${i===sel?'sel':''}" data-i="${i}"><span>${o.t}</span><small>${o.k}</small></div>`});
+ cl.innerHTML=h||'<div class="gh">NOTHING FOUND. TRY “AI” OR “DATABASE”.</div>'}
+function open(){ck.classList.add('open');ci.value='';sel=0;render();ci.focus();setTimeout(()=>ci.focus(),30)}
+function close(){ck.classList.remove('open')}
+function go(o){close();if(!o)return;if(/^https?:/.test(o.h))window.open(o.h,'_blank');else location.href=o.h}
+document.getElementById('sbtn').onclick=open;
+addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();ck.classList.contains('open')?close():open();return}
+ if(!ck.classList.contains('open'))return;if(e.key==='Escape')close();if(e.key==='ArrowDown'){sel=Math.min(vis.length-1,sel+1);render();e.preventDefault()}if(e.key==='ArrowUp'){sel=Math.max(0,sel-1);render();e.preventDefault()}if(e.key==='Enter')go(vis[sel])});
+ci.addEventListener('input',()=>{sel=0;render()});cl.addEventListener('click',e=>{const o=e.target.closest('.o');o&&go(vis[+o.dataset.i])});ck.addEventListener('click',e=>{if(e.target===ck)close()});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));})();
+</script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title='Résumé · Vishalkiran Raichur' description='One-page résumé of Vishalkiran Raichur.' active="resume">
+<style is:global>
+
+
+
+.ph{padding:80px 0 0;display:flex;justify-content:space-between;align-items:flex-end;gap:40px}
+.ph h1{font-weight:300;font-size:clamp(54px,7vw,104px);line-height:.98;text-transform:uppercase;margin-top:24px}
+.ph p{font-size:18px;color:#3a3936;margin-top:20px;max-width:560px;line-height:1.6}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.desk{margin-top:60px;background:#efeae0;border:1px solid var(--ink);padding:60px 0;display:flex;justify-content:center;position:relative}
+.desk .m.l{position:absolute;left:24px;top:18px}.desk .m.r{position:absolute;right:24px;top:18px}
+.sheet{width:min(850px,92%);background:#fff;box-shadow:0 30px 70px rgba(0,0,0,.14);padding:56px 64px;font-size:13.5px;line-height:1.5;color:#1a1a1a}
+.sheet h2{font-weight:400;font-size:30px;letter-spacing:.14em;text-transform:uppercase;text-align:center}
+.sheet .ct{text-align:center;font-family:PM;font-size:10.5px;color:#555;margin-top:8px;letter-spacing:.04em}
+.sheet h3{font-family:PM;font-weight:400;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--or);border-bottom:1px solid #1a1a1a;padding-bottom:5px;margin-top:22px}
+.ent{margin-top:11px}
+.eh{display:flex;justify-content:space-between;gap:16px}
+.eh b{font-weight:500;font-size:14px}
+.eh span{font-family:PM;font-size:10.5px;color:#555;white-space:nowrap}
+.es{display:flex;justify-content:space-between;font-style:italic;color:#444;margin-top:1px}
+.sheet ul{margin:5px 0 0 16px}
+.sheet li{margin-top:3px}
+.sk{display:grid;grid-template-columns:150px 1fr;gap:4px 12px;margin-top:10px}
+.sk b{font-weight:500}
+.note{margin-top:22px;display:grid;grid-template-columns:200px 1fr;gap:40px;border-top:1px solid var(--line);padding-top:18px}
+.note p{font-size:15.5px;line-height:1.6;color:#3a3936}
+.foot{border-top:1px solid var(--ink);display:grid;grid-template-columns:repeat(4,1fr);gap:40px;padding:40px 0 60px;margin-top:100px}
+.foot b{display:block;font-weight:400;font-size:15px;margin-top:12px;line-height:1.8}
+@media (max-width:960px){.wrap{padding:0 18px}.links,.srch .t{display:none}.srch{gap:6px;padding:8px 10px}.nr .pillb{display:none}
+ .ph{flex-direction:column;align-items:flex-start;padding-top:50px}.desk{padding:44px 0 20px}.sheet{padding:28px 20px;font-size:12.5px}.sheet h2{font-size:22px}
+ .eh,.es{flex-direction:column}.sk{grid-template-columns:1fr}.note{grid-template-columns:1fr;gap:8px}.foot{grid-template-columns:1fr 1fr}}
+@media print{.eh,.es{flex-direction:row!important}.sk{grid-template-columns:130px 1fr!important}.sheet{padding:0!important;font-size:10.6px!important;line-height:1.38}.sheet h2{font-size:22px}.sheet h3{margin-top:10px;font-size:9.5px}.ent{margin-top:6px}.sheet li{margin-top:1px}.eh b{font-size:12px}.sk{margin-top:6px}.nav,.ph,.note,.foot,.desk .m{display:none!important}.desk{border:0;background:#fff;padding:0;margin:0!important}.wrap{padding:0!important;max-width:none}body{background:#fff}.sheet{box-shadow:none;width:100%;padding:0}}
+
+</style>
+
+
+
+
+<main class="wrap">
+ <section class="ph">
+  <div><div class="m">Résumé · one page</div><h1>Vishalkiran<br>Raichur<span class="or">.</span></h1><p>AI systems and backend infrastructure. The whole thing is below, and the PDF is one tap away.</p></div>
+  <div class="btns"><a class="pillb solid" href="/Vishalkiran_Raichur_Resume.pdf" download>Download PDF <span class="arr"></span></a><a class="pillb" href="/contact">Get in touch</a></div>
+ </section>
+
+ <div class="desk">
+  <span class="m l">FIG. 01 · RÉSUMÉ</span><span class="m r">UPDATED NOV 2026</span>
+  <article class="sheet">
+   <h2>Vishalkiran Raichur</h2>
+   <div class="ct">San José, CA · <a href="mailto:vishalkiran.raichur@sjsu.edu">vishalkiran.raichur@sjsu.edu</a> · <a href="https://github.com/VishalkiranRaichur">github.com/VishalkiranRaichur</a> · <a href="https://www.linkedin.com/in/vishalkiran-raichur/">linkedin.com/in/vishalkiran-raichur</a></div>
+
+   <h3>Education</h3>
+   <div class="ent"><div class="eh"><b>San José State University</b><span>San José, CA</span></div><div class="es"><span>B.S. Data Science</span><span>Expected May 2028</span></div></div>
+
+   <h3>Experience</h3>
+   <div class="ent"><div class="eh"><b>Responsible Computing Club, SJSU</b><span>Jan 2026 – May 2026</span></div><div class="es"><span>Software Engineering Intern · Backend lead, Luminara</span><span>San José, CA</span></div>
+    <ul><li>Led the Flask backend of an accessible-reading app: PDF, slide, Word and image (OCR) conversion in and back out, for a team of 6.</li><li>Designed an NLP-flag pipeline where a local llama3 model rewrites only flagged spans, preserving meaning and layout; built JWT auth with disposable-email blocking and rate limiting.</li></ul></div>
+   <div class="ent"><div class="eh"><b>Relling Systems</b><span>Dec 2025 – Feb 2026</span></div><div class="es"><span>Project-Based Software Developer</span><span>San Francisco, CA</span></div>
+    <ul><li>Built a centralized web-based asset management system for ~800 GoPro cameras used by field teams across the U.S.</li><li>Designed an asset-identification and allocation workflow tracking ownership, availability and job-site assignment; iterated from real-world use.</li></ul></div>
+   <div class="ent"><div class="eh"><b>SJSU Software &amp; Computer Engineering Society</b><span>Jan 2025 – May 2025</span></div><div class="es"><span>Software Engineering Intern</span><span>San José, CA</span></div>
+    <ul><li>Built an end-to-end professor review feature for a platform serving 30,000+ students, combining reviews with Rate My Professor data from a GraphQL/Python pipeline.</li><li>Led a 3-person team building a Python/Grafanalib monitoring wrapper: 10 dashboards, ~70% less repeated config code.</li><li>Shipped React/JavaScript features within a 12-person engineering team.</li></ul></div>
+
+   <h3>Projects</h3>
+   <div class="ent"><div class="eh"><b>ORION · AI executive intelligence</b><span>FastAPI · Postgres/pgvector · Celery · Next.js</span></div>
+    <ul><li>Bounded AI agent that plans multi-step investigations and writes evidence-backed briefs; every figure comes from a tool result.</li><li>68 tests in CI; negative control caps confidence at 0.44 and withholds a cause when evidence is removed.</li></ul></div>
+   <div class="ent"><div class="eh"><b>PulseGrid · distributed CI platform</b><span>Python · FastAPI · SQLite WAL · Docker</span></div>
+    <ul><li>Pull-based Docker workers with resource matching, leases, heartbeats and stale-worker fencing; YAML workflows run as DAGs.</li><li>Verified GitHub webhooks with duplicate-delivery protection and exact-SHA checkout into read-only workspaces.</li></ul></div>
+   <div class="ent"><div class="eh"><b>Job Beast · job discovery &amp; application orchestration</b><span>Python · SQLite · LaTeX · Playwright</span></div>
+    <ul><li>Fit + bounded freshness ranking, cross-source dedup, eligibility gates and evidence-grounded résumé tailoring that never invents a skill.</li><li>Persisted state machine with human-in-the-loop states; used across 100+ real application workflows.</li></ul></div>
+   <div class="ent"><div class="eh"><b>ForgeDB · relational database engine</b><span>Java 17 · zero dependencies</span></div>
+    <ul><li>SQL parser, 4 KB binary pages, LRU buffer pool and B+ tree index; tested with a 20,000-key tree and restart persistence.</li></ul></div>
+   <div class="ent"><div class="eh"><b>SLA Copilot · hackathon</b><span>PagerDuty · PostHog · Stripe · Linear</span></div>
+    <ul><li>Service-credit workflow joining incident, usage, policy and billing state; deterministic policy engine with read-after-write, exactly-once verification.</li></ul></div>
+
+   <h3>Leadership &amp; Ventures</h3>
+   <div class="ent"><div class="eh"><b>Founder, IVK Media</b><span>2026 – Present</span></div><div class="es"><span>Websites, review stands and Instagram for San José businesses; hand-coded site at 60 fps</span></div></div>
+   <div class="ent"><div class="eh"><b>Adobe Student Ambassador, SJSU</b><span>2025 – Present</span></div><div class="es"><span>Hosted 5+ UI/UX workshops using Adobe Express</span></div></div>
+
+   <h3>Technical Skills</h3>
+   <div class="sk"><b>Languages</b><span>Python, Java, TypeScript, JavaScript, SQL</span><b>Backend &amp; Data</b><span>FastAPI, Flask, PostgreSQL, pgvector, SQLite, Redis, Celery, GraphQL, REST</span><b>AI</b><span>OpenAI API, Ollama, spaCy, RAG, agents, TF-IDF</span><b>Web &amp; Infra</b><span>React, Next.js, Docker, GitHub Actions, Netlify, Git</span></div>
+  </article>
+ </div>
+</main>
+<script is:inline>addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('sc',scrollY>10),{passive:true});</script>
+
+</Layout>

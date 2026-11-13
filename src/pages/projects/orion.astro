@@ -1,0 +1,431 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title='ORION · Vishalkiran Raichur' description='An AI executive analyst that investigates business questions and refuses to guess.' active="projects">
+<style is:global>
+
+
+
+.vf{position:relative;border:1px solid var(--ink);background:var(--paper)}
+.vf .c{position:absolute;width:16px;height:16px;border-color:var(--ink);border-style:solid;z-index:2}
+.vf .tl{left:10px;top:10px;border-width:1px 0 0 1px}.vf .tr{right:10px;top:10px;border-width:1px 1px 0 0}.vf .bl{left:10px;bottom:10px;border-width:0 0 1px 1px}.vf .br{right:10px;bottom:10px;border-width:0 1px 1px 0}
+.vf .hd,.vf .ft{display:flex;justify-content:space-between;gap:20px;padding:16px 34px;font-family:PM;font-size:10px;letter-spacing:.16em}
+.vf .ft{color:var(--mut)}
+.back{display:inline-flex;gap:10px;margin-top:56px;font-size:12px;letter-spacing:.2em;text-transform:uppercase}
+.meta{display:flex;gap:14px;align-items:center;margin-top:40px;flex-wrap:wrap}
+.meta .ln{width:34px;height:1px;background:var(--line)}
+.rec{width:6px;height:6px;border-radius:50%;background:var(--or);display:inline-block;margin-right:8px;animation:rec 1.6s steps(1) infinite}
+@keyframes rec{50%{opacity:.2}}
+h1{font-weight:300;font-size:clamp(90px,14vw,210px);line-height:.86;text-transform:uppercase;margin-top:18px}
+h1 .o{display:inline-block;width:.74em;height:.74em;border:.035em solid var(--ink);border-radius:50%;position:relative;vertical-align:-.02em}
+h1 .o::after{content:"";position:absolute;left:50%;top:50%;width:.12em;height:.12em;margin:-.06em;border-radius:50%;background:var(--or)}
+.top{display:grid;grid-template-columns:1fr 400px;gap:60px;align-items:end}
+.kick{font-weight:300;font-size:clamp(30px,3vw,44px);line-height:1.12;text-transform:uppercase;margin-top:30px;max-width:820px}
+.kick span{color:var(--mut)}
+.lede{font-size:20px;line-height:1.6;color:#2b2a28;margin-top:22px;max-width:720px}
+.acts{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+.facts{border-top:1px solid var(--ink)}
+.facts div{display:flex;justify-content:space-between;gap:20px;padding:13px 0;border-bottom:1px solid var(--line);font-size:15px;text-align:right}
+.facts div span:first-child{font-family:PM;font-size:10.5px;letter-spacing:.14em;color:var(--mut);text-transform:uppercase;padding-top:3px;text-align:left}
+/* section frame */
+.sec{margin-top:150px}
+.sl{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--ink);padding-top:16px}
+.sl .n{color:var(--or)}
+.sh{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:34px;align-items:end}
+.sh h2{font-weight:300;font-size:clamp(42px,4.8vw,72px);line-height:1;text-transform:uppercase}
+.sh p{font-size:18px;line-height:1.65;color:#2b2a28}
+.sh p b{font-weight:500}
+/* problem */
+.prob{display:grid;grid-template-columns:1.2fr 1fr;margin-top:50px;border:1px solid var(--ink)}
+.prob svg{width:100%;height:auto;display:block}
+.prob .r{border-left:1px solid var(--ink);padding:36px;display:flex;flex-direction:column;justify-content:space-between;background:#f6f2ea}
+.prob .q{font-weight:300;font-size:30px;line-height:1.2;margin-top:16px}
+.ppl{border-top:1px solid var(--line);margin-top:26px}
+.ppl div{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line);font-size:15px}
+.ppl div span:last-child{font-family:PM;font-size:10.5px;letter-spacing:.12em;color:var(--mut)}
+.prob .then{font-size:17px;line-height:1.6;margin-top:24px}
+.prob .then b{font-weight:500;border-bottom:1px solid var(--or)}
+/* product tabs */
+.tabs{display:flex;gap:0;margin-top:50px;border:1px solid var(--ink);border-bottom:0;width:max-content}
+.tabs button{all:unset;cursor:pointer;padding:14px 26px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;border-right:1px solid var(--ink);display:flex;gap:10px;align-items:center;transition:background .25s,color .25s}
+.tabs button:last-child{border-right:0}
+.tabs button sup{font-family:PM;font-size:9px;color:var(--dim)}
+.tabs button.on{background:var(--ink);color:var(--paper)}
+.tabs button.on sup{color:var(--or)}
+.screen{border:1px solid var(--ink);position:relative;background:var(--paper)}
+.screen .hd{border-bottom:1px solid var(--line)}
+.pane{display:none;padding:30px 34px 34px;min-height:520px;animation:fd .5s cubic-bezier(.2,.8,.2,1)}
+.pane.on{display:block}
+@keyframes fd{from{opacity:0;transform:translateY(10px)}}
+.cap{display:grid;grid-template-columns:1fr 1.4fr;gap:40px;margin-top:22px;align-items:start}
+.cap h4{font-weight:300;font-size:30px;text-transform:uppercase}
+.cap p{font-size:16.5px;line-height:1.6;color:#2b2a28}
+/* concept UI pieces */
+.ui{border:1px solid var(--line);background:#fff;border-radius:2px}
+.ui .bar{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);font-family:PM;font-size:10px;letter-spacing:.12em;color:var(--mut)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr)}
+.kpi{padding:18px 16px;border-right:1px solid var(--line)}.kpi:last-child{border:0}
+.kpi small{font-family:PM;font-size:9.5px;letter-spacing:.12em;color:var(--mut)}
+.kpi b{display:block;font-weight:300;font-size:32px;margin-top:8px}
+.kpi em{font-style:normal;font-family:PM;font-size:10.5px}
+.dn{color:var(--or)}.up{color:#1f7a4d}
+.dgrid{display:grid;grid-template-columns:1.6fr 1fr;border-top:1px solid var(--line)}
+.dgrid>div{padding:16px}
+.dgrid>div+div{border-left:1px solid var(--line)}
+.ins{border:1px solid var(--line);padding:12px;margin-top:10px;font-size:13.5px;line-height:1.5}
+.ins .t{font-family:PM;font-size:9.5px;letter-spacing:.12em;color:var(--or)}
+.ins b{font-weight:500}
+.askbox{border:1px solid var(--ink);padding:16px 18px;font-size:16px;display:flex;justify-content:space-between;align-items:center}
+.askbox .k{font-family:PM;font-size:10px;border:1px solid var(--ink);padding:6px 10px;background:var(--ink);color:#fff}
+.ans{display:grid;grid-template-columns:1.5fr 1fr;gap:0;margin-top:14px;border:1px solid var(--line)}
+.ans>div{padding:18px}.ans>div+div{border-left:1px solid var(--line);background:#faf8f3}
+.ans p{font-size:14.5px;line-height:1.65;color:#2b2a28}
+.ans sup{font-family:PM;font-size:9px;color:var(--or);margin-left:2px}
+.ans ul{list-style:none;margin-top:10px}
+.ans li{font-size:14px;padding:8px 0;border-top:1px solid var(--line);line-height:1.5}
+.src{display:flex;gap:10px;padding:10px 0;border-top:1px solid var(--line);font-size:13px;line-height:1.45}
+.src i{font-style:normal;font-family:PM;font-size:9.5px;color:var(--or);min-width:16px}
+.src small{display:block;font-family:PM;font-size:9.5px;color:var(--mut);letter-spacing:.06em}
+.conf{display:flex;gap:10px;align-items:center;margin-top:14px;font-family:PM;font-size:10px;letter-spacing:.12em;color:var(--mut)}
+.conf i{flex:1;height:4px;background:rgba(17,17,17,.1);position:relative}.conf i b{position:absolute;inset:0 auto 0 0;background:var(--ink)}
+.inv{display:grid;grid-template-columns:1fr 1.2fr;border:1px solid var(--line);margin-top:14px}
+.inv>div{padding:18px}.inv>div+div{border-left:1px solid var(--line);background:#faf8f3}
+.stp{display:grid;grid-template-columns:26px 1fr auto;gap:10px;padding:11px 0;border-top:1px solid var(--line);font-size:14px;align-items:center}
+.stp:first-of-type{border-top:0}
+.stp .n{font-family:PM;font-size:10px;color:var(--mut)}
+.stp .s{font-family:PM;font-size:9.5px;letter-spacing:.1em}
+.stp.dn2 .s{color:#1f7a4d}.stp.now .s{color:var(--or)}
+.stp.now{font-weight:500}
+.brf .r{display:grid;grid-template-columns:110px 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--line);font-size:14px;line-height:1.5}
+.brf .r small{font-family:PM;font-size:9px;letter-spacing:.12em;color:var(--mut);padding-top:3px}
+.brf .r b{font-weight:500}
+.lbl{font-family:PM;font-size:9.5px;letter-spacing:.14em;border:1px solid var(--or);color:var(--or);padding:3px 7px}
+/* built vs vision */
+.board{display:grid;grid-template-columns:1fr 1fr;margin-top:50px;border:1px solid var(--ink)}
+.board>div{padding:30px 34px}
+.board>div+div{border-left:1px solid var(--ink);background:#f6f2ea}
+.board h4{display:flex;justify-content:space-between;align-items:center;font-weight:300;font-size:30px;text-transform:uppercase}
+.board h4 span{font-family:PM;font-size:11px;letter-spacing:.14em;color:var(--mut)}
+.it{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:14px 0;border-top:1px solid var(--line);font-size:16.5px}
+.it:first-of-type{margin-top:20px}
+.it .s{font-family:PM;font-size:10px;letter-spacing:.12em;white-space:nowrap}
+.it .s.b::before{content:"● ";color:var(--or)}
+.it .s.p::before{content:"○ ";color:var(--mut)}
+.proof{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--ink);border-top:0}
+.proof div{padding:26px 28px;border-right:1px solid var(--line)}.proof div:last-child{border:0}
+.proof b{display:block;font-weight:300;font-size:54px;line-height:1}
+.proof b em{font-style:normal;color:var(--or)}
+.proof small{display:block;font-size:14.5px;color:#3a3936;margin-top:10px;line-height:1.45}
+/* control */
+.duo{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}
+.brief{padding:26px 34px 30px}
+.brief+.brief{border-left:1px solid var(--line);background:#f6f2ea}
+.brief .q{font-size:21px;margin-top:10px}
+.brief .r{display:grid;grid-template-columns:130px 1fr;gap:14px;padding:12px 0;border-top:1px solid var(--line);font-size:15px;line-height:1.5;color:#2b2a28}
+.brief .r:first-of-type{margin-top:16px}
+.brief .r small{font-family:PM;font-size:9.5px;letter-spacing:.14em;color:var(--mut);padding-top:4px}
+.brief .r b{font-weight:500;color:var(--ink)}
+.brief .x{color:var(--or)}
+.mtr{display:flex;align-items:center;gap:12px}.mtr i{flex:1;height:4px;background:rgba(17,17,17,.1);position:relative}.mtr i b{position:absolute;inset:0 auto 0 0;background:var(--ink)}
+.brief+.brief .mtr i b{background:var(--or)}
+.note{margin-top:22px;display:grid;grid-template-columns:200px 1fr;gap:40px;border-top:1px solid var(--line);padding-top:20px}
+.note p{font-size:16.5px;line-height:1.65;color:#2b2a28;max-width:820px}
+.note p b{font-weight:500}
+/* six capabilities */
+.six{display:grid;grid-template-columns:repeat(3,1fr);margin-top:50px;border-top:1px solid var(--ink);border-left:1px solid var(--ink)}
+.cp{border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:26px 26px 30px;min-height:300px;display:flex;flex-direction:column;transition:background .3s}
+.cp:hover{background:#f6f2ea}
+.cp .h{display:flex;justify-content:space-between;align-items:center}
+.cp .h .n{font-family:PM;font-size:11px;color:var(--or);letter-spacing:.1em}
+.st{font-family:PM;font-size:9.5px;letter-spacing:.12em;padding:4px 8px;border:1px solid var(--ink)}
+.st.b{background:var(--ink);color:var(--paper)}
+.st.f{border-style:dashed;color:var(--mut);border-color:var(--dim)}
+.cp h4{font-weight:300;font-size:30px;text-transform:uppercase;margin-top:44px;line-height:1.05}
+.cp p{font-size:15.5px;line-height:1.6;color:#3a3936;margin-top:12px}
+.cp .ex{margin-top:auto;padding-top:18px;font-family:PM;font-size:11px;color:var(--mut);line-height:1.55}
+.cp .ex b{color:var(--ink);font-weight:400}
+.alert{border:1px solid var(--or);padding:12px 14px;margin-top:18px;background:#fff}
+.alert .t{display:flex;justify-content:space-between;font-family:PM;font-size:9.5px;letter-spacing:.12em;color:var(--or)}
+.alert b{display:block;font-weight:500;font-size:15px;margin-top:6px}
+.alert p{font-size:13px!important;margin-top:4px!important}
+/* arch */
+.arch{display:grid;grid-template-columns:1.3fr 1fr;gap:60px;margin-top:50px;align-items:start}
+.layers{border:1px solid var(--ink)}
+.ly{display:grid;grid-template-columns:44px 1fr auto;gap:16px;align-items:center;padding:20px 22px;border-bottom:1px solid var(--line);position:relative}
+.ly:last-child{border:0}
+.ly .n{font-family:PM;font-size:10.5px;color:var(--mut)}
+.ly h5{font-weight:400;font-size:19px;text-transform:uppercase;letter-spacing:.03em}
+.ly p{font-family:PM;font-size:11px;color:var(--mut);margin-top:4px;letter-spacing:.02em}
+.ly.core{background:#f6f2ea}
+.surf{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--ink)}
+.surf div{padding:16px;text-align:center;font-size:14px;letter-spacing:.16em;text-transform:uppercase;border-right:1px solid var(--line)}.surf div:last-child{border:0;color:var(--mut)}
+.prin{border-top:1px solid var(--ink)}
+.prin div{display:grid;grid-template-columns:34px 1fr;padding:16px 0;border-bottom:1px solid var(--line);font-size:17px}
+.prin span{font-family:PM;font-size:10.5px;color:var(--or);padding-top:4px}
+/* users + chatgpt */
+.users{display:grid;grid-template-columns:repeat(5,1fr);margin-top:50px;border-top:1px solid var(--ink)}
+.users div{padding:22px 20px 0 0}
+.users h5{font-weight:400;font-size:18px;text-transform:uppercase;letter-spacing:.03em}
+.users p{font-size:14.5px;line-height:1.55;color:#3a3936;margin-top:8px}
+.vs{display:grid;grid-template-columns:1fr 1fr;margin-top:50px;border:1px solid var(--ink)}
+.vs>div{padding:30px 34px}.vs>div+div{border-left:1px solid var(--ink);background:var(--ink);color:var(--paper)}
+.vs h5{font-family:PM;font-size:10.5px;letter-spacing:.16em;font-weight:400;color:var(--mut)}
+.vs>div+div h5{color:var(--or)}
+.vs ul{list-style:none;margin-top:16px}
+.vs li{padding:12px 0;border-top:1px solid var(--line);font-size:16px}
+.vs>div+div li{border-color:rgba(255,255,255,.15)}
+.claim{margin-top:60px;text-align:center;font-weight:300;font-size:clamp(34px,4vw,58px);line-height:1.1;text-transform:uppercase;max-width:1100px;margin-left:auto;margin-right:auto}
+.claim span{color:var(--or)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:30px;justify-content:center}
+.chips span{font-family:PM;font-size:11px;border:1px solid var(--line);border-radius:999px;padding:6px 12px;color:#3a3936}
+.next{display:grid;grid-template-columns:1fr auto;align-items:end;margin-top:140px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:44px 0;transition:padding .4s}
+.next:hover{padding-left:16px}
+.next h2{font-weight:300;font-size:clamp(56px,9vw,140px);line-height:.9;text-transform:uppercase;margin-top:16px}
+.next p{font-family:PM;font-size:13px;color:var(--mut);margin-top:14px}
+.bigarr{width:84px;height:84px;border:1px solid var(--ink);border-radius:50%;display:grid;place-items:center;transition:.3s}
+.next:hover .bigarr{background:var(--ink);color:var(--paper)}
+.foot{border-top:1px solid var(--ink);display:grid;grid-template-columns:repeat(4,1fr);gap:40px;padding:40px 0 60px;margin-top:100px}
+.foot b{display:block;font-weight:400;font-size:15px;margin-top:12px;line-height:1.8}
+.rv{opacity:0;transform:translateY(24px);transition:opacity 1s cubic-bezier(.2,.8,.2,1),transform 1s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}.d1{transition-delay:.1s}.d2{transition-delay:.2s}
+@media (max-width:960px){
+ .wrap{padding:0 18px}.links,.srch .t{display:none}.srch{gap:6px;padding:8px 10px}.nr .pillb{display:none}
+ h1{font-size:76px}.top,.sh,.prob,.cap,.board,.arch,.vs,.note{grid-template-columns:1fr;gap:28px}
+ .prob .r,.board>div+div,.vs>div+div{border-left:0;border-top:1px solid var(--ink)}
+ .tabs{width:100%}.tabs button{flex:1;justify-content:center;padding:12px 8px;font-size:10.5px;letter-spacing:.1em}.tabs button sup{display:none}
+ .pane{padding:18px}.kpis{grid-template-columns:1fr 1fr}.kpi:nth-child(2){border:0}.dgrid,.ans,.inv{grid-template-columns:1fr}.dgrid>div+div,.ans>div+div,.inv>div+div{border-left:0;border-top:1px solid var(--line)}
+ .proof{grid-template-columns:1fr 1fr}.duo{grid-template-columns:1fr}.brief+.brief{border-left:0}.brief{padding:20px 18px}.brief .r{grid-template-columns:1fr;gap:4px}
+ .six{grid-template-columns:1fr}.cp{min-height:0}.users{grid-template-columns:1fr 1fr;gap:10px}
+ .next{grid-template-columns:1fr;gap:20px}.bigarr{width:56px;height:56px}.foot{grid-template-columns:1fr 1fr}.vf .hd,.vf .ft{padding:14px 18px;flex-wrap:wrap}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+
+</style>
+
+
+
+
+<main class="wrap">
+ <a class="back" href="/projects">← All projects</a>
+ <div class="meta m"><span style="color:var(--ink)">Build 01</span><span class="ln"></span><span>AI executive intelligence</span><span class="ln"></span><span><span class="rec"></span>Core built · connectors next</span></div>
+
+ <!-- 1. HERO -->
+ <section class="top">
+  <div>
+   <h1><span class="o"></span>RI<span class="o"></span>N</h1>
+   <div class="kick">Ask your company “why?” <span>Get an answer you can trace.</span></div>
+   <p class="lede">ORION connects a company's scattered information, investigates business questions across it and explains what the evidence supports. When the evidence is thin, it says so.</p>
+   <div class="acts"><a class="pillb solid" href="#product">See the product <span class="arr"></span></a><a class="pillb" href="#built">What's built</a><a class="pillb" href="https://github.com/VishalkiranRaichur/orion">Source</a></div>
+  </div>
+  <div class="facts rv">
+   <div><span>Role</span><span>Solo · design to backend</span></div>
+   <div><span>For</span><span>Growing companies with scattered tools</span></div>
+   <div><span>Core</span><span>Ask · Investigate · Workspaces</span></div>
+   <div><span>Proof</span><span>68 tests · negative control</span></div>
+   <div><span>Stack</span><span>FastAPI · Postgres + pgvector · Next.js</span></div>
+  </div>
+ </section>
+
+ <!-- 2. PROBLEM -->
+ <section class="sec">
+  <div class="sl m"><span><span class="n">01</span> · The problem</span><span>Why this exists</span></div>
+  <div class="sh"><h2 class="rv">The answer is in six tools. Nobody can see all six.</h2><p class="rv d1">Picture a 100-person company. Customer talks live in the CRM, money in spreadsheets, projects in Jira, decisions in Slack, docs in Drive, complaints in Zendesk. <b>When the CEO asks a hard question, three people spend days stitching it together.</b></p></div>
+  <div class="prob rv">
+   <svg viewBox="0 0 640 420">
+    <g font-family="PM" font-size="10.5" letter-spacing="1.2" fill="#111" text-anchor="middle">
+     <g fill="none" stroke="#111" stroke-width="1"><rect x="40" y="40" width="130" height="40"/><rect x="40" y="120" width="130" height="40"/><rect x="40" y="200" width="130" height="40"/><rect x="40" y="280" width="130" height="40"/><rect x="40" y="360" width="130" height="40" stroke-opacity="0"/></g>
+     <text x="105" y="64">CRM</text><text x="105" y="144">SPREADSHEETS</text><text x="105" y="224">JIRA · LINEAR</text><text x="105" y="304">SLACK</text>
+     <g fill="none" stroke="#111" stroke-width="1"><rect x="40" y="340" width="130" height="40"/></g><text x="105" y="364">DRIVE · NOTION</text>
+     <g fill="none" stroke="#111" stroke-width="1"><rect x="200" y="380" width="0" height="0"/></g>
+    </g>
+    <g font-family="PM" font-size="10.5" letter-spacing="1.2" text-anchor="middle"><rect x="190" y="0" width="0" height="0"/></g>
+    <g fill="none" stroke="#111" stroke-width="1" stroke-dasharray="3 5" stroke-opacity=".55">
+     <path d="M170 60 C300 60 330 200 420 200"/><path d="M170 140 C290 140 330 200 420 200"/><path d="M170 220 C290 220 330 205 420 205"/><path d="M170 300 C290 300 330 210 420 210"/><path d="M170 360 C300 360 330 215 420 215"/>
+    </g>
+    <circle cx="470" cy="207" r="52" fill="#fcfaf6" stroke="#111"/><circle cx="470" cy="207" r="6" fill="#ff5a1f"/>
+    <text x="470" y="282" font-family="PM" font-size="11" letter-spacing="2" text-anchor="middle">ORION</text>
+    <path d="M522 207 H600" stroke="#ff5a1f" stroke-width="1.4"/><path d="M594 201 l7 6 -7 6" fill="none" stroke="#ff5a1f" stroke-width="1.4"/>
+    <text x="600" y="190" font-family="PM" font-size="9.5" letter-spacing="1" text-anchor="end" fill="#ff5a1f">ONE BRIEF</text>
+    <text x="40" y="22" font-family="PM" font-size="9.5" letter-spacing="1.5" fill="#6f6d68">+ ZENDESK, FINANCE DB, …</text>
+   </svg>
+   <div class="r">
+    <div><div class="m">The CEO asks</div><div class="q">“Why did revenue drop last month, and what should we do about it?”</div>
+     <div class="ppl"><div><span>Finance analyst</span><span>PULLS THE NUMBERS</span></div><div><span>Customer success</span><span>CHECKS ACCOUNTS</span></div><div><span>Operations lead</span><span>DIGS THROUGH PROJECTS</span></div></div></div>
+    <p class="then">ORION gives all three <b>a much faster starting point</b>, with every finding linked back to its source. It doesn't replace them. It does the gathering.</p>
+   </div>
+  </div>
+ </section>
+
+ <!-- 3. PRODUCT -->
+ <section class="sec" id="product">
+  <div class="sl m"><span><span class="n">02</span> · The product</span><span>Three surfaces</span></div>
+  <div class="sh"><h2 class="rv">A dashboard, a research assistant and an investigator.</h2><p class="rv d1">One product, three ways in. Leaders see what changed, ask questions in plain English, and open a full investigation when the answer isn't simple.</p></div>
+  <div class="tabs rv" id="tabs"><button class="on" data-p="0"><sup>01</sup>Dashboard</button><button data-p="1"><sup>02</sup>Ask</button><button data-p="2"><sup>03</sup>Investigate</button></div>
+  <div class="screen rv">
+   <span class="c tl"></span>
+   <div class="hd" style="display:flex;justify-content:space-between;padding:14px 34px;font-family:PM;font-size:10px;letter-spacing:.16em"><span id="ptitle">ORION · EXECUTIVE DASHBOARD</span><span class="lbl">CONCEPT UI · ILLUSTRATIVE DATA</span></div>
+
+   <div class="pane on">
+    <div class="ui">
+     <div class="bar"><span>NORTHWIND CO · JULY</span><span>LAST 30 DAYS ▾</span></div>
+     <div class="kpis">
+      <div class="kpi"><small>REVENUE</small><b>$410K</b><em class="dn">▼ 18% vs June</em></div>
+      <div class="kpi"><small>RENEWALS AT RISK</small><b>3</b><em class="dn">▲ 2 this month</em></div>
+      <div class="kpi"><small>OPEN ESCALATIONS</small><b>12</b><em class="dn">▲ 5 this week</em></div>
+      <div class="kpi"><small>PROJECTS ON TRACK</small><b>9/11</b><em class="up">2 delayed</em></div>
+     </div>
+     <div class="dgrid">
+      <div><div class="m" style="font-size:9.5px">REVENUE · LAST 6 MONTHS</div>
+       <svg viewBox="0 0 500 170" style="width:100%;height:auto;margin-top:8px"><g stroke="#111" stroke-opacity=".08"><path d="M0 40H500M0 85H500M0 130H500"/></g><polyline points="10,92 100,82 190,76 280,70 370,64 460,118" fill="none" stroke="#111" stroke-width="1.6"/><circle cx="460" cy="118" r="5" fill="#ff5a1f"/><text x="452" y="140" font-family="PM" font-size="10" fill="#ff5a1f" text-anchor="end">JUL −18%</text><g font-family="PM" font-size="9" fill="#a19e97"><text x="6" y="164">FEB</text><text x="96" y="164">MAR</text><text x="186" y="164">APR</text><text x="276" y="164">MAY</text><text x="366" y="164">JUN</text><text x="452" y="164">JUL</text></g></svg></div>
+      <div><div class="m" style="font-size:9.5px">ORION FOUND</div>
+       <div class="ins"><div class="t">● REVENUE</div>88.9% of the drop comes from <b>one customer</b>. <u>Investigate →</u></div>
+       <div class="ins"><div class="t">● RENEWAL RISK</div><b>Cedar Ridge</b>: usage reporting delayed, export issues unresolved.</div>
+       <div class="ins"><div class="t" style="color:var(--mut)">● DELIVERY</div>2 projects slipped past their deadlines.</div></div>
+     </div>
+    </div>
+    <div class="cap"><h4>See what changed</h4><p>Revenue, customer risk and delivery in one view, with ORION's findings beside the numbers instead of hidden in fifteen dashboards.</p></div>
+   </div>
+
+   <div class="pane">
+    <div class="askbox"><span>Which customers are most likely to leave next quarter, and why?</span><span class="k">ASK ⏎</span></div>
+    <div class="ans">
+     <div><div class="m" style="font-size:9.5px">ORION · ANSWER</div>
+      <p style="margin-top:10px">Two accounts show strong warning signs. <b>Cedar Ridge</b> has unresolved dashboard export issues and delayed adoption reporting ahead of renewal<sup>[1][2]</sup>. <b>Atlas Freight</b> cut active seats after a support escalation<sup>[3]</sup>.</p>
+      <ul><li>A third account looks weaker, but <b>the evidence isn't strong enough</b> to call it at risk.</li></ul>
+      <div class="conf">CONFIDENCE <i><b style="width:64%"></b></i> MODERATE</div></div>
+     <div><div class="m" style="font-size:9.5px">SOURCES · 3</div>
+      <div class="src"><i>1</i><div>Renewal record · Cedar Ridge<small>CRM · RENEWAL IN 41 DAYS</small></div></div>
+      <div class="src"><i>2</i><div>Ticket: dashboard export failing<small>SUPPORT · OPEN 19 DAYS</small></div></div>
+      <div class="src"><i>3</i><div>Seat count change · Atlas Freight<small>BILLING · −30% SEATS</small></div></div></div>
+    </div>
+    <div class="cap"><h4>Ask in plain English</h4><p>Answers come only from the company's own connected information, with a numbered source for every claim and a clear note when the evidence falls short.</p></div>
+   </div>
+
+   <div class="pane">
+    <div class="askbox"><span>Why did revenue decrease by 18% in July?</span><span class="k" style="background:var(--or);border-color:var(--or)">INVESTIGATING</span></div>
+    <div class="inv">
+     <div><div class="m" style="font-size:9.5px">INVESTIGATION PLAN</div>
+      <div class="stp dn2"><span class="n">01</span><span>Find the change and comparison period</span><span class="s">DONE</span></div>
+      <div class="stp dn2"><span class="n">02</span><span>Rank customers and products driving it</span><span class="s">DONE</span></div>
+      <div class="stp dn2"><span class="n">03</span><span>Pull contracts, incidents and projects, including the weeks before</span><span class="s">DONE</span></div>
+      <div class="stp now"><span class="n">04</span><span>Test explanations against the evidence</span><span class="s">RUNNING</span></div>
+      <div class="stp"><span class="n">05</span><span>Write the executive brief</span><span class="s" style="color:var(--dim)">QUEUED</span></div></div>
+     <div class="brf"><div class="m" style="font-size:9.5px">DRAFT BRIEF</div>
+      <div class="r"><small>WHAT</small><div>Revenue fell <b>18%</b>, $500K → $410K.</div></div>
+      <div class="r"><small>DRIVER</small><div><b>One customer</b>, 88.9% of the decline.</div></div>
+      <div class="r"><small>LIKELY WHY</small><div>Service incidents in June, before the drop. <span style="color:var(--or)">Validating…</span></div></div>
+      <div class="r"><small>OPEN</small><div>Was the contract change planned?</div></div></div>
+    </div>
+    <div class="cap"><h4>Investigate, don't just answer</h4><p>ORION breaks a hard question into steps, runs real tools against the data, checks each explanation against evidence and states what's still uncertain. This is what makes it more than a document chatbot.</p></div>
+   </div>
+   <div class="ft" style="display:flex;justify-content:space-between;padding:14px 34px;font-family:PM;font-size:10px;letter-spacing:.16em;color:var(--mut);border-top:1px solid var(--line)"><span>PRODUCT DIRECTION · DESIGNED FOR THIS PAGE</span><span>REAL SCREENSHOTS COMING WITH THE UI</span></div>
+  </div>
+ </section>
+
+ <!-- 4. BUILT VS VISION -->
+ <section class="sec" id="built">
+  <div class="sl m"><span><span class="n">03</span> · Built vs. vision</span><span>No overselling</span></div>
+  <div class="sh"><h2 class="rv">The foundation is real. Here's exactly what works.</h2><p class="rv d1">The full vision is ambitious, so I keep a clear line between what runs today and what's next. <b>The hardest part, the investigation engine, is already built and tested.</b></p></div>
+  <div class="board rv">
+   <div><h4>Built <span>06</span></h4>
+    <div class="it">Document ingestion &amp; semantic search<span class="s b">LIVE</span></div>
+    <div class="it">Evidence-backed Ask with citations<span class="s b">LIVE</span></div>
+    <div class="it">Multi-step investigation engine<span class="s b">LIVE · IMPROVING</span></div>
+    <div class="it">Company workspaces &amp; data isolation<span class="s b">LIVE</span></div>
+    <div class="it">Data source foundation<span class="s b">LIVE</span></div>
+    <div class="it">Idempotent data imports<span class="s b">LIVE</span></div></div>
+   <div><h4>Next <span>05</span></h4>
+    <div class="it">Real connectors: Slack, Drive, CRM, Jira<span class="s p">PLANNED</span></div>
+    <div class="it">Automatic ongoing sync<span class="s p">PLANNED</span></div>
+    <div class="it">Proactive risk monitoring &amp; alerts<span class="s p">PLANNED</span></div>
+    <div class="it">Scheduled executive briefings<span class="s p">PLANNED</span></div>
+    <div class="it">Production SaaS deployment &amp; access control<span class="s p">FUTURE</span></div></div>
+  </div>
+  <div class="proof rv"><div><b>68</b><small>automated tests passing in CI on Postgres + pgvector</small></div><div><b>18<em>%</em></b><small>revenue decline found and computed in evaluation</small></div><div><b>88.9<em>%</em></b><small>of that decline traced to a single customer</small></div><div><b>0.44</b><small>confidence cap when the evidence is removed</small></div></div>
+ </section>
+
+ <!-- 5. PROOF -->
+ <section class="sec">
+  <div class="sl m"><span><span class="n">04</span> · The result I'm proudest of</span><span>Negative control</span></div>
+  <div class="sh"><h2 class="rv">I tested whether it would refuse to guess.</h2><p class="rv d1">Same question, same company, run twice. The second time I deleted the evidence that explains the drop. <b>A tool that's guessing tells the same story both times. ORION didn't.</b></p></div>
+  <figure class="vf rv" style="margin-top:44px">
+   <span class="c tl"></span><span class="c tr"></span><span class="c bl"></span><span class="c br"></span>
+   <div class="hd"><span>FIG. 01 · THE SAME QUESTION, TWICE</span><span>FROM ORION'S TEST SUITE</span></div>
+   <div class="duo">
+    <div class="brief"><div class="m">A · With the evidence</div><div class="q">Why did revenue decline in July?</div>
+     <div class="r"><small>WHAT HAPPENED</small><div>Revenue fell <b>18%</b>, $500K → $410K.</div></div>
+     <div class="r"><small>DRIVER</small><div><b>One customer</b>, 88.9% of the decline.</div></div>
+     <div class="r"><small>EXPLANATION</small><div>Validated against records from the weeks before.</div></div>
+     <div class="r"><small>CONFIDENCE</small><div class="mtr"><i><b style="width:82%"></b></i><span class="m" style="color:var(--ink)">Validated</span></div></div></div>
+    <div class="brief"><div class="m or">B · Evidence removed</div><div class="q">Why did revenue decline in July?</div>
+     <div class="r"><small>WHAT HAPPENED</small><div>Revenue fell <b>18%</b>, $500K → $410K.</div></div>
+     <div class="r"><small>DRIVER</small><div><b>One customer</b>, 88.9% of the decline.</div></div>
+     <div class="r"><small>EXPLANATION</small><div class="x">None stated. The evidence doesn't prove a cause.</div></div>
+     <div class="r"><small>CONFIDENCE</small><div class="mtr"><i><b style="width:44%"></b></i><span class="m or">Capped · 0.44</span></div></div></div>
+   </div>
+  </figure>
+  <div class="note rv"><div class="m">Engineering note</div><p>Testing also caught a real planner bug: the AI only searched for evidence <b>in the month revenue fell</b>, missing incidents from the weeks before. The validator now always reaches back a month, whatever the model plans, and a regression test replays the exact failing plan.</p></div>
+ </section>
+
+ <!-- 6. SIX CAPABILITIES -->
+ <section class="sec">
+  <div class="sl m"><span><span class="n">05</span> · The vision</span><span>Six capabilities</span></div>
+  <div class="sh"><h2 class="rv">From answering questions to spotting problems first.</h2><p class="rv d1">Today, most AI assistants wait to be asked. The finished ORION connects, investigates, watches and helps people act, with <b>humans approving anything important</b>.</p></div>
+  <div class="six">
+   <div class="cp rv"><div class="h"><span class="n">A</span><span class="st">FOUNDATION BUILT</span></div><h4>Connect</h4><p>Link approved tools into one permission-aware map of documents, records, metrics and how they relate.</p><div class="ex">The point isn't collecting data. It's <b>connecting what lives apart</b>.</div></div>
+   <div class="cp rv d1"><div class="h"><span class="n">B</span><span class="st b">BUILT</span></div><h4>Ask</h4><p>Ask hard business questions and get answers from the company's own evidence, with sources.</p><div class="ex">If the evidence isn't strong enough, <b>ORION says so</b>.</div></div>
+   <div class="cp rv d2"><div class="h"><span class="n">C</span><span class="st b">BUILT</span></div><h4>Investigate</h4><p>Break a question into steps, pull evidence across departments, test explanations and report confidence.</p><div class="ex">Its biggest differentiator: <b>it investigates, not just responds</b>.</div></div>
+   <div class="cp rv"><div class="h"><span class="n">D</span><span class="st f">PLANNED</span></div><h4>Monitor</h4><p>Watch approved sources for meaningful changes and flag risks before someone has to ask.</p>
+    <div class="alert"><div class="t"><span>● RENEWAL RISK</span><span>ILLUSTRATIVE</span></div><b>Cedar Ridge · renewal at risk</b><p>Reporting delayed, export issues unresolved. Review with customer success.</p></div></div>
+   <div class="cp rv d1"><div class="h"><span class="n">E</span><span class="st f">PLANNED</span></div><h4>Brief</h4><p>A short Monday-morning briefing: what changed, who needs attention, what's moving the wrong way, and the evidence for each.</p><div class="ex">Less time gathering. <b>More time deciding.</b></div></div>
+   <div class="cp rv d2"><div class="h"><span class="n">F</span><span class="st f">PLANNED</span></div><h4>Act</h4><p>Propose the next step, like a Jira task or a customer follow-up, and run it only after explicit approval.</p><div class="ex">Not an AI that runs the business. <b>One that helps people act responsibly.</b></div></div>
+  </div>
+ </section>
+
+ <!-- 7. ARCHITECTURE -->
+ <section class="sec">
+  <div class="sl m"><span><span class="n">06</span> · How it works</span><span>Target architecture</span></div>
+  <div class="sh"><h2 class="rv">Built in layers, for decisions that cost money.</h2><p class="rv d1">Some layers are implemented and others are planned. Every layer follows the same principles, because a wrong business answer has real financial consequences.</p></div>
+  <div class="arch">
+   <div class="layers rv">
+    <div class="ly"><span class="n">L1</span><div><h5>Connected business systems</h5><p>CRM · Documents · Projects · Support · Finance</p></div><span class="st f">PLANNED</span></div>
+    <div class="ly"><span class="n">L2</span><div><h5>Ingestion &amp; sync</h5><p>Parsing · Normalization · Change detection · Permissions</p></div><span class="st">PARTIAL</span></div>
+    <div class="ly core"><span class="n">L3</span><div><h5>Company knowledge layer</h5><p>PostgreSQL · pgvector · Documents · Metrics · Relationships</p></div><span class="st b">BUILT</span></div>
+    <div class="ly core"><span class="n">L4</span><div><h5>Reasoning &amp; investigation engine</h5><p>Retrieval · Planning · Tool execution · Evidence validation</p></div><span class="st b">BUILT</span></div>
+    <div class="surf"><div>Ask</div><div>Investigate</div><div>Insights · next</div></div>
+   </div>
+   <div class="prin rv d1"><div class="m" style="padding:0 0 14px;border:0;display:block">Design principles</div>
+    <div><span>01</span>Isolate each company's data</div><div><span>02</span>Keep the source of every piece of evidence</div><div><span>03</span>Put hard limits on what the AI can do</div><div><span>04</span>Test the failure cases, not just the happy path</div><div><span>05</span>Make uncertainty visible</div></div>
+  </div>
+ </section>
+
+ <!-- 8. USERS + VS CHATGPT -->
+ <section class="sec">
+  <div class="sl m"><span><span class="n">07</span> · Who it's for</span><span>First market: growing companies</span></div>
+  <div class="users">
+   <div class="rv"><h5>CEO / Founder</h5><p>Company performance and emerging risks</p></div>
+   <div class="rv d1"><h5>COO</h5><p>Operational bottlenecks and delayed projects</p></div>
+   <div class="rv d2"><h5>CFO / Finance</h5><p>Revenue changes and financial trends</p></div>
+   <div class="rv"><h5>Customer success</h5><p>Renewal risks and unresolved issues</p></div>
+   <div class="rv d1"><h5>Product / Eng</h5><p>Linking customer problems to delivery</p></div>
+  </div>
+  <div class="vs rv">
+   <div><h5>A GENERAL AI ASSISTANT</h5><ul><li>Knows the internet, not your company</li><li>Answers from what it read in training</li><li>One conversation at a time</li><li>Waits to be asked</li></ul></div>
+   <div><h5>ORION</h5><ul><li>Connected to the company's own systems</li><li>Every claim traced to a source, or withheld</li><li>Structured, multi-step investigations</li><li>Permission-aware and, next, proactive</li></ul></div>
+  </div>
+  <p class="claim rv">Not “ORION knows everything about your business.” <span>ORION helps you investigate it, with evidence you can trace.</span></p>
+  <div class="chips rv"><span>FastAPI</span><span>SQLAlchemy 2</span><span>PostgreSQL 16</span><span>pgvector</span><span>Redis</span><span>Celery</span><span>Next.js 15</span><span>React 19</span><span>TypeScript</span><span>OpenAI</span><span>GitHub Actions</span></div>
+ </section>
+
+ <a class="next rv" href="/projects/pulsegrid"><div><div class="m">Next project · Build 02</div><h2>PulseGrid</h2><p>A CI platform that recovers when workers die.</p></div><span class="bigarr"><span class="arr"></span></span></a>
+</main>
+<script is:inline>
+addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('sc',scrollY>10),{passive:true});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+const T=['ORION · EXECUTIVE DASHBOARD','ORION · ASK','ORION · INVESTIGATE'];
+const bs=[...document.querySelectorAll('#tabs button')],ps=[...document.querySelectorAll('.pane')];
+bs.forEach(b=>b.onclick=()=>{const i=+b.dataset.p;bs.forEach(x=>x.classList.toggle('on',x===b));ps.forEach((p,j)=>p.classList.toggle('on',j===i));document.getElementById('ptitle').textContent=T[i]});
+</script>
+
+</Layout>

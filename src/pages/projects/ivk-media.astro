@@ -1,0 +1,454 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title='IVK Media · Vishalkiran Raichur' description='A San José studio I started: brand, content and a hand-coded website with its own physics.' active="projects">
+<style is:global>
+
+
+
+
+.vf{position:relative;border:1px solid var(--ink);background:var(--paper)}
+.vf .c{position:absolute;width:16px;height:16px;border-color:var(--ink);border-style:solid;z-index:2}
+.vf .tl{left:10px;top:10px;border-width:1px 0 0 1px}.vf .tr{right:10px;top:10px;border-width:1px 1px 0 0}.vf .bl{left:10px;bottom:10px;border-width:0 0 1px 1px}.vf .br{right:10px;bottom:10px;border-width:0 1px 1px 0}
+.vf .hd,.vf .ft{display:flex;justify-content:space-between;gap:20px;padding:16px 34px;font-family:PM;font-size:10px;letter-spacing:.16em}
+.vf .ft{color:var(--mut)}
+.back{display:inline-flex;gap:10px;margin-top:56px;font-size:12px;letter-spacing:.2em;text-transform:uppercase}
+.meta{display:flex;gap:14px;align-items:center;margin-top:40px;flex-wrap:wrap}
+.meta .ln{width:34px;height:1px;background:var(--line)}
+.rec{width:6px;height:6px;border-radius:50%;background:var(--or);display:inline-block;margin-right:8px;animation:rec 1.6s steps(1) infinite}
+@keyframes rec{50%{opacity:.2}}
+h1{font-weight:300;font-size:clamp(90px,14vw,210px);line-height:.86;text-transform:uppercase;margin-top:18px}
+h1 .o{display:inline-block;width:.74em;height:.74em;border:.035em solid var(--ink);border-radius:50%;position:relative;vertical-align:-.02em}
+h1 .o::after{content:"";position:absolute;left:50%;top:50%;width:.12em;height:.12em;margin:-.06em;border-radius:50%;background:var(--or)}
+.top{display:grid;grid-template-columns:1fr 400px;gap:60px;align-items:end}
+.kick{font-weight:300;font-size:clamp(30px,3vw,44px);line-height:1.12;text-transform:uppercase;margin-top:30px;max-width:820px}
+.kick span{color:var(--mut)}
+.lede{font-size:20px;line-height:1.6;color:#2b2a28;margin-top:22px;max-width:720px}
+.acts{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+.facts{border-top:1px solid var(--ink)}
+.facts div{display:flex;justify-content:space-between;gap:20px;padding:13px 0;border-bottom:1px solid var(--line);font-size:15px;text-align:right}
+.facts div span:first-child{font-family:PM;font-size:10.5px;letter-spacing:.14em;color:var(--mut);text-transform:uppercase;padding-top:3px;text-align:left}
+/* section frame */
+.sec{margin-top:150px}
+.sl{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--ink);padding-top:16px}
+.sl .n{color:var(--or)}
+.sh{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:34px;align-items:end}
+.sh h2{font-weight:300;font-size:clamp(42px,4.8vw,72px);line-height:1;text-transform:uppercase}
+.sh p{font-size:18px;line-height:1.65;color:#2b2a28}
+.sh p b{font-weight:500}
+/* problem */
+.prob{display:grid;grid-template-columns:1.2fr 1fr;margin-top:50px;border:1px solid var(--ink)}
+.prob svg{width:100%;height:auto;display:block}
+.prob .r{border-left:1px solid var(--ink);padding:36px;display:flex;flex-direction:column;justify-content:space-between;background:#f6f2ea}
+.prob .q{font-weight:300;font-size:30px;line-height:1.2;margin-top:16px}
+.ppl{border-top:1px solid var(--line);margin-top:26px}
+.ppl div{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line);font-size:15px}
+.ppl div span:last-child{font-family:PM;font-size:10.5px;letter-spacing:.12em;color:var(--mut)}
+.prob .then{font-size:17px;line-height:1.6;margin-top:24px}
+.prob .then b{font-weight:500;border-bottom:1px solid var(--or)}
+/* product tabs */
+.tabs{display:flex;gap:0;margin-top:50px;border:1px solid var(--ink);border-bottom:0;width:max-content}
+.tabs button{all:unset;cursor:pointer;padding:14px 26px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;border-right:1px solid var(--ink);display:flex;gap:10px;align-items:center;transition:background .25s,color .25s}
+.tabs button:last-child{border-right:0}
+.tabs button sup{font-family:PM;font-size:9px;color:var(--dim)}
+.tabs button.on{background:var(--ink);color:var(--paper)}
+.tabs button.on sup{color:var(--or)}
+.screen{border:1px solid var(--ink);position:relative;background:var(--paper)}
+.screen .hd{border-bottom:1px solid var(--line)}
+.pane{display:none;padding:30px 34px 34px;min-height:520px;animation:fd .5s cubic-bezier(.2,.8,.2,1)}
+.pane.on{display:block}
+@keyframes fd{from{opacity:0;transform:translateY(10px)}}
+.cap{display:grid;grid-template-columns:1fr 1.4fr;gap:40px;margin-top:22px;align-items:start}
+.cap h4{font-weight:300;font-size:30px;text-transform:uppercase}
+.cap p{font-size:16.5px;line-height:1.6;color:#2b2a28}
+/* concept UI pieces */
+.ui{border:1px solid var(--line);background:#fff;border-radius:2px}
+.ui .bar{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);font-family:PM;font-size:10px;letter-spacing:.12em;color:var(--mut)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr)}
+.kpi{padding:18px 16px;border-right:1px solid var(--line)}.kpi:last-child{border:0}
+.kpi small{font-family:PM;font-size:9.5px;letter-spacing:.12em;color:var(--mut)}
+.kpi b{display:block;font-weight:300;font-size:32px;margin-top:8px}
+.kpi em{font-style:normal;font-family:PM;font-size:10.5px}
+.dn{color:var(--or)}.up{color:#1f7a4d}
+.dgrid{display:grid;grid-template-columns:1.6fr 1fr;border-top:1px solid var(--line)}
+.dgrid>div{padding:16px}
+.dgrid>div+div{border-left:1px solid var(--line)}
+.ins{border:1px solid var(--line);padding:12px;margin-top:10px;font-size:13.5px;line-height:1.5}
+.ins .t{font-family:PM;font-size:9.5px;letter-spacing:.12em;color:var(--or)}
+.ins b{font-weight:500}
+.askbox{border:1px solid var(--ink);padding:16px 18px;font-size:16px;display:flex;justify-content:space-between;align-items:center}
+.askbox .k{font-family:PM;font-size:10px;border:1px solid var(--ink);padding:6px 10px;background:var(--ink);color:#fff}
+.ans{display:grid;grid-template-columns:1.5fr 1fr;gap:0;margin-top:14px;border:1px solid var(--line)}
+.ans>div{padding:18px}.ans>div+div{border-left:1px solid var(--line);background:#faf8f3}
+.ans p{font-size:14.5px;line-height:1.65;color:#2b2a28}
+.ans sup{font-family:PM;font-size:9px;color:var(--or);margin-left:2px}
+.ans ul{list-style:none;margin-top:10px}
+.ans li{font-size:14px;padding:8px 0;border-top:1px solid var(--line);line-height:1.5}
+.src{display:flex;gap:10px;padding:10px 0;border-top:1px solid var(--line);font-size:13px;line-height:1.45}
+.src i{font-style:normal;font-family:PM;font-size:9.5px;color:var(--or);min-width:16px}
+.src small{display:block;font-family:PM;font-size:9.5px;color:var(--mut);letter-spacing:.06em}
+.conf{display:flex;gap:10px;align-items:center;margin-top:14px;font-family:PM;font-size:10px;letter-spacing:.12em;color:var(--mut)}
+.conf i{flex:1;height:4px;background:rgba(17,17,17,.1);position:relative}.conf i b{position:absolute;inset:0 auto 0 0;background:var(--ink)}
+.inv{display:grid;grid-template-columns:1fr 1.2fr;border:1px solid var(--line);margin-top:14px}
+.inv>div{padding:18px}.inv>div+div{border-left:1px solid var(--line);background:#faf8f3}
+.stp{display:grid;grid-template-columns:26px 1fr auto;gap:10px;padding:11px 0;border-top:1px solid var(--line);font-size:14px;align-items:center}
+.stp:first-of-type{border-top:0}
+.stp .n{font-family:PM;font-size:10px;color:var(--mut)}
+.stp .s{font-family:PM;font-size:9.5px;letter-spacing:.1em}
+.stp.dn2 .s{color:#1f7a4d}.stp.now .s{color:var(--or)}
+.stp.now{font-weight:500}
+.brf .r{display:grid;grid-template-columns:110px 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--line);font-size:14px;line-height:1.5}
+.brf .r small{font-family:PM;font-size:9px;letter-spacing:.12em;color:var(--mut);padding-top:3px}
+.brf .r b{font-weight:500}
+.lbl{font-family:PM;font-size:9.5px;letter-spacing:.14em;border:1px solid var(--or);color:var(--or);padding:3px 7px}
+/* built vs vision */
+.board{display:grid;grid-template-columns:1fr 1fr;margin-top:50px;border:1px solid var(--ink)}
+.board>div{padding:30px 34px}
+.board>div+div{border-left:1px solid var(--ink);background:#f6f2ea}
+.board h4{display:flex;justify-content:space-between;align-items:center;font-weight:300;font-size:30px;text-transform:uppercase}
+.board h4 span{font-family:PM;font-size:11px;letter-spacing:.14em;color:var(--mut)}
+.it{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:14px 0;border-top:1px solid var(--line);font-size:16.5px}
+.it:first-of-type{margin-top:20px}
+.it .s{font-family:PM;font-size:10px;letter-spacing:.12em;white-space:nowrap}
+.it .s.b::before{content:"● ";color:var(--or)}
+.it .s.p::before{content:"○ ";color:var(--mut)}
+.proof{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--ink);border-top:0}
+.proof div{padding:26px 28px;border-right:1px solid var(--line)}.proof div:last-child{border:0}
+.proof b{display:block;font-weight:300;font-size:54px;line-height:1}
+.proof b em{font-style:normal;color:var(--or)}
+.proof small{display:block;font-size:14.5px;color:#3a3936;margin-top:10px;line-height:1.45}
+/* control */
+.duo{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}
+.brief{padding:26px 34px 30px}
+.brief+.brief{border-left:1px solid var(--line);background:#f6f2ea}
+.brief .q{font-size:21px;margin-top:10px}
+.brief .r{display:grid;grid-template-columns:130px 1fr;gap:14px;padding:12px 0;border-top:1px solid var(--line);font-size:15px;line-height:1.5;color:#2b2a28}
+.brief .r:first-of-type{margin-top:16px}
+.brief .r small{font-family:PM;font-size:9.5px;letter-spacing:.14em;color:var(--mut);padding-top:4px}
+.brief .r b{font-weight:500;color:var(--ink)}
+.brief .x{color:var(--or)}
+.mtr{display:flex;align-items:center;gap:12px}.mtr i{flex:1;height:4px;background:rgba(17,17,17,.1);position:relative}.mtr i b{position:absolute;inset:0 auto 0 0;background:var(--ink)}
+.brief+.brief .mtr i b{background:var(--or)}
+.note{margin-top:22px;display:grid;grid-template-columns:200px 1fr;gap:40px;border-top:1px solid var(--line);padding-top:20px}
+.note p{font-size:16.5px;line-height:1.65;color:#2b2a28;max-width:820px}
+.note p b{font-weight:500}
+/* six capabilities */
+.six{display:grid;grid-template-columns:repeat(3,1fr);margin-top:50px;border-top:1px solid var(--ink);border-left:1px solid var(--ink)}
+.cp{border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:26px 26px 30px;min-height:300px;display:flex;flex-direction:column;transition:background .3s}
+.cp:hover{background:#f6f2ea}
+.cp .h{display:flex;justify-content:space-between;align-items:center}
+.cp .h .n{font-family:PM;font-size:11px;color:var(--or);letter-spacing:.1em}
+.st{font-family:PM;font-size:9.5px;letter-spacing:.12em;padding:4px 8px;border:1px solid var(--ink)}
+.st.b{background:var(--ink);color:var(--paper)}
+.st.f{border-style:dashed;color:var(--mut);border-color:var(--dim)}
+.cp h4{font-weight:300;font-size:30px;text-transform:uppercase;margin-top:44px;line-height:1.05}
+.cp p{font-size:15.5px;line-height:1.6;color:#3a3936;margin-top:12px}
+.cp .ex{margin-top:auto;padding-top:18px;font-family:PM;font-size:11px;color:var(--mut);line-height:1.55}
+.cp .ex b{color:var(--ink);font-weight:400}
+.alert{border:1px solid var(--or);padding:12px 14px;margin-top:18px;background:#fff}
+.alert .t{display:flex;justify-content:space-between;font-family:PM;font-size:9.5px;letter-spacing:.12em;color:var(--or)}
+.alert b{display:block;font-weight:500;font-size:15px;margin-top:6px}
+.alert p{font-size:13px!important;margin-top:4px!important}
+/* arch */
+.arch{display:grid;grid-template-columns:1.3fr 1fr;gap:60px;margin-top:50px;align-items:start}
+.layers{border:1px solid var(--ink)}
+.ly{display:grid;grid-template-columns:44px 1fr auto;gap:16px;align-items:center;padding:20px 22px;border-bottom:1px solid var(--line);position:relative}
+.ly:last-child{border:0}
+.ly .n{font-family:PM;font-size:10.5px;color:var(--mut)}
+.ly h5{font-weight:400;font-size:19px;text-transform:uppercase;letter-spacing:.03em}
+.ly p{font-family:PM;font-size:11px;color:var(--mut);margin-top:4px;letter-spacing:.02em}
+.ly.core{background:#f6f2ea}
+.surf{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--ink)}
+.surf div{padding:16px;text-align:center;font-size:14px;letter-spacing:.16em;text-transform:uppercase;border-right:1px solid var(--line)}.surf div:last-child{border:0;color:var(--mut)}
+.prin{border-top:1px solid var(--ink)}
+.prin div{display:grid;grid-template-columns:34px 1fr;padding:16px 0;border-bottom:1px solid var(--line);font-size:17px}
+.prin span{font-family:PM;font-size:10.5px;color:var(--or);padding-top:4px}
+/* users + chatgpt */
+.users{display:grid;grid-template-columns:repeat(5,1fr);margin-top:50px;border-top:1px solid var(--ink)}
+.users div{padding:22px 20px 0 0}
+.users h5{font-weight:400;font-size:18px;text-transform:uppercase;letter-spacing:.03em}
+.users p{font-size:14.5px;line-height:1.55;color:#3a3936;margin-top:8px}
+.vs{display:grid;grid-template-columns:1fr 1fr;margin-top:50px;border:1px solid var(--ink)}
+.vs>div{padding:30px 34px}.vs>div+div{border-left:1px solid var(--ink);background:var(--ink);color:var(--paper)}
+.vs h5{font-family:PM;font-size:10.5px;letter-spacing:.16em;font-weight:400;color:var(--mut)}
+.vs>div+div h5{color:var(--or)}
+.vs ul{list-style:none;margin-top:16px}
+.vs li{padding:12px 0;border-top:1px solid var(--line);font-size:16px}
+.vs>div+div li{border-color:rgba(255,255,255,.15)}
+.claim{margin-top:60px;text-align:center;font-weight:300;font-size:clamp(34px,4vw,58px);line-height:1.1;text-transform:uppercase;max-width:1100px;margin-left:auto;margin-right:auto}
+.claim span{color:var(--or)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:30px;justify-content:center}
+.chips span{font-family:PM;font-size:11px;border:1px solid var(--line);border-radius:999px;padding:6px 12px;color:#3a3936}
+.next{display:grid;grid-template-columns:1fr auto;align-items:end;margin-top:140px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:44px 0;transition:padding .4s}
+.next:hover{padding-left:16px}
+.next h2{font-weight:300;font-size:clamp(56px,9vw,140px);line-height:.9;text-transform:uppercase;margin-top:16px}
+.next p{font-family:PM;font-size:13px;color:var(--mut);margin-top:14px}
+.bigarr{width:84px;height:84px;border:1px solid var(--ink);border-radius:50%;display:grid;place-items:center;transition:.3s}
+.next:hover .bigarr{background:var(--ink);color:var(--paper)}
+.foot{border-top:1px solid var(--ink);display:grid;grid-template-columns:repeat(4,1fr);gap:40px;padding:40px 0 60px;margin-top:100px}
+.foot b{display:block;font-weight:400;font-size:15px;margin-top:12px;line-height:1.8}
+.rv{opacity:0;transform:translateY(24px);transition:opacity 1s cubic-bezier(.2,.8,.2,1),transform 1s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}.d1{transition-delay:.1s}.d2{transition-delay:.2s}
+@media (max-width:960px){
+ .wrap{padding:0 18px}.links,.srch .t{display:none}.srch{gap:6px;padding:8px 10px}.nr .pillb{display:none}
+ h1{font-size:76px}.top,.sh,.prob,.cap,.board,.arch,.vs,.note{grid-template-columns:1fr;gap:28px}
+ .prob .r,.board>div+div,.vs>div+div{border-left:0;border-top:1px solid var(--ink)}
+ .tabs{width:100%}.tabs button{flex:1;justify-content:center;padding:12px 8px;font-size:10.5px;letter-spacing:.1em}.tabs button sup{display:none}
+ .pane{padding:18px}.kpis{grid-template-columns:1fr 1fr}.kpi:nth-child(2){border:0}.dgrid,.ans,.inv{grid-template-columns:1fr}.dgrid>div+div,.ans>div+div,.inv>div+div{border-left:0;border-top:1px solid var(--line)}
+ .proof{grid-template-columns:1fr 1fr}.duo{grid-template-columns:1fr}.brief+.brief{border-left:0}.brief{padding:20px 18px}.brief .r{grid-template-columns:1fr;gap:4px}
+ .six{grid-template-columns:1fr}.cp{min-height:0}.users{grid-template-columns:1fr 1fr;gap:10px}
+ .next{grid-template-columns:1fr;gap:20px}.bigarr{width:56px;height:56px}.foot{grid-template-columns:1fr 1fr}.vf .hd,.vf .ft{padding:14px 18px;flex-wrap:wrap}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+
+img{display:block;max-width:100%}
+/* hero visual */
+.heroviz{position:relative;margin-top:70px}
+.heroviz .vf{padding:44px 34px 44px}
+.heroviz .vf img{border:1px solid var(--line);width:100%}
+.heroviz .ph{position:absolute;right:70px;bottom:-40px;width:210px;border:1px solid var(--ink);background:var(--paper);padding:8px;box-shadow:0 30px 60px rgba(0,0,0,.18);transform:rotate(3deg)}
+.heroviz .ph img{border:1px solid var(--line)}
+.heroviz .hd{position:absolute;top:0;left:0;right:0}
+.heroviz .ft{position:absolute;bottom:0;left:0;right:0}
+/* launch list */
+.launch{display:grid;grid-template-columns:repeat(6,1fr);border-top:1px solid var(--ink);border-left:1px solid var(--ink);margin-top:50px}
+.launch div{border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:20px 18px 22px;min-height:190px;display:flex;flex-direction:column}
+.launch span{font-family:PM;font-size:10px;color:var(--or);letter-spacing:.1em}
+.launch h5{font-weight:400;font-size:17px;text-transform:uppercase;letter-spacing:.03em;margin-top:auto}
+.launch p{font-size:13.5px;line-height:1.5;color:#3a3936;margin-top:6px}
+.budget{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--ink);border-top:0;padding:18px 22px;background:var(--ink);color:var(--paper)}
+.budget b{font-weight:300;font-size:30px;text-transform:uppercase}
+.budget span{font-family:PM;font-size:11px;letter-spacing:.14em;color:var(--or)}
+/* services */
+.svcs{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--ink);margin-top:50px}
+.sv{padding:24px 22px 26px;border-right:1px solid var(--line);min-height:240px;display:flex;flex-direction:column}
+.sv:last-child{border:0}
+.sv span{font-family:PM;font-size:10px;color:var(--mut);letter-spacing:.12em}
+.sv h5{font-weight:300;font-size:28px;text-transform:uppercase;margin-top:30px;line-height:1.05}
+.sv p{font-size:14.5px;line-height:1.55;color:#3a3936;margin-top:10px}
+.promise{border:1px solid var(--ink);border-top:0;display:grid;grid-template-columns:1fr auto;align-items:center;padding:22px 26px;background:#f6f2ea}
+.promise b{font-weight:300;font-size:30px;text-transform:uppercase}
+.promise b em{font-style:normal;color:var(--or)}
+.promise span{font-family:PM;font-size:11px;letter-spacing:.12em;color:var(--mut)}
+/* gallery */
+.gal{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;margin-top:50px}
+.shot .vf{padding:40px 22px 22px}
+.shot .vf .hd{position:absolute;top:0;left:0;right:0}
+.shot img{border:1px solid var(--line);width:100%}
+.shot h4{font-weight:400;font-size:22px;text-transform:uppercase;letter-spacing:.03em;margin-top:18px}
+.shot p{font-size:15.5px;line-height:1.6;color:#3a3936;margin-top:6px}
+.shot p b{font-weight:500}
+/* physics demo */
+.phys{display:grid;grid-template-columns:1.5fr 1fr;border:1px solid var(--ink);margin-top:50px}
+.phys .cv{position:relative;height:420px;background:#14130f;cursor:grab;touch-action:none}
+.phys .cv:active{cursor:grabbing}
+.phys canvas{position:absolute;inset:0;width:100%;height:100%}
+.phys .cv .tag{position:absolute;left:18px;top:14px;font-family:PM;font-size:10px;letter-spacing:.14em;color:#8f8b82}
+.phys .cv .hint{position:absolute;right:18px;top:12px;font-family:PM;font-size:10px;letter-spacing:.14em;color:#ff8a5c}
+.phys .r{border-left:1px solid var(--ink);padding:28px 30px;background:#f6f2ea;display:flex;flex-direction:column}
+.phys .r div{display:grid;grid-template-columns:30px 1fr;padding:13px 0;border-top:1px solid var(--line);font-size:15.5px;line-height:1.5}
+.phys .r div span{font-family:PM;font-size:10.5px;color:var(--or);padding-top:3px}
+.phys .r b{font-weight:500}
+.drop{all:unset;cursor:pointer;margin-top:auto;font-size:12px;letter-spacing:.2em;text-transform:uppercase;border:1px solid var(--ink);border-radius:999px;padding:11px 18px;align-self:flex-start;background:var(--ink);color:var(--paper)}
+/* perf */
+.perf{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--ink);border-top:0}
+.perf div{padding:24px 24px 26px;border-right:1px solid var(--line)}.perf div:last-child{border:0}
+.perf b{display:block;font-weight:300;font-size:46px;line-height:1}
+.perf b em{font-style:normal;color:var(--or)}
+.perf small{display:block;font-size:14px;color:#3a3936;margin-top:10px;line-height:1.5}
+/* brand */
+.brand{display:grid;grid-template-columns:1fr 1.25fr;gap:28px;margin-top:50px;align-items:start}
+.bkit{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.bkit .wide{grid-column:1/-1}
+.bkit figure{border:1px solid var(--ink);padding:8px;background:#fff}
+.bkit figcaption{font-family:PM;font-size:9.5px;letter-spacing:.12em;color:var(--mut);padding:8px 2px 2px}
+.feed{border:1px solid var(--ink);background:#fff}
+.feed .top{display:flex;align-items:center;gap:14px;padding:16px 18px;border-bottom:1px solid var(--line)}
+.feed .top img{width:46px;height:46px;border-radius:50%;border:1px solid var(--line)}
+.feed .top b{font-weight:500;font-size:15px}.feed .top small{display:block;font-family:PM;font-size:10px;color:var(--mut);letter-spacing:.06em;margin-top:2px}
+.grid9{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:3px}
+.grid9 div{aspect-ratio:4/5;overflow:hidden;position:relative}
+.grid9 img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.grid9 div:hover img{transform:scale(1.05)}
+.grid9 i{position:absolute;right:8px;top:8px;font-style:normal;font-family:PM;font-size:9px;letter-spacing:.1em;background:rgba(0,0,0,.65);color:#fff;padding:3px 6px}
+/* learned */
+.learn{margin-top:150px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:60px 0;display:grid;grid-template-columns:260px 1fr;gap:60px}
+.lgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line)}
+.lgrid div{padding:20px 22px 0 0}
+.lgrid h5{font-weight:400;font-size:19px;text-transform:uppercase;letter-spacing:.03em}
+.lgrid p{font-size:15px;line-height:1.6;color:#3a3936;margin-top:8px}
+@media (max-width:960px){
+ .heroviz .ph{position:relative;right:auto;bottom:auto;width:150px;margin:-60px 0 0 auto;transform:rotate(3deg)}.heroviz .vf{padding:38px 12px 38px}
+ .launch{grid-template-columns:1fr 1fr}.launch div{min-height:0}.launch h5{margin-top:14px}
+ .svcs{grid-template-columns:1fr 1fr}.sv{min-height:0;border-bottom:1px solid var(--line)}.sv h5{margin-top:14px}
+ .promise,.budget{grid-template-columns:1fr;flex-direction:column;align-items:flex-start;gap:8px}
+ .gal,.phys,.brand,.learn{grid-template-columns:1fr}.phys .r{border-left:0;border-top:1px solid var(--ink);padding:20px 18px}.phys .cv{height:340px}
+ .perf{grid-template-columns:1fr 1fr}.lgrid{grid-template-columns:1fr}.learn{gap:20px;padding:44px 0}
+}
+
+</style>
+
+
+
+
+<main class="wrap">
+ <a class="back" href="/projects">← All projects</a>
+ <div class="meta m"><span style="color:var(--ink)">In the wild</span><span class="ln"></span><span>A real studio for San José shops</span><span class="ln"></span><span><span class="rec"></span>Live at ivkmedia.com</span></div>
+
+ <section class="top">
+  <div>
+   <h1 style="font-size:clamp(76px,12vw,184px)">IVK Media</h1>
+   <div class="kick">Most students build a portfolio. <span>I started a studio.</span></div>
+   <p class="lede">IVK Media helps San José small businesses get found online with websites, Google review stands, Google profiles and Instagram. I built all of it myself: the brand, the offer, the content and a hand-coded website with its own physics engine.</p>
+   <div class="acts"><a class="pillb solid" href="https://ivkmedia.com">Visit ivkmedia.com <span class="arr"></span></a><a class="pillb" href="#throw">Throw a review stand</a><a class="pillb" href="https://github.com/VishalkiranRaichur/ivk-media-website">Source</a></div>
+  </div>
+  <div class="facts rv">
+   <div><span>Role</span><span>Founder · design, code, content</span></div>
+   <div><span>Started as</span><span>A 3-day, $100 team challenge</span></div>
+   <div><span>Market</span><span>San José &amp; South Bay shops</span></div>
+   <div><span>Website</span><span>One HTML file · no frameworks</span></div>
+   <div><span>Hosting</span><span>Netlify · custom domain · HTTPS</span></div>
+  </div>
+ </section>
+
+ <div class="heroviz rv">
+  <div class="vf"><span class="c tl"></span><span class="c tr"></span><span class="c bl"></span><span class="c br"></span>
+   <div class="hd"><span>IVKMEDIA.COM · DESKTOP</span><span class="or">● LIVE</span></div>
+   <img src="/img/hero.jpg" alt="IVK Media website homepage">
+   <div class="ft"><span>BLUEPRINT DESIGN SYSTEM · 48PX GRID</span><span>ARCHIVO BLACK · INSTRUMENT SERIF · JETBRAINS MONO</span></div></div>
+  <div class="ph"><img src="/img/mob.jpg" alt="IVK Media website on a phone"></div>
+ </div>
+
+ <!-- 01 ORIGIN -->
+ <section class="sec">
+  <div class="sl m"><span><span class="n">01</span> · How it started</span><span>$100 · 3 days</span></div>
+  <div class="sh"><h2 class="rv">A challenge became a business.</h2><p class="rv d1">It started as a team challenge: <b>$100 and three days</b> to build something real. I didn't want a lemonade stand. I wanted a business that could keep running after the challenge ended, so I built every piece it needed.</p></div>
+  <div class="launch">
+   <div class="rv"><span>01</span><h5>Name &amp; brand</h5><p>IVK Media, logo, colors and Google covers</p></div>
+   <div class="rv d1"><span>02</span><h5>Domain &amp; email</h5><p>ivkmedia.com with a working business inbox</p></div>
+   <div class="rv d2"><span>03</span><h5>Website</h5><p>Hand-coded and live on Netlify</p></div>
+   <div class="rv"><span>04</span><h5>Instagram</h5><p>A 9-post launch: carousels and reels</p></div>
+   <div class="rv d1"><span>05</span><h5>A product</h5><p>A tap-or-scan Google review stand</p></div>
+   <div class="rv d2"><span>06</span><h5>Lead list</h5><p>Local shops that needed help online</p></div>
+  </div>
+  <div class="budget rv"><b>One founder. One budget. Six launches.</b><span>NOTHING OUTSOURCED</span></div>
+ </section>
+
+ <!-- 02 OFFER -->
+ <section class="sec">
+  <div class="sl m"><span><span class="n">02</span> · The offer</span><span>What shops get</span></div>
+  <div class="sh"><h2 class="rv">Great local shops are invisible online.</h2><p class="rv d1">No website, a dozen reviews, wrong hours on Google, a quiet Instagram. <b>A taqueria with 12 reviews loses to the one with 418</b>, even if the tacos are better. IVK fixes the whole online storefront.</p></div>
+  <div class="svcs">
+   <div class="sv rv"><span>01 · WEB</span><h5>Websites</h5><p>Fast, mobile-first sites with menus, hours, directions and booking.</p></div>
+   <div class="sv rv d1"><span>02 · REVIEWS</span><h5>Review stands</h5><p>A counter stand customers tap with NFC or scan by QR to leave a Google review.</p></div>
+   <div class="sv rv d2"><span>03 · MAPS</span><h5>Google profile</h5><p>Correct hours, photos, categories and replies, so the shop shows up on Maps.</p></div>
+   <div class="sv rv"><span>04 · SOCIAL</span><h5>Instagram</h5><p>Profile setup, posts and reels made for local customers.</p></div>
+  </div>
+  <div class="promise rv"><b>We build it first. <em>You pay only if you love it.</em></b><span>FREE PREVIEW IN 24 HOURS · NO CONTRACTS</span></div>
+ </section>
+
+ <!-- 03 WEBSITE -->
+ <section class="sec">
+  <div class="sl m"><span><span class="n">03</span> · The website</span><span>Hand-built, no frameworks</span></div>
+  <div class="sh"><h2 class="rv">A website that tells the story by itself.</h2><p class="rv d1">Agency sites usually just list services. I wanted visitors to <b>watch a shop get fixed</b>, then play with the product, all in one dependency-free HTML file.</p></div>
+  <div class="gal">
+   <div class="shot rv"><div class="vf"><span class="c tl"></span><span class="c tr"></span><div class="hd"><span>FIG. 01 · SCROLL STORY</span><span></span></div><img src="/img/story.jpg" alt="Scroll story section"></div><h4>A storefront that fixes itself</h4><p>A pinned, hand-drawn SVG shop whose problems (“No website”, “12 reviews”) get <b>fixed one by one as you scroll</b>, synced to a step list and progress bar.</p></div>
+   <div class="shot rv d1"><div class="vf"><span class="c tl"></span><span class="c tr"></span><div class="hd"><span>FIG. 02 · PHYSICS</span><span></span></div><img src="/img/phys.jpg" alt="Physics section"></div><h4>Review stands you can throw</h4><p>A <b>custom 2D physics engine</b>: gravity, bounce, circle collisions, drag-and-fling with real velocity, and a sleep state when everything rests.</p></div>
+   <div class="shot rv"><div class="vf"><span class="c tl"></span><span class="c tr"></span><div class="hd"><span>FIG. 03 · SERVICES</span><span></span></div><img src="/img/svc.jpg" alt="Services section"></div><h4>A blueprint design system</h4><p>A 48px grid, crosshair marks, figure labels and a three-font type system, all driven by <b>CSS custom properties</b>.</p></div>
+   <div class="shot rv d1"><div class="vf"><span class="c tl"></span><span class="c tr"></span><div class="hd"><span>FIG. 04 · PRICING</span><span></span></div><img src="/img/price.jpg" alt="Pricing section"></div><h4>Accessible by default</h4><p>Pricing tabs with <b>arrow-key support</b>, a live San José clock, copy-to-clipboard contact buttons and hover previews on the work list.</p></div>
+  </div>
+ </section>
+
+ <!-- 04 THROW -->
+ <section class="sec" id="throw">
+  <div class="sl m"><span><span class="n">04</span> · Try it</span><span>The physics, live</span></div>
+  <div class="sh"><h2 class="rv">Go ahead. Throw a review stand.</h2><p class="rv d1">This is a small rebuild of the physics from the site. <b>Grab anything and fling it.</b> It runs on the same ideas: gravity, collisions, velocity from your drag, and sleeping when still.</p></div>
+  <div class="phys rv">
+   <div class="cv" id="cv"><canvas id="pc"></canvas><span class="tag">FIG. 05 · DRAG + FLING</span><span class="hint">GRAB ONE ↓</span></div>
+   <div class="r"><div class="m" style="display:block;border:0;padding:0 0 10px">How it works</div>
+    <div><span>01</span><p><b>Gravity &amp; bounce</b> with energy loss on every hit</p></div>
+    <div><span>02</span><p><b>Circle collisions</b> push objects apart and trade momentum</p></div>
+    <div><span>03</span><p><b>Fling velocity</b> comes from your last pointer movements</p></div>
+    <div><span>04</span><p><b>Sleep state:</b> the loop stops when nothing moves, saving the CPU</p></div>
+    <button class="drop" id="drop">Drop them again</button></div>
+  </div>
+  <div class="perf rv"><div><b>60<em>fps</em></b><small>while scrolling: rAF-batched work, transform-only animation</small></div><div><b>~60<em>KB</em></b><small>one HTML file plus fonts, no build step</small></div><div><b>AA</b><small>color contrast chosen to meet WCAG AA</small></div><div><b>0</b><small>animations for people who turn on reduced motion</small></div></div>
+  <div class="note rv"><div class="m">The hard part</div><p>The first version <b>lagged</b>. I fixed it by removing blur effects, moving all animation to transforms, batching scroll work into requestAnimationFrame, only touching the DOM when state actually changes, and putting the physics loop to sleep when idle. It now holds 60 fps.</p></div>
+ </section>
+
+ <!-- 05 BRAND -->
+ <section class="sec">
+  <div class="sl m"><span><span class="n">05</span> · Brand &amp; content</span><span>Designed and written by me</span></div>
+  <div class="sh"><h2 class="rv">A brand people can recognize from a thumbnail.</h2><p class="rv d1">Bold orange, cream paper, one serif accent. I designed the logo and Google covers, then a <b>9-post Instagram launch</b>: carousels that teach, reels that sell, and an offer that removes the risk.</p></div>
+  <div class="brand">
+   <div class="bkit rv">
+    <figure class="wide"><img src="/img/cover.jpg" alt="IVK Media Google cover"><figcaption>GOOGLE PROFILE COVER</figcaption></figure>
+    <figure><img src="/img/logo.jpg" alt="IVK Media logo"><figcaption>LOGO</figcaption></figure>
+    <figure><img src="/img/pfp.jpg" alt="IVK Media profile picture"><figcaption>PROFILE PICTURE</figcaption></figure>
+   </div>
+   <div class="feed rv d1">
+    <div class="top"><img src="/img/pfp.jpg" alt=""><div><b>ivkmedia.sj</b><small>9 POSTS · 3 REELS · 4 CAROUSELS</small></div></div>
+    <div class="grid9">
+     <div><img src="/img/ig1.jpg" alt="Post: the offer"></div><div><img src="/img/ig2.jpg" alt="Post: makeover"><i>CAROUSEL</i></div><div><img src="/img/ig3.jpg" alt="Reel: meet IVK"><i>REEL</i></div>
+     <div><img src="/img/ig4.jpg" alt="Post: Google checklist"><i>CAROUSEL</i></div><div><img src="/img/ig5.jpg" alt="Reel: review stand"><i>REEL</i></div><div><img src="/img/ig6.jpg" alt="Post: no website"></div>
+     <div><img src="/img/ig7.jpg" alt="Reel: Google your shop"><i>REEL</i></div><div><img src="/img/ig8.jpg" alt="Post: 12 vs 418 reviews"><i>CAROUSEL</i></div><div><img src="/img/ig9.jpg" alt="Post: pricing"><i>CAROUSEL</i></div>
+    </div>
+   </div>
+  </div>
+ </section>
+
+ <!-- LEARNED -->
+ <section class="learn rv">
+  <div><div class="m">What it taught me</div><div class="m" style="color:var(--or);margin-top:10px">Beyond the code</div></div>
+  <div>
+   <p class="claim" style="text-align:left;margin:0;max-width:none">Code is one part of a product. <span>The rest is the offer, the story and the trust.</span></p>
+   <div class="lgrid" style="margin-top:36px">
+    <div><h5>Ship end to end</h5><p>Domain, DNS, email, hosting and launch, not just a pretty page on localhost.</p></div>
+    <div><h5>Design for a real customer</h5><p>A shop owner doesn't care about frameworks. They care about the phone ringing.</p></div>
+    <div><h5>Performance is a feature</h5><p>A beautiful site that lags feels cheap. Smooth is part of the brand.</p></div>
+   </div>
+  </div>
+ </section>
+ <div class="chips rv" style="margin-top:40px"><span>HTML</span><span>CSS custom properties</span><span>Vanilla JavaScript</span><span>SVG</span><span>Canvas physics</span><span>IntersectionObserver</span><span>Pointer Events</span><span>Netlify</span><span>Branding</span><span>Content design</span></div>
+
+ <a class="next rv" href="/projects/luminara"><div><div class="m">Next project · Build 06</div><h2>Luminara</h2><p>Dense writing in. Clear writing out.</p></div><span class="bigarr"><span class="arr"></span></span></a>
+</main>
+<script is:inline>
+addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('sc',scrollY>10),{passive:true});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+// ---------- mini physics ----------
+(()=>{const box=document.getElementById('cv'),cv=document.getElementById('pc'),cx=cv.getContext('2d');let W,H,dpr=Math.min(2,devicePixelRatio||1),B=[],drag=null,hist=[],running=false,still=0;
+ const rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+ function size(){const r=box.getBoundingClientRect();W=r.width;H=r.height;cv.width=W*dpr;cv.height=H*dpr;cx.setTransform(dpr,0,0,dpr,0,0)}
+ function make(){B=[];const n=W<500?5:8;for(let i=0;i<n;i++){const stand=i%3===0;B.push({x:60+Math.random()*(W-120),y:-60-i*70,vx:(Math.random()-.5)*2,vy:0,r:stand?44:26,stand,a:0,va:(Math.random()-.5)*.1})}}
+ function step(){const g=.45;let energy=0;
+  for(const b of B){if(b===drag)continue;b.vy+=g;b.x+=b.vx;b.y+=b.vy;b.a+=b.va;b.vx*=.995;b.va*=.98;
+   if(b.y>H-b.r){b.y=H-b.r;b.vy*=-.45;b.vx*=.9;b.va=b.vx*.02}
+   if(b.x<b.r){b.x=b.r;b.vx*=-.6}if(b.x>W-b.r){b.x=W-b.r;b.vx*=-.6}
+   energy+=Math.abs(b.vx)+Math.abs(b.vy)}
+  for(let i=0;i<B.length;i++)for(let j=i+1;j<B.length;j++){const a=B[i],c=B[j],dx=c.x-a.x,dy=c.y-a.y,d=Math.hypot(dx,dy)||1,m=a.r+c.r;
+   if(d<m){const nx=dx/d,ny=dy/d,o=(m-d)/2;if(a!==drag){a.x-=nx*o;a.y-=ny*o}if(c!==drag){c.x+=nx*o;c.y+=ny*o}
+    const rv=(c.vx-a.vx)*nx+(c.vy-a.vy)*ny;if(rv<0){const k=-rv*.8;if(a!==drag){a.vx-=nx*k*.5;a.vy-=ny*k*.5}if(c!==drag){c.vx+=nx*k*.5;c.vy+=ny*k*.5}}}}
+  return energy}
+ function draw(){cx.clearRect(0,0,W,H);
+  cx.strokeStyle='rgba(255,255,255,.05)';for(let x=0;x<W;x+=48){cx.beginPath();cx.moveTo(x,0);cx.lineTo(x,H);cx.stroke()}for(let y=0;y<H;y+=48){cx.beginPath();cx.moveTo(0,y);cx.lineTo(W,y);cx.stroke()}
+  for(const b of B){cx.save();cx.translate(b.x,b.y);cx.rotate(b.a);
+   if(b.stand){cx.fillStyle='#f3efe6';cx.fillRect(-32,-42,64,84);cx.fillStyle='#ff5a1f';cx.fillRect(-32,-42,64,6);cx.fillStyle='#111';cx.font='600 9px JO';cx.textAlign='center';cx.fillText('★★★★★',0,-22);cx.font='italic 11px serif';cx.fillText('How was',0,-6);cx.fillText('your visit?',0,7);
+    for(let i=0;i<4;i++)for(let j=0;j<4;j++)if((i*7+j*3)%3)cx.fillRect(-10+i*5,16+j*5,4,4);}
+   else{cx.fillStyle='#d9a441';cx.beginPath();cx.arc(0,0,b.r,0,7);cx.fill();cx.fillStyle='#b98428';cx.beginPath();cx.arc(0,0,b.r*.72,0,7);cx.fill();cx.fillStyle='#f6d58a';cx.font=`${b.r*.9}px serif`;cx.textAlign='center';cx.textBaseline='middle';cx.fillText('★',0,1)}
+   cx.restore()}}
+ function loop(){const e=step();draw();if(!drag&&e<.6*B.length){still++}else still=0;if(still>40){running=false;return}requestAnimationFrame(loop)}
+ function wake(){still=0;if(!running){running=true;requestAnimationFrame(loop)}}
+ function pos(e){const r=box.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top}}
+ box.addEventListener('pointerdown',e=>{const p=pos(e);drag=B.slice().reverse().find(b=>Math.hypot(b.x-p.x,b.y-p.y)<b.r);if(drag){box.setPointerCapture(e.pointerId);hist=[{...p,t:performance.now()}];drag.vx=drag.vy=0;wake()}});
+ box.addEventListener('pointermove',e=>{if(!drag)return;const p=pos(e);drag.x=p.x;drag.y=p.y;hist.push({...p,t:performance.now()});if(hist.length>5)hist.shift()});
+ const up=()=>{if(!drag)return;if(hist.length>1){const a=hist[0],b=hist[hist.length-1],dt=Math.max(16,b.t-a.t);drag.vx=(b.x-a.x)/dt*16;drag.vy=(b.y-a.y)/dt*16;drag.va=drag.vx*.01}drag=null;wake()};
+ box.addEventListener('pointerup',up);box.addEventListener('pointercancel',up);
+ document.getElementById('drop').onclick=()=>{make();wake()};
+ size();addEventListener('resize',()=>{size();draw()});
+ new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){make();if(rm){for(let i=0;i<400;i++)step();draw()}else wake();o.disconnect()}}),{threshold:.3}).observe(box);
+})();
+</script>
+
+</Layout>

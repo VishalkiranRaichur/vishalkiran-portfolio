@@ -1,0 +1,166 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title='About · Vishalkiran Raichur' description='I take things apart to see how they work, then build them so they hold up.' active="about">
+<style is:global>
+
+
+
+.facts4{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink);border-bottom:1px solid var(--line);margin-top:90px}
+.facts4 div{padding:18px 20px 20px 0}
+.facts4 b{display:block;font-weight:400;font-size:16.5px;margin-top:8px;line-height:1.4}
+.hero2{display:grid;grid-template-columns:1fr 440px;gap:70px;margin-top:70px;align-items:start}
+h1{font-weight:300;font-size:clamp(44px,5.6vw,84px);line-height:1.02;text-transform:uppercase}
+h1 .ln{display:block;overflow:hidden}h1 .ln>span{display:inline-block;transform:translateY(102%);animation:up 1s cubic-bezier(.2,.8,.2,1) forwards}
+h1 .ln:nth-child(2)>span{animation-delay:.07s}h1 .ln:nth-child(3)>span{animation-delay:.14s}h1 .ln:nth-child(4)>span{animation-delay:.21s}h1 .ln:nth-child(5)>span{animation-delay:.28s}
+@keyframes up{to{transform:none}}
+h1 .g{color:var(--mut)}
+.story{margin-top:46px;max-width:780px}
+.story p{font-size:19px;line-height:1.78;color:#2b2a28;margin-top:24px}
+.story p:first-child{margin-top:0}
+.story p b{font-weight:500}
+.story .pull{font-weight:300;font-size:32px;line-height:1.2;text-transform:uppercase;margin:40px 0;padding-left:22px;border-left:2px solid var(--or)}
+.vf{position:relative;border:1px solid var(--ink);background:var(--paper);position:sticky;top:110px}
+.vf .c{position:absolute;width:16px;height:16px;border-color:var(--ink);border-style:solid}
+.vf .tl{left:10px;top:10px;border-width:1px 0 0 1px}.vf .tr{right:10px;top:10px;border-width:1px 1px 0 0}.vf .bl{left:10px;bottom:10px;border-width:0 0 1px 1px}.vf .br{right:10px;bottom:10px;border-width:0 1px 1px 0}
+.vf .hd,.vf .ft{display:flex;justify-content:space-between;padding:16px 30px;font-family:PM;font-size:10px;letter-spacing:.16em}
+.vf .ft{color:var(--mut)}
+.vf svg{display:block;width:100%;height:auto;cursor:pointer}
+.vf .pt{transform-box:fill-box;transform-origin:center;transition:transform 1.2s cubic-bezier(.2,.9,.25,1)}
+.vf .cap{padding:0 30px 6px;font-size:15px;line-height:1.55;color:#3a3936}
+/* now */
+.lab{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--ink);padding-top:16px;margin-top:130px}
+.now{display:grid;grid-template-columns:repeat(4,1fr);border-left:1px solid var(--ink);border-top:1px solid var(--ink);margin-top:30px}
+.nw{border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:24px 22px 26px;min-height:210px;display:flex;flex-direction:column}
+.nw span{font-family:PM;font-size:10px;letter-spacing:.12em;color:var(--or)}
+.nw h4{font-weight:300;font-size:26px;text-transform:uppercase;margin-top:auto;line-height:1.05}
+.nw p{font-size:14.5px;line-height:1.55;color:#3a3936;margin-top:8px}
+.nw.dark{background:var(--ink);color:var(--paper)}.nw.dark p{color:#bdbab3}
+/* tools */
+.tools{display:grid;grid-template-columns:200px 1fr;border-top:1px solid var(--line)}
+.tools>div{padding:20px 0;border-bottom:1px solid var(--line)}
+.tools .k{font-family:PM;font-size:10.5px;letter-spacing:.14em;color:var(--mut);padding-top:28px}
+.tools .v{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.tools .v span{font-size:15px;border:1px solid var(--ink);border-radius:999px;padding:7px 14px;transition:background .25s,color .25s}
+.tools .v span:hover{background:var(--ink);color:var(--paper)}
+.tools .v span small{font-family:PM;font-size:9.5px;color:var(--or);margin-left:6px;letter-spacing:.06em}
+/* values */
+.vals{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--ink);margin-top:30px}
+.vals div{padding:28px 26px 30px;border-right:1px solid var(--line)}.vals div:last-child{border:0}
+.vals span{font-family:PM;font-size:10.5px;color:var(--or)}
+.vals h4{font-weight:300;font-size:30px;text-transform:uppercase;margin-top:26px;line-height:1.05}
+.vals p{font-size:15px;line-height:1.6;color:#3a3936;margin-top:10px}
+.off{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:30px;align-items:start}
+.off p{font-size:18px;line-height:1.7;color:#2b2a28}
+.off ul{list-style:none;border-top:1px solid var(--ink)}
+.off li{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line);font-size:16.5px}
+.off li span{font-family:PM;font-size:10.5px;color:var(--mut);letter-spacing:.1em;padding-top:4px}
+.cta{padding:150px 0 100px;text-align:center}
+.cta h2{font-weight:300;font-size:clamp(52px,8vw,124px);line-height:.96;text-transform:uppercase}
+.cta p{font-size:19px;color:#3a3936;margin-top:24px}
+.btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:36px}
+.foot{border-top:1px solid var(--ink);display:grid;grid-template-columns:repeat(4,1fr);gap:40px;padding:40px 0 60px}
+.foot b{display:block;font-weight:400;font-size:15px;margin-top:12px;line-height:1.8}
+.rv{opacity:0;transform:translateY(24px);transition:opacity 1s cubic-bezier(.2,.8,.2,1),transform 1s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+@media (max-width:960px){
+ .wrap{padding:0 18px}.links,.srch .t{display:none}.srch{gap:6px;padding:8px 10px}.nr .pillb{display:none}
+ .facts4{grid-template-columns:1fr 1fr;margin-top:50px}.hero2{grid-template-columns:1fr;gap:40px}.vf{position:relative;top:0}
+ .story p{font-size:17px}.story .pull{font-size:24px}
+ .now,.vals{grid-template-columns:1fr}.nw{min-height:0}.nw h4{margin-top:16px}.vals div{border-right:0;border-bottom:1px solid var(--line)}
+ .tools{grid-template-columns:1fr}.tools .k{padding:18px 0 0;border:0!important}.off{grid-template-columns:1fr;gap:24px}.foot{grid-template-columns:1fr 1fr}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}h1 .ln>span{transform:none}}
+
+</style>
+
+
+
+
+<main class="wrap">
+ <div class="facts4 rv">
+  <div><span class="m">Based in</span><b>San José, California</b></div>
+  <div><span class="m">Currently</span><b>Building ORION · Founder, IVK Media</b></div>
+  <div><span class="m">Studying</span><b>B.S. Data Science, SJSU</b></div>
+  <div><span class="m">Focus</span><b>AI systems, backend &amp; infrastructure</b></div>
+ </div>
+
+ <section class="hero2">
+  <div>
+   <div class="m">03 · About</div>
+   <h1 style="margin-top:24px"><span class="ln"><span>I take things apart</span></span><span class="ln"><span>to see how they work.</span></span><span class="ln"><span class="g">Then I build them</span></span><span class="ln"><span class="g">so they hold up<span class="or">.</span></span></span></h1>
+   <div class="story rv">
+    <p>As a kid, nothing in our house was safe. I opened my red remote-control car to see how it worked, then my cycle, then the fridge, then most things in the apartment. I built my own air conditioner out of a box, a <b>DC motor and a pile of ice</b>. I was obsessed with airplanes and big machines. And at least once, I shorted the circuit for our whole apartment.</p>
+    <p>Then my dad asked me something I still think about: <b>“Why do you always stop?”</b> I could take anything apart. I'd never made one work again. So I went to YouTube and Google and learned how to put things back together, and how to make them work.</p>
+    <div class="pull">The curiosity got me to open things. That question got me to finish them.</div>
+    <p>Today the things I open are <b>databases, CI systems and AI models</b>. I built a database engine to see how storage really works, a CI platform to see what happens after git push, and an AI analyst that refuses to guess when the evidence isn't there.</p>
+    <p>Building those taught me the biggest lesson so far: <b>something that works once is very different from something you can trust repeatedly</b>. Now, whenever I build anything, I start by asking how it fails, not just how it works.</p>
+   </div>
+  </div>
+  <figure class="vf rv d1" id="fig">
+   <span class="c tl"></span><span class="c tr"></span><span class="c bl"></span><span class="c br"></span>
+   <div class="hd"><span>FIG. 01 · WHERE IT STARTED</span><span id="fs">● IN PIECES</span></div>
+   <svg viewBox="0 0 440 340" id="car"></svg>
+   <p class="cap">The red RC car I took apart and never put back together. <span style="color:var(--mut)">Tap to finally fix it.</span></p>
+   <div class="ft"><span>PHOTO SLOT · OPTIONAL</span><span>REV 2.0</span></div>
+  </figure>
+ </section>
+
+ <div class="lab m"><span>Now</span><span>Fall 2026</span></div>
+ <section class="now">
+  <div class="nw rv"><span>BUILDING</span><h4>ORION</h4><p>The investigation engine is built and tested. Connectors come next.</p></div>
+  <div class="nw rv d1"><span>RUNNING</span><h4>IVK Media</h4><p>A studio getting San José shops found online.</p></div>
+  <div class="nw rv d2"><span>STUDYING</span><h4>Data Science</h4><p>At San José State, including Intro to AI this fall.</p></div>
+  <div class="nw dark rv d3"><span>LOOKING FOR</span><h4>Internships</h4><p>Software engineering, AI/ML and backend or infrastructure roles.</p></div>
+ </section>
+
+ <div class="lab m"><span>How I work</span><span>03</span></div>
+ <section class="vals">
+  <div class="rv"><span>01</span><h4>Open it up</h4><p>If I use a tool, I want to know what's underneath. That's why I build the engine, not just the app on top.</p></div>
+  <div class="rv d1"><span>02</span><h4>Plan for failure</h4><p>Leases, retries, verification, honest uncertainty. Failures should be expected states, not surprises.</p></div>
+  <div class="rv d2"><span>03</span><h4>Never fake it</h4><p>My systems don't invent causes, skills or results. If the evidence isn't there, they say so. So do I.</p></div>
+ </section>
+
+ <div class="lab m"><span>Tools I reach for</span><span>From my projects</span></div>
+ <section class="tools rv">
+  <div class="k">LANGUAGES</div><div class="v"><span>Python</span><span>Java</span><span>TypeScript</span><span>JavaScript</span><span>SQL</span></div>
+  <div class="k">BACKEND &amp; DATA</div><div class="v"><span>FastAPI</span><span>Flask</span><span>PostgreSQL</span><span>pgvector</span><span>SQLite</span><span>Redis</span><span>Celery</span></div>
+  <div class="k">AI</div><div class="v"><span>OpenAI</span><span>Ollama</span><span>spaCy</span><span>RAG</span><span>Agents</span></div>
+  <div class="k">WEB &amp; PRODUCT</div><div class="v"><span>React</span><span>Next.js</span><span>Tailwind</span><span>HTML / CSS</span><span>GraphQL</span></div>
+  <div class="k">INFRA</div><div class="v"><span>Docker</span><span>GitHub Actions</span><span>Netlify</span><span>Playwright</span></div>
+  <div class="k">DESIGN</div><div class="v"><span>Figma</span><span>Adobe Express</span><span>Branding</span></div>
+ </section>
+
+ <div class="lab m"><span>Off the clock</span><span>Yes, I touch grass</span></div>
+ <section class="off">
+  <p class="rv">When I'm not building, I'm usually staying active, out with friends or watching a movie. I still look up at every airplane that flies over. And I spend a lot of time picturing the life I want to build, then working toward it. <b style="font-weight:500">Someday that means my own startup</b>, something that helps people and makes a real difference.</p>
+  <ul class="rv d1"><li>Sports &amp; fitness<span>KEEPS MY HEAD CLEAR</span></li><li>Friends &amp; movies<span>ALWAYS</span></li><li>Planes &amp; big machines<span>SINCE FOREVER</span></li><li>The startup<span>SOMEDAY · SOON</span></li></ul>
+ </section>
+
+ <section class="cta">
+  <div class="m rv"><span class="or">●</span> Open to internships</div>
+  <h2 class="rv d1" style="margin-top:24px">Got a hard problem?<br>Let's take it apart<span class="or">.</span></h2>
+  <p class="rv d2">I'd love to hear what you're building.</p>
+  <div class="btns rv d3"><a class="pillb solid" href="/contact">Get in touch <span class="arr"></span></a><a class="pillb" href="/resume">Résumé</a><a class="pillb" href="https://github.com/VishalkiranRaichur" target="_blank" rel="noopener">GitHub</a></div>
+ </section>
+</main>
+<script is:inline>
+addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('sc',scrollY>10),{passive:true});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+const P=[
+ ['<path d="M130 170 q14-46 66-50 h56 q42 3 60 50" fill="none" stroke="#111" stroke-width="1.4"/>',-40,-70,-14],
+ ['<rect x="100" y="170" width="240" height="44" rx="14" fill="none" stroke="#111" stroke-width="1.4"/>',0,0,0],
+ ['<path d="M194 125 v42 M250 122 v45" stroke="#111" stroke-width="1.2"/>',30,-90,0],
+ ['<g><circle cx="158" cy="232" r="28" fill="#fcfaf6" stroke="#111" stroke-width="1.4"/><circle cx="158" cy="232" r="8" fill="none" stroke="#111"/></g>',-100,60,0],
+ ['<g><circle cx="284" cy="232" r="28" fill="#fcfaf6" stroke="#111" stroke-width="1.4"/><circle cx="284" cy="232" r="8" fill="none" stroke="#111"/></g>',100,60,0],
+ ['<g><rect x="194" y="180" width="54" height="24" fill="#fcfaf6" stroke="#ff5a1f" stroke-width="1.4"/><path d="M202 192 h38" stroke="#ff5a1f"/></g>',0,100,0],
+ ['<path d="M312 170 l22 -58" stroke="#111" stroke-width="1.4"/><circle cx="334" cy="110" r="4" fill="#ff5a1f"/>',70,-50,20]];
+const sv=document.getElementById('car');sv.innerHTML=P.map(p=>`<g class="pt">${p[0]}</g>`).join('');
+const gs=[...sv.querySelectorAll('.pt')];let built=false;
+const place=t=>gs.forEach((g,i)=>{const p=P[i];g.style.transform=`translate(${p[1]*t}px,${p[2]*t}px) rotate(${p[3]*t}deg)`});place(1);
+const fig=document.getElementById('fig');
+fig.onclick=()=>{built=!built;place(built?0:1);const s=document.getElementById('fs');s.textContent=built?'● FIXED ✓ (FINALLY)':'● IN PIECES';s.style.color=built?'#ff5a1f':''};
+</script>
+
+</Layout>

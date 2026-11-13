@@ -1,0 +1,455 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title='Luminara · Vishalkiran Raichur' description='An accessible-reading app. I led the backend.' active="projects">
+<style is:global>
+
+
+
+
+.vf{position:relative;border:1px solid var(--ink);background:var(--paper)}
+.vf .c{position:absolute;width:16px;height:16px;border-color:var(--ink);border-style:solid;z-index:2}
+.vf .tl{left:10px;top:10px;border-width:1px 0 0 1px}.vf .tr{right:10px;top:10px;border-width:1px 1px 0 0}.vf .bl{left:10px;bottom:10px;border-width:0 0 1px 1px}.vf .br{right:10px;bottom:10px;border-width:0 1px 1px 0}
+.vf .hd,.vf .ft{display:flex;justify-content:space-between;gap:20px;padding:16px 34px;font-family:PM;font-size:10px;letter-spacing:.16em}
+.vf .ft{color:var(--mut)}
+.back{display:inline-flex;gap:10px;margin-top:56px;font-size:12px;letter-spacing:.2em;text-transform:uppercase}
+.meta{display:flex;gap:14px;align-items:center;margin-top:40px;flex-wrap:wrap}
+.meta .ln{width:34px;height:1px;background:var(--line)}
+.rec{width:6px;height:6px;border-radius:50%;background:var(--or);display:inline-block;margin-right:8px;animation:rec 1.6s steps(1) infinite}
+@keyframes rec{50%{opacity:.2}}
+h1{font-weight:300;font-size:clamp(90px,14vw,210px);line-height:.86;text-transform:uppercase;margin-top:18px}
+h1 .o{display:inline-block;width:.74em;height:.74em;border:.035em solid var(--ink);border-radius:50%;position:relative;vertical-align:-.02em}
+h1 .o::after{content:"";position:absolute;left:50%;top:50%;width:.12em;height:.12em;margin:-.06em;border-radius:50%;background:var(--or)}
+.top{display:grid;grid-template-columns:1fr 400px;gap:60px;align-items:end}
+.kick{font-weight:300;font-size:clamp(30px,3vw,44px);line-height:1.12;text-transform:uppercase;margin-top:30px;max-width:820px}
+.kick span{color:var(--mut)}
+.lede{font-size:20px;line-height:1.6;color:#2b2a28;margin-top:22px;max-width:720px}
+.acts{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+.facts{border-top:1px solid var(--ink)}
+.facts div{display:flex;justify-content:space-between;gap:20px;padding:13px 0;border-bottom:1px solid var(--line);font-size:15px;text-align:right}
+.facts div span:first-child{font-family:PM;font-size:10.5px;letter-spacing:.14em;color:var(--mut);text-transform:uppercase;padding-top:3px;text-align:left}
+/* section frame */
+.sec{margin-top:150px}
+.sl{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--ink);padding-top:16px}
+.sl .n{color:var(--or)}
+.sh{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:34px;align-items:end}
+.sh h2{font-weight:300;font-size:clamp(42px,4.8vw,72px);line-height:1;text-transform:uppercase}
+.sh p{font-size:18px;line-height:1.65;color:#2b2a28}
+.sh p b{font-weight:500}
+/* problem */
+.prob{display:grid;grid-template-columns:1.2fr 1fr;margin-top:50px;border:1px solid var(--ink)}
+.prob svg{width:100%;height:auto;display:block}
+.prob .r{border-left:1px solid var(--ink);padding:36px;display:flex;flex-direction:column;justify-content:space-between;background:#f6f2ea}
+.prob .q{font-weight:300;font-size:30px;line-height:1.2;margin-top:16px}
+.ppl{border-top:1px solid var(--line);margin-top:26px}
+.ppl div{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line);font-size:15px}
+.ppl div span:last-child{font-family:PM;font-size:10.5px;letter-spacing:.12em;color:var(--mut)}
+.prob .then{font-size:17px;line-height:1.6;margin-top:24px}
+.prob .then b{font-weight:500;border-bottom:1px solid var(--or)}
+/* product tabs */
+.tabs{display:flex;gap:0;margin-top:50px;border:1px solid var(--ink);border-bottom:0;width:max-content}
+.tabs button{all:unset;cursor:pointer;padding:14px 26px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;border-right:1px solid var(--ink);display:flex;gap:10px;align-items:center;transition:background .25s,color .25s}
+.tabs button:last-child{border-right:0}
+.tabs button sup{font-family:PM;font-size:9px;color:var(--dim)}
+.tabs button.on{background:var(--ink);color:var(--paper)}
+.tabs button.on sup{color:var(--or)}
+.screen{border:1px solid var(--ink);position:relative;background:var(--paper)}
+.screen .hd{border-bottom:1px solid var(--line)}
+.pane{display:none;padding:30px 34px 34px;min-height:520px;animation:fd .5s cubic-bezier(.2,.8,.2,1)}
+.pane.on{display:block}
+@keyframes fd{from{opacity:0;transform:translateY(10px)}}
+.cap{display:grid;grid-template-columns:1fr 1.4fr;gap:40px;margin-top:22px;align-items:start}
+.cap h4{font-weight:300;font-size:30px;text-transform:uppercase}
+.cap p{font-size:16.5px;line-height:1.6;color:#2b2a28}
+/* concept UI pieces */
+.ui{border:1px solid var(--line);background:#fff;border-radius:2px}
+.ui .bar{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);font-family:PM;font-size:10px;letter-spacing:.12em;color:var(--mut)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr)}
+.kpi{padding:18px 16px;border-right:1px solid var(--line)}.kpi:last-child{border:0}
+.kpi small{font-family:PM;font-size:9.5px;letter-spacing:.12em;color:var(--mut)}
+.kpi b{display:block;font-weight:300;font-size:32px;margin-top:8px}
+.kpi em{font-style:normal;font-family:PM;font-size:10.5px}
+.dn{color:var(--or)}.up{color:#1f7a4d}
+.dgrid{display:grid;grid-template-columns:1.6fr 1fr;border-top:1px solid var(--line)}
+.dgrid>div{padding:16px}
+.dgrid>div+div{border-left:1px solid var(--line)}
+.ins{border:1px solid var(--line);padding:12px;margin-top:10px;font-size:13.5px;line-height:1.5}
+.ins .t{font-family:PM;font-size:9.5px;letter-spacing:.12em;color:var(--or)}
+.ins b{font-weight:500}
+.askbox{border:1px solid var(--ink);padding:16px 18px;font-size:16px;display:flex;justify-content:space-between;align-items:center}
+.askbox .k{font-family:PM;font-size:10px;border:1px solid var(--ink);padding:6px 10px;background:var(--ink);color:#fff}
+.ans{display:grid;grid-template-columns:1.5fr 1fr;gap:0;margin-top:14px;border:1px solid var(--line)}
+.ans>div{padding:18px}.ans>div+div{border-left:1px solid var(--line);background:#faf8f3}
+.ans p{font-size:14.5px;line-height:1.65;color:#2b2a28}
+.ans sup{font-family:PM;font-size:9px;color:var(--or);margin-left:2px}
+.ans ul{list-style:none;margin-top:10px}
+.ans li{font-size:14px;padding:8px 0;border-top:1px solid var(--line);line-height:1.5}
+.src{display:flex;gap:10px;padding:10px 0;border-top:1px solid var(--line);font-size:13px;line-height:1.45}
+.src i{font-style:normal;font-family:PM;font-size:9.5px;color:var(--or);min-width:16px}
+.src small{display:block;font-family:PM;font-size:9.5px;color:var(--mut);letter-spacing:.06em}
+.conf{display:flex;gap:10px;align-items:center;margin-top:14px;font-family:PM;font-size:10px;letter-spacing:.12em;color:var(--mut)}
+.conf i{flex:1;height:4px;background:rgba(17,17,17,.1);position:relative}.conf i b{position:absolute;inset:0 auto 0 0;background:var(--ink)}
+.inv{display:grid;grid-template-columns:1fr 1.2fr;border:1px solid var(--line);margin-top:14px}
+.inv>div{padding:18px}.inv>div+div{border-left:1px solid var(--line);background:#faf8f3}
+.stp{display:grid;grid-template-columns:26px 1fr auto;gap:10px;padding:11px 0;border-top:1px solid var(--line);font-size:14px;align-items:center}
+.stp:first-of-type{border-top:0}
+.stp .n{font-family:PM;font-size:10px;color:var(--mut)}
+.stp .s{font-family:PM;font-size:9.5px;letter-spacing:.1em}
+.stp.dn2 .s{color:#1f7a4d}.stp.now .s{color:var(--or)}
+.stp.now{font-weight:500}
+.brf .r{display:grid;grid-template-columns:110px 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--line);font-size:14px;line-height:1.5}
+.brf .r small{font-family:PM;font-size:9px;letter-spacing:.12em;color:var(--mut);padding-top:3px}
+.brf .r b{font-weight:500}
+.lbl{font-family:PM;font-size:9.5px;letter-spacing:.14em;border:1px solid var(--or);color:var(--or);padding:3px 7px}
+/* built vs vision */
+.board{display:grid;grid-template-columns:1fr 1fr;margin-top:50px;border:1px solid var(--ink)}
+.board>div{padding:30px 34px}
+.board>div+div{border-left:1px solid var(--ink);background:#f6f2ea}
+.board h4{display:flex;justify-content:space-between;align-items:center;font-weight:300;font-size:30px;text-transform:uppercase}
+.board h4 span{font-family:PM;font-size:11px;letter-spacing:.14em;color:var(--mut)}
+.it{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:14px 0;border-top:1px solid var(--line);font-size:16.5px}
+.it:first-of-type{margin-top:20px}
+.it .s{font-family:PM;font-size:10px;letter-spacing:.12em;white-space:nowrap}
+.it .s.b::before{content:"● ";color:var(--or)}
+.it .s.p::before{content:"○ ";color:var(--mut)}
+.proof{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--ink);border-top:0}
+.proof div{padding:26px 28px;border-right:1px solid var(--line)}.proof div:last-child{border:0}
+.proof b{display:block;font-weight:300;font-size:54px;line-height:1}
+.proof b em{font-style:normal;color:var(--or)}
+.proof small{display:block;font-size:14.5px;color:#3a3936;margin-top:10px;line-height:1.45}
+/* control */
+.duo{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}
+.brief{padding:26px 34px 30px}
+.brief+.brief{border-left:1px solid var(--line);background:#f6f2ea}
+.brief .q{font-size:21px;margin-top:10px}
+.brief .r{display:grid;grid-template-columns:130px 1fr;gap:14px;padding:12px 0;border-top:1px solid var(--line);font-size:15px;line-height:1.5;color:#2b2a28}
+.brief .r:first-of-type{margin-top:16px}
+.brief .r small{font-family:PM;font-size:9.5px;letter-spacing:.14em;color:var(--mut);padding-top:4px}
+.brief .r b{font-weight:500;color:var(--ink)}
+.brief .x{color:var(--or)}
+.mtr{display:flex;align-items:center;gap:12px}.mtr i{flex:1;height:4px;background:rgba(17,17,17,.1);position:relative}.mtr i b{position:absolute;inset:0 auto 0 0;background:var(--ink)}
+.brief+.brief .mtr i b{background:var(--or)}
+.note{margin-top:22px;display:grid;grid-template-columns:200px 1fr;gap:40px;border-top:1px solid var(--line);padding-top:20px}
+.note p{font-size:16.5px;line-height:1.65;color:#2b2a28;max-width:820px}
+.note p b{font-weight:500}
+/* six capabilities */
+.six{display:grid;grid-template-columns:repeat(3,1fr);margin-top:50px;border-top:1px solid var(--ink);border-left:1px solid var(--ink)}
+.cp{border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:26px 26px 30px;min-height:300px;display:flex;flex-direction:column;transition:background .3s}
+.cp:hover{background:#f6f2ea}
+.cp .h{display:flex;justify-content:space-between;align-items:center}
+.cp .h .n{font-family:PM;font-size:11px;color:var(--or);letter-spacing:.1em}
+.st{font-family:PM;font-size:9.5px;letter-spacing:.12em;padding:4px 8px;border:1px solid var(--ink)}
+.st.b{background:var(--ink);color:var(--paper)}
+.st.f{border-style:dashed;color:var(--mut);border-color:var(--dim)}
+.cp h4{font-weight:300;font-size:30px;text-transform:uppercase;margin-top:44px;line-height:1.05}
+.cp p{font-size:15.5px;line-height:1.6;color:#3a3936;margin-top:12px}
+.cp .ex{margin-top:auto;padding-top:18px;font-family:PM;font-size:11px;color:var(--mut);line-height:1.55}
+.cp .ex b{color:var(--ink);font-weight:400}
+.alert{border:1px solid var(--or);padding:12px 14px;margin-top:18px;background:#fff}
+.alert .t{display:flex;justify-content:space-between;font-family:PM;font-size:9.5px;letter-spacing:.12em;color:var(--or)}
+.alert b{display:block;font-weight:500;font-size:15px;margin-top:6px}
+.alert p{font-size:13px!important;margin-top:4px!important}
+/* arch */
+.arch{display:grid;grid-template-columns:1.3fr 1fr;gap:60px;margin-top:50px;align-items:start}
+.layers{border:1px solid var(--ink)}
+.ly{display:grid;grid-template-columns:44px 1fr auto;gap:16px;align-items:center;padding:20px 22px;border-bottom:1px solid var(--line);position:relative}
+.ly:last-child{border:0}
+.ly .n{font-family:PM;font-size:10.5px;color:var(--mut)}
+.ly h5{font-weight:400;font-size:19px;text-transform:uppercase;letter-spacing:.03em}
+.ly p{font-family:PM;font-size:11px;color:var(--mut);margin-top:4px;letter-spacing:.02em}
+.ly.core{background:#f6f2ea}
+.surf{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--ink)}
+.surf div{padding:16px;text-align:center;font-size:14px;letter-spacing:.16em;text-transform:uppercase;border-right:1px solid var(--line)}.surf div:last-child{border:0;color:var(--mut)}
+.prin{border-top:1px solid var(--ink)}
+.prin div{display:grid;grid-template-columns:34px 1fr;padding:16px 0;border-bottom:1px solid var(--line);font-size:17px}
+.prin span{font-family:PM;font-size:10.5px;color:var(--or);padding-top:4px}
+/* users + chatgpt */
+.users{display:grid;grid-template-columns:repeat(5,1fr);margin-top:50px;border-top:1px solid var(--ink)}
+.users div{padding:22px 20px 0 0}
+.users h5{font-weight:400;font-size:18px;text-transform:uppercase;letter-spacing:.03em}
+.users p{font-size:14.5px;line-height:1.55;color:#3a3936;margin-top:8px}
+.vs{display:grid;grid-template-columns:1fr 1fr;margin-top:50px;border:1px solid var(--ink)}
+.vs>div{padding:30px 34px}.vs>div+div{border-left:1px solid var(--ink);background:var(--ink);color:var(--paper)}
+.vs h5{font-family:PM;font-size:10.5px;letter-spacing:.16em;font-weight:400;color:var(--mut)}
+.vs>div+div h5{color:var(--or)}
+.vs ul{list-style:none;margin-top:16px}
+.vs li{padding:12px 0;border-top:1px solid var(--line);font-size:16px}
+.vs>div+div li{border-color:rgba(255,255,255,.15)}
+.claim{margin-top:60px;text-align:center;font-weight:300;font-size:clamp(34px,4vw,58px);line-height:1.1;text-transform:uppercase;max-width:1100px;margin-left:auto;margin-right:auto}
+.claim span{color:var(--or)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:30px;justify-content:center}
+.chips span{font-family:PM;font-size:11px;border:1px solid var(--line);border-radius:999px;padding:6px 12px;color:#3a3936}
+.next{display:grid;grid-template-columns:1fr auto;align-items:end;margin-top:140px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:44px 0;transition:padding .4s}
+.next:hover{padding-left:16px}
+.next h2{font-weight:300;font-size:clamp(56px,9vw,140px);line-height:.9;text-transform:uppercase;margin-top:16px}
+.next p{font-family:PM;font-size:13px;color:var(--mut);margin-top:14px}
+.bigarr{width:84px;height:84px;border:1px solid var(--ink);border-radius:50%;display:grid;place-items:center;transition:.3s}
+.next:hover .bigarr{background:var(--ink);color:var(--paper)}
+.foot{border-top:1px solid var(--ink);display:grid;grid-template-columns:repeat(4,1fr);gap:40px;padding:40px 0 60px;margin-top:100px}
+.foot b{display:block;font-weight:400;font-size:15px;margin-top:12px;line-height:1.8}
+.rv{opacity:0;transform:translateY(24px);transition:opacity 1s cubic-bezier(.2,.8,.2,1),transform 1s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}.d1{transition-delay:.1s}.d2{transition-delay:.2s}
+@media (max-width:960px){
+ .wrap{padding:0 18px}.links,.srch .t{display:none}.srch{gap:6px;padding:8px 10px}.nr .pillb{display:none}
+ h1{font-size:76px}.top,.sh,.prob,.cap,.board,.arch,.vs,.note{grid-template-columns:1fr;gap:28px}
+ .prob .r,.board>div+div,.vs>div+div{border-left:0;border-top:1px solid var(--ink)}
+ .tabs{width:100%}.tabs button{flex:1;justify-content:center;padding:12px 8px;font-size:10.5px;letter-spacing:.1em}.tabs button sup{display:none}
+ .pane{padding:18px}.kpis{grid-template-columns:1fr 1fr}.kpi:nth-child(2){border:0}.dgrid,.ans,.inv{grid-template-columns:1fr}.dgrid>div+div,.ans>div+div,.inv>div+div{border-left:0;border-top:1px solid var(--line)}
+ .proof{grid-template-columns:1fr 1fr}.duo{grid-template-columns:1fr}.brief+.brief{border-left:0}.brief{padding:20px 18px}.brief .r{grid-template-columns:1fr;gap:4px}
+ .six{grid-template-columns:1fr}.cp{min-height:0}.users{grid-template-columns:1fr 1fr;gap:10px}
+ .next{grid-template-columns:1fr;gap:20px}.bigarr{width:56px;height:56px}.foot{grid-template-columns:1fr 1fr}.vf .hd,.vf .ft{padding:14px 18px;flex-wrap:wrap}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+
+img{display:block;max-width:100%}
+/* real app */
+.real{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:70px}
+.real .vf{padding:44px 22px 46px}
+.real .vf .hd{position:absolute;top:0;left:0;right:0}.real .vf .ft{position:absolute;bottom:0;left:0;right:0}
+.real img,.real video{display:block;width:100%;border:1px solid var(--line);background:#f1ede6}
+.real p{font-size:15.5px;line-height:1.6;color:#3a3936;margin-top:14px}
+.real p b{font-weight:500}
+@media (max-width:960px){.real{grid-template-columns:1fr}.real .vf{padding:40px 10px 42px}}
+/* audiences */
+.aud{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--ink);margin-top:50px}
+.au{padding:26px 26px 30px;border-right:1px solid var(--line);min-height:230px;display:flex;flex-direction:column}
+.au:last-child{border:0}
+.au span{font-family:PM;font-size:10px;color:var(--or);letter-spacing:.12em}
+.au h5{font-weight:300;font-size:30px;text-transform:uppercase;margin-top:auto;line-height:1.05}
+.au p{font-size:15px;line-height:1.55;color:#3a3936;margin-top:10px}
+.quote2{border:1px solid var(--ink);border-top:0;padding:22px 26px;background:#f6f2ea;font-weight:300;font-size:26px;line-height:1.25;text-transform:uppercase}
+.quote2 em{font-style:normal;color:var(--or)}
+/* demo */
+.demo{display:grid;grid-template-columns:1.5fr 1fr;border:1px solid var(--ink);margin-top:50px}
+.dl{padding:28px 32px}
+.dr{border-left:1px solid var(--ink);padding:28px 30px;background:#f6f2ea;display:flex;flex-direction:column}
+.modes{display:flex;border:1px solid var(--ink);width:max-content}
+.modes button{all:unset;cursor:pointer;padding:10px 16px;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;border-right:1px solid var(--ink)}
+.modes button:last-child{border:0}
+.modes button.on{background:var(--ink);color:var(--paper)}
+.doc{border:1px solid var(--line);background:#fff;padding:26px 28px;margin-top:18px;font-size:20px;line-height:1.75;min-height:250px;font-family:Georgia,serif;color:#222}
+.doc h6{font-family:JO;font-weight:500;font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px;color:var(--ink)}
+.w{border-radius:2px;transition:background .3s,color .3s;cursor:pointer}
+.mode-flag .w{background:rgba(255,90,31,.16);border-bottom:2px solid var(--or)}
+.mode-flag .w:hover{background:rgba(255,90,31,.3)}
+.mode-new .w{background:rgba(31,122,77,.1);border-bottom:2px solid #1f7a4d}
+.mode-orig .w{background:none}
+.w.saved{outline:1px dashed var(--ink);outline-offset:2px}
+.meter{display:flex;justify-content:space-between;align-items:center;margin-top:14px;font-family:PM;font-size:10.5px;letter-spacing:.1em;color:var(--mut)}
+.meter b{font-weight:400;color:var(--ink);font-size:13px}
+.dict{margin-top:14px;flex:1}
+.de{border:1px solid var(--ink);background:#fff;padding:14px 16px;margin-top:10px;animation:fd .35s}
+.de b{font-weight:500;font-size:18px}
+.de small{font-family:PM;font-size:10px;color:var(--or);letter-spacing:.1em;margin-left:8px}
+.de p{font-size:14px;line-height:1.5;color:#3a3936;margin-top:4px}
+.empty{font-size:14.5px;line-height:1.6;color:var(--mut);margin-top:14px;border:1px dashed var(--dim);padding:16px}
+/* sketch */
+.sk{display:grid;grid-template-columns:1.25fr 1fr;border:1px solid var(--ink);margin-top:50px}
+.sk .im{padding:26px;background:#f6f2ea;border-right:1px solid var(--ink)}
+.sk .im img{border:1px solid var(--line);background:#fff;transform:rotate(-1deg);box-shadow:0 20px 40px rgba(0,0,0,.12)}
+.sk .im .cap{font-family:PM;font-size:10px;letter-spacing:.12em;color:var(--mut);margin-top:16px}
+.steps7{padding:22px 26px}
+.s7{display:grid;grid-template-columns:30px 1fr;gap:10px;padding:11px 0;border-top:1px solid var(--line)}
+.s7:first-of-type{border:0}
+.s7 span{font-family:PM;font-size:10px;color:var(--or);padding-top:4px}
+.s7 h5{font-weight:400;font-size:16px;text-transform:uppercase;letter-spacing:.04em}
+.s7 p{font-size:13.5px;line-height:1.5;color:#3a3936;margin-top:2px}
+.s7.key{background:var(--ink);color:var(--paper);margin:0 -26px;padding:13px 26px}
+.s7.key p{color:#cfcbc2}
+/* my part */
+.mine{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--ink);border-left:1px solid var(--ink);margin-top:50px}
+.mp{border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:24px 24px 26px;min-height:250px;display:flex;flex-direction:column}
+.mp .n{font-family:PM;font-size:10.5px;color:var(--or);letter-spacing:.1em}
+.mp h5{font-weight:300;font-size:26px;text-transform:uppercase;margin-top:26px;line-height:1.05}
+.mp p{font-size:14.5px;line-height:1.55;color:#3a3936;margin-top:10px}
+.mp .t{margin-top:auto;padding-top:16px;font-family:PM;font-size:10.5px;color:var(--mut);letter-spacing:.04em;line-height:1.6}
+/* feedback */
+.fb{display:grid;grid-template-columns:1fr 60px 1fr;margin-top:50px;align-items:stretch}
+.fbc{border:1px solid var(--ink)}
+.fbr{display:grid;grid-template-columns:110px 1fr;gap:14px;padding:16px 20px;border-top:1px solid var(--line);font-size:15px;line-height:1.5}
+.fbr:first-of-type{border:0}
+.fbr small{font-family:PM;font-size:9.5px;letter-spacing:.12em;padding-top:4px}
+.fbc h5{font-family:PM;font-weight:400;font-size:10.5px;letter-spacing:.16em;padding:14px 20px;border-bottom:1px solid var(--ink)}
+.fbc.after{background:var(--ink);color:var(--paper)}.fbc.after h5{border-color:rgba(255,255,255,.2);color:var(--or)}.fbc.after .fbr{border-color:rgba(255,255,255,.15)}
+.arrowc{display:grid;place-items:center;font-size:26px;color:var(--or)}
+/* challenges */
+.ch3{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--ink);margin-top:50px}
+.ch3 div{padding:24px;border-right:1px solid var(--line)}.ch3 div:last-child{border:0}
+.ch3 small{font-family:PM;font-size:10px;letter-spacing:.12em;color:var(--or)}
+.ch3 h5{font-weight:400;font-size:19px;text-transform:uppercase;letter-spacing:.03em;margin-top:14px}
+.ch3 p{font-size:14.5px;line-height:1.55;color:#3a3936;margin-top:8px}
+.team{margin-top:150px;border:1px solid var(--ink);display:grid;grid-template-columns:1fr 1.2fr}
+.team>div{padding:34px}
+.team>div+div{border-left:1px solid var(--ink);background:#f6f2ea}
+.team h3{font-weight:300;font-size:clamp(34px,3.4vw,50px);text-transform:uppercase;line-height:1.05}
+.team h3 em{font-style:normal;color:var(--or)}
+.team p{font-size:16.5px;line-height:1.65;color:#2b2a28;margin-top:16px}
+.names{display:grid;grid-template-columns:1fr 1fr;margin-top:14px}
+.names div{padding:13px 0;border-top:1px solid var(--line);font-size:16px;display:flex;justify-content:space-between}
+.names div small{font-family:PM;font-size:9.5px;color:var(--mut);letter-spacing:.1em;padding-top:4px;padding-right:16px}
+.names .me{font-weight:500}.names .me small{color:var(--or)}
+@media (max-width:960px){
+ .aud,.ch3{grid-template-columns:1fr}.au{min-height:0;border-right:0;border-bottom:1px solid var(--line)}.au h5{margin-top:14px}
+ .demo,.sk,.team{grid-template-columns:1fr}.dr,.sk .im,.team>div+div{border-left:0;border-right:0;border-top:1px solid var(--ink)}.dl,.dr,.team>div{padding:20px 18px}
+ .doc{font-size:17px;padding:18px}.mine{grid-template-columns:1fr}.mp{min-height:0}
+ .fb{grid-template-columns:1fr}.arrowc{transform:rotate(90deg);padding:10px}.fbr{grid-template-columns:1fr;gap:4px}
+ .ch3 div{border-right:0;border-bottom:1px solid var(--line)}.names{grid-template-columns:1fr}.modes button{padding:9px 10px;letter-spacing:.08em}
+}
+
+</style>
+
+
+
+
+<main class="wrap">
+ <a class="back" href="/projects">← All projects</a>
+ <div class="meta m"><span style="color:var(--ink)">Build 06</span><span class="ln"></span><span>Accessible reading · Responsible Computing Club, SJSU</span><span class="ln"></span><span><span class="rec" style="animation:none;background:var(--ink)"></span>Shipped · Spring 2026</span></div>
+
+ <section class="top">
+  <div>
+   <h1 style="font-size:clamp(76px,12vw,184px)">Luminara</h1>
+   <div class="kick">Dense writing in. Clear writing out. <span>Meaning kept.</span></div>
+   <p class="lede">An app that makes academic reading accessible. Upload a PDF, slides, a Word doc or even a photo of a page, and Luminara finds the hard parts, rewrites only those with a local AI model, and hands the file back in its original format. I led the backend.</p>
+   <div class="acts"><a class="pillb solid" href="#demo">Try the simplifier <span class="arr"></span></a><a class="pillb" href="#sketch">See the whiteboard</a><a class="pillb" href="https://github.com/Lord-Helix07/Luminara">Source</a></div>
+  </div>
+  <div class="facts rv">
+   <div><span>My role</span><span>Lead backend developer</span></div>
+   <div><span>Also</span><span>Helped teammates with code &amp; Figma</span></div>
+   <div><span>Team</span><span>6 · Responsible Computing Club</span></div>
+   <div><span>AI</span><span>Local llama3 via Ollama</span></div>
+   <div><span>Stack</span><span>Flask · spaCy · React · Docker</span></div>
+  </div>
+ </section>
+
+
+ <section class="real">
+  <div class="rv"><div class="vf"><span class="c tl"></span><span class="c tr"></span><span class="c bl"></span><span class="c br"></span><div class="hd"><span>FIG. 01 · THE REAL APP</span><span class="or">● SCREENSHOT</span></div><img src="/img/lumui.jpg" alt="Luminara upload screen with output format, language, page range and accessibility options"><div class="ft"><span>DYSLEXIA FRIENDLY · TEXT-TO-SPEECH · SIMPLIFY</span><span>NOT STORED</span></div></div>
+   <p><b>Upload and choose.</b> Pick an output format, a language and a page range, then turn on dyslexia-friendly mode, text-to-speech or simplification.</p></div>
+  <div class="rv d1"><div class="vf"><span class="c tl"></span><span class="c tr"></span><span class="c bl"></span><span class="c br"></span><div class="hd"><span>FIG. 02 · A REAL RUN</span><span class="or">● RECORDING</span></div><video src="/video/lumdemo.mp4" poster="/img/lumposter.jpg" autoplay muted loop playsinline></video><div class="ft"><span>PDF IN → CONVERTED → DOWNLOAD</span><span>RUNNING LOCALLY</span></div></div>
+   <p><b>Convert and download.</b> A real speech-outline PDF goes through the backend, comes back as clean text with its structure kept, and downloads as a file again.</p></div>
+ </section>
+
+ <!-- 01 PROBLEM -->
+ <section class="sec">
+  <div class="sl m"><span><span class="n">01</span> · The problem</span><span>Who it's for</span></div>
+  <div class="sh"><h2 class="rv">It's not the student. It's the text.</h2><p class="rv d1">Students struggle with academic reading not because they lack ability, but because <b>the content isn't accessible</b>. Three groups feel it the most.</p></div>
+  <div class="aud">
+   <div class="au rv"><span>01</span><h5>Dense text</h5><p>Long sentences and complex vocabulary overwhelm any reader.</p></div>
+   <div class="au rv d1"><span>02</span><h5>ESL students</h5><p>International learners face an extra language barrier on every page.</p></div>
+   <div class="au rv d2"><span>03</span><h5>Dyslexic learners</h5><p>Dense paragraphs make comprehension significantly harder.</p></div>
+  </div>
+  <div class="quote2 rv">Learning should be understandable for everyone, <em>regardless of background, language or learning style.</em></div>
+ </section>
+
+ <!-- 02 DEMO -->
+ <section class="sec" id="demo">
+  <div class="sl m"><span><span class="n">02</span> · How it feels</span><span>Try it</span></div>
+  <div class="sh"><h2 class="rv">Simplify the hard parts. Keep the rest.</h2><p class="rv d1">Luminara doesn't rewrite the whole page. It <b>flags only the difficult words and phrases</b>, replaces those, and leaves everything else exactly where it was. Tap a highlighted word to save it to your dictionary.</p></div>
+  <div class="demo rv">
+   <div class="dl">
+    <div class="modes" id="modes"><button data-m="orig">Original</button><button class="on" data-m="flag">Flagged</button><button data-m="new">Luminara</button></div>
+    <div class="doc mode-flag" id="doc"></div>
+    <div class="meter"><span id="mlabel">FLAGGED WORDS · <b>6</b></span><span>ILLUSTRATIVE TEXT</span></div>
+   </div>
+   <div class="dr"><div class="m">My dictionary</div>
+    <div class="dict" id="dict"><div class="empty">Tap any highlighted word to save it. Saved words are kept in mind the next time the model rewrites a page.</div></div>
+    <p style="font-size:14px;line-height:1.6;color:#3a3936;margin-top:18px;border-top:1px solid var(--line);padding-top:14px"><b style="font-weight:500">Learn, don't just simplify.</b> Each entry has a part of speech and a clear definition, and the dictionary grows with the reader.</p></div>
+  </div>
+ </section>
+
+ <!-- 03 SKETCH -->
+ <section class="sec" id="sketch">
+  <div class="sl m"><span><span class="n">03</span> · The architecture</span><span>It started on a whiteboard</span></div>
+  <div class="sh"><h2 class="rv">From a sketch to a seven-step pipeline.</h2><p class="rv d1">This is the real sketch I drew for the backend. The idea that shaped everything is in step four: <b>no full generation, only flags</b>. The AI never gets to rewrite the whole document.</p></div>
+  <div class="sk rv">
+   <div class="im"><img src="/img/sketch.jpg" alt="Hand-drawn Luminara backend pipeline sketch"><div class="cap">ORIGINAL SKETCH · FEB 23, 2026</div></div>
+   <div class="steps7">
+    <div class="s7"><span>01</span><div><h5>Upload</h5><p>PDF, slides or Word doc, with an edge check on the file.</p></div></div>
+    <div class="s7"><span>02</span><div><h5>Extract text</h5><p>Parse the file, save its type, convert to one common format.</p></div></div>
+    <div class="s7"><span>03</span><div><h5>Identify &amp; flag</h5><p>Find what's hard: for dyslexia, for language learners, or what the user asks.</p></div></div>
+    <div class="s7 key"><span>04</span><div><h5>Modify flags only</h5><p>Keep the theme. No full generation. Output replacements for flagged spans.</p></div></div>
+    <div class="s7"><span>05</span><div><h5>Rebuild</h5><p>Create the full text with the flags replaced.</p></div></div>
+    <div class="s7"><span>06</span><div><h5>Revert file type</h5><p>Reverse step two, so the output matches the input format.</p></div></div>
+    <div class="s7"><span>07</span><div><h5>Output</h5><p>Download, rasterize if needed, and delete the user's file.</p></div></div>
+   </div>
+  </div>
+ </section>
+
+ <!-- 04 MY PART -->
+ <section class="sec">
+  <div class="sl m"><span><span class="n">04</span> · What I built</span><span>The backend</span></div>
+  <div class="sh"><h2 class="rv">The engine underneath the app.</h2><p class="rv d1">I was the main backend developer: the Flask server and everything it does with a file. I also <b>helped teammates write their code and design in Figma</b>, so the whole team could ship together.</p></div>
+  <div class="mine">
+   <div class="mp rv"><span class="n">01 · FILES</span><h5>Any format in, same format out</h5><p>PDFs, slides, Word docs and photos of pages, with OCR for images, converted to text and back again.</p><div class="t">PyMuPDF · pytesseract · python-pptx · python-docx · Pillow</div></div>
+   <div class="mp rv d1"><span class="n">02 · NLP</span><h5>Find what's hard</h5><p>Readability scoring and word-rarity checks flag difficult spans before any AI runs.</p><div class="t">spaCy · textstat · wordfreq</div></div>
+   <div class="mp rv d2"><span class="n">03 · LOCAL AI</span><h5>Rewrite only the flags</h5><p>A local llama3 model replaces just the flagged spans, guided by the reader's saved words.</p><div class="t">Ollama · llama3</div></div>
+   <div class="mp rv"><span class="n">04 · SECURITY</span><h5>Accounts that hold up</h5><p>JWT sign-in that blocks disposable emails, caps password length against malicious input, and rate-limits login attempts.</p><div class="t">Flask · PyJWT</div></div>
+   <div class="mp rv d1"><span class="n">05 · API</span><h5>Personal dictionary</h5><p>Save, list and delete words with their part of speech and definition, tied to each user.</p><div class="t">Flask · Flask-CORS</div></div>
+   <div class="mp rv d2"><span class="n">06 · SHIP</span><h5>One-command setup</h5><p>Frontend, backend and the AI model all start together with Docker Compose.</p><div class="t">Docker · Docker Compose</div></div>
+  </div>
+ </section>
+
+ <!-- 05 FEEDBACK -->
+ <section class="sec">
+  <div class="sl m"><span><span class="n">05</span> · Listening to users</span><span>Demo feedback</span></div>
+  <div class="sh"><h2 class="rv">Users told us it was too simple. So we changed the goal.</h2><p class="rv d1">After the demo, people liked the idea but said the output lost important meaning, and they wanted help understanding hard words, not just removing them. <b>We shifted from shortening text to helping people understand it.</b></p></div>
+  <div class="fb">
+   <div class="fbc rv"><h5>WHAT WE HEARD</h5>
+    <div class="fbr"><small class="or">WORKED</small><span>Simplifying dense academic text</span></div>
+    <div class="fbr"><small style="color:var(--mut)">DIDN'T</small><span>Output got too simple and lost meaning</span></div>
+    <div class="fbr"><small style="color:var(--mut)">MISSING</small><span>Help learning hard words, and better dyslexia support</span></div></div>
+   <div class="arrowc">→</div>
+   <div class="fbc after rv d1"><h5>WHAT WE CHANGED</h5>
+    <div class="fbr"><small>MEANING</small><span>Keep the original meaning while simplifying</span></div>
+    <div class="fbr"><small>BALANCE</small><span>Less aggressive rewrites, so details stay</span></div>
+    <div class="fbr"><small>LEARNING</small><span>Built the personal dictionary</span></div></div>
+  </div>
+ </section>
+
+ <!-- 06 CHALLENGES -->
+ <section class="sec">
+  <div class="sl m"><span><span class="n">06</span> · Hard parts</span><span>Tested on real textbooks</span></div>
+  <div class="sh"><h2 class="rv">Real textbooks, not sample data.</h2><p class="rv d1">We tested with real textbooks from our own classes across several subjects, checking both readability and whether the meaning survived. <b>Real text exposed problems sample data never would.</b></p></div>
+  <div class="ch3">
+   <div class="rv"><small>01 · SCORING</small><h5>Unreliable readability scores</h5><p>Flesch-Kincaid scores swung with text length, causing over- and under-flagging.</p></div>
+   <div class="rv d1"><small>02 · FORMAT</small><h5>Keeping the layout</h5><p>Headers and titles had to stay in place while still being simplified when needed.</p></div>
+   <div class="rv d2"><small>03 · INTEGRATION</small><h5>Frontend ↔ backend</h5><p>CORS and port issues between React and Flask, including the dictionary calls.</p></div>
+  </div>
+  <div class="note rv"><div class="m">Responsible design</div><p>We <b>limited how much we used AI</b>. Cheaper, greener NLP does the flagging, and a local model does only the rewriting, so documents never have to leave the machine.</p></div>
+ </section>
+
+ <!-- TEAM -->
+ <section class="team rv">
+  <div><div class="m">The team</div><h3 style="margin-top:16px">Built together, <em>shipped together.</em></h3><p>I led the backend and treated Luminara like my own project, but it wouldn't exist without this team. Thank you for the support from the first sketch to the final demo.</p></div>
+  <div><div class="m">Responsible Computing Club, SJSU · Spring 2026</div>
+   <div class="names"><div class="me">Vishalkiran Raichur<small>BACKEND LEAD</small></div><div>Shivaji Ganesh</div><div>Ryan Deng</div><div>Shubh Rawal</div><div>Naysa Ratra</div><div>Suhas Kappala</div></div></div>
+ </section>
+ <div class="chips rv" style="margin-top:40px"><span>Python</span><span>Flask</span><span>PyJWT</span><span>spaCy</span><span>textstat</span><span>wordfreq</span><span>PyMuPDF</span><span>pytesseract</span><span>Ollama · llama3</span><span>React</span><span>Docker Compose</span></div>
+
+ <a class="next rv" href="/projects/sla-copilot"><div><div class="m">Next project · Build 05</div><h2>SLA Copilot</h2><p>When a service goes down, who gets their money back?</p></div><span class="bigarr"><span class="arr"></span></span></a>
+</main>
+<script is:inline>
+addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('sc',scrollY>10),{passive:true});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+// ---------- simplifier demo ----------
+const W=[
+ {o:'autotrophic organisms',n:'living things that make their own food',pos:'adjective',def:'Able to make its own food, for example from sunlight.'},
+ {o:'synthesize',n:'make',pos:'verb',def:'To build something by combining simpler parts.'},
+ {o:'utilizing',n:'using',pos:'verb',def:'Using something for a purpose.'},
+ {o:'facilitate',n:'help',pos:'verb',def:'To make an action or process easier.'},
+ {o:'subsequently',n:'then',pos:'adverb',def:'Coming after something in time.'},
+ {o:'metabolic',n:'energy',pos:'adjective',def:'Related to the chemical processes that keep a living thing alive.'}];
+const T=['<h6>Chapter 8 · Photosynthesis</h6>Photosynthesis is the process by which ',0,' ',1,' carbohydrates, ',2,' light energy to ',3,' the conversion of carbon dioxide and water. The resulting glucose is ',4,' used to fuel ',5,' reactions throughout the cell.'];
+let mode='flag';const saved=new Set();
+function render(){const d=document.getElementById('doc');d.className='doc mode-'+mode;
+ d.innerHTML=T.map(x=>typeof x==='number'?`<span class="w${saved.has(x)?' saved':''}" data-i="${x}">${mode==='new'?W[x].n:W[x].o}</span>`:x).join('');
+ document.getElementById('mlabel').innerHTML=mode==='orig'?'READING GRADE · <b>COLLEGE</b>':mode==='flag'?'FLAGGED SPANS · <b>6</b>':'REWRITTEN · <b>6 SPANS ONLY</b> · REST UNCHANGED';
+ d.querySelectorAll('.w').forEach(s=>s.onclick=()=>save(+s.dataset.i))}
+function save(i){if(saved.has(i))return;saved.add(i);const w=W[i],dict=document.getElementById('dict');const e=dict.querySelector('.empty');if(e)e.remove();
+ const word=w.o.split(' ')[0];dict.insertAdjacentHTML('afterbegin',`<div class="de"><b>${word}</b><small>${w.pos.toUpperCase()}</small><p>${w.def}</p></div>`);render()}
+document.querySelectorAll('#modes button').forEach(b=>b.onclick=()=>{mode=b.dataset.m;document.querySelectorAll('#modes button').forEach(x=>x.classList.toggle('on',x===b));render()});
+render();
+</script>
+
+</Layout>

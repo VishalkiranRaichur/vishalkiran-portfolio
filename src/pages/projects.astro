@@ -1,0 +1,231 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title='Projects · Vishalkiran Raichur' description='Everything I have taken apart and built: ORION, PulseGrid, ForgeDB, Job Beast, IVK Media and more.' active="projects">
+<style is:global>
+
+
+
+.vf{position:relative;border:1px solid var(--ink);overflow:hidden;background:var(--paper);transition:background .4s}
+.vf .c{position:absolute;width:16px;height:16px;border-color:var(--ink);border-style:solid;z-index:2}
+.vf .tl{left:10px;top:10px;border-width:1px 0 0 1px}.vf .tr{right:10px;top:10px;border-width:1px 1px 0 0}.vf .bl{left:10px;bottom:10px;border-width:0 0 1px 1px}.vf .br{right:10px;bottom:10px;border-width:0 1px 1px 0}
+.vf .hd,.vf .ft{position:absolute;left:0;right:0;display:flex;justify-content:space-between;padding:14px 34px;font-family:PM;font-size:10px;letter-spacing:.16em;z-index:2}
+.vf .hd{top:0}.vf .ft{bottom:0;color:var(--mut)}
+.vf svg,.vf img{position:absolute;inset:0;width:100%;height:100%;transition:transform 1s cubic-bezier(.2,.8,.2,1)}
+.vf img{object-fit:cover;object-position:left top;inset:44px 34px;width:calc(100% - 68px);height:calc(100% - 88px);border:1px solid var(--line)}
+a:hover .vf{background:#f3efe7}a:hover .vf svg{transform:scale(1.035)}
+/* header */
+.ph{padding:90px 0 0;display:grid;grid-template-columns:1fr 380px;gap:60px;align-items:end}
+.ph h1{font-weight:300;font-size:clamp(54px,7.4vw,108px);line-height:.98;text-transform:uppercase;margin-top:26px}
+.ph h1 .ln{display:block;overflow:hidden}.ph h1 .ln>span{display:inline-block;transform:translateY(102%);animation:up 1s cubic-bezier(.2,.8,.2,1) forwards}
+.ph h1 .ln:nth-child(2)>span{animation-delay:.08s}.ph h1 .ln:nth-child(3)>span{animation-delay:.16s}
+@keyframes up{to{transform:none}}
+.ph p{font-size:19px;line-height:1.65;color:#2b2a28;margin-top:30px;max-width:720px}
+.idx{border-top:1px solid var(--ink)}
+.idx a{display:flex;justify-content:space-between;padding:15px 0;border-bottom:1px solid var(--line);font-size:13px;letter-spacing:.16em;text-transform:uppercase;transition:padding .35s}
+.idx a:hover{padding-left:10px}
+.idx a span{font-family:PM;color:var(--or);font-size:11px}
+/* featured rows */
+.lab{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--ink);padding-top:16px;margin-top:130px}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;padding:80px 0;border-bottom:1px solid var(--line)}
+.fr:nth-of-type(even) .vfw{order:2}
+.fr .vf{aspect-ratio:4/3}
+.meta{display:flex;gap:16px;align-items:center}
+.meta i{width:6px;height:6px;border-radius:50%;background:var(--or);display:inline-block;margin-right:8px}
+.meta i.g{background:var(--dim)}
+.meta .n{color:var(--ink)}
+.fr h2{font-weight:300;font-size:clamp(48px,5vw,76px);line-height:1;text-transform:uppercase;margin-top:18px}
+.fr .tag{font-family:PM;font-size:13px;color:var(--mut);margin-top:12px}
+.fr p{font-size:17.5px;line-height:1.7;color:#2b2a28;margin-top:22px;max-width:580px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.chips span{font-family:PM;font-size:11px;letter-spacing:.06em;border:1px solid var(--line);border-radius:999px;padding:6px 12px;color:#3a3936}
+.stats{display:flex;gap:44px;margin-top:30px;padding-top:24px;border-top:1px solid var(--line)}
+.stats b{display:block;font-weight:300;font-size:46px;line-height:1}
+.stats b em{font-style:normal;color:var(--or)}
+.stats small{display:block;font-family:PM;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin-top:8px}
+.lk{display:flex;gap:26px;margin-top:30px;align-items:center}
+.lk a{font-size:12px;letter-spacing:.2em;text-transform:uppercase;display:inline-flex;gap:10px;align-items:center}
+.lk a.u{border-bottom:1px solid var(--ink);padding-bottom:5px}
+.lk a.p{border:1px solid var(--ink);border-radius:999px;padding:11px 18px;background:var(--ink);color:var(--paper);transition:.25s}
+.lk a.p:hover{background:transparent;color:var(--ink)}
+/* studio block */
+.studio{margin-top:130px;border:1px solid var(--ink);display:grid;grid-template-columns:1fr 1.1fr;min-height:520px}
+.studio .l{padding:48px;display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid var(--ink)}
+.studio h2{font-weight:300;font-size:clamp(40px,4.4vw,64px);line-height:1.02;text-transform:uppercase;margin-top:22px}
+.studio p{font-size:17.5px;line-height:1.7;color:#2b2a28;margin-top:22px;max-width:520px}
+.studio .r{position:relative;background:#f3efe7}
+.studio .r .vf{position:absolute;inset:34px;border-color:var(--ink)}
+.studio .r .vf img{inset:40px 24px 40px;width:calc(100% - 48px);height:calc(100% - 80px)}
+.studio .facts{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);margin-top:34px}
+.studio .facts div{padding:18px 18px 0 0}
+.studio .facts b{display:block;font-weight:400;font-size:17px}
+/* more work */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px 28px;margin-top:40px}
+.mc{display:block}
+.mc .vf{aspect-ratio:4/3}
+.mc .row{display:flex;justify-content:space-between;align-items:baseline;margin-top:18px}
+.mc h3{font-weight:400;font-size:24px;text-transform:uppercase;letter-spacing:.02em}
+.mc .tg{font-family:PM;font-size:12px;color:var(--mut);margin-top:6px}
+.mc p{font-size:15.5px;color:#3a3936;line-height:1.6;margin-top:10px}
+.mc .go{display:inline-flex;gap:10px;align-items:center;margin-top:14px;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;border-bottom:1px solid var(--ink);padding-bottom:4px}
+/* experiments */
+.ex{margin-top:40px;border-top:1px solid var(--ink)}
+.er{display:grid;grid-template-columns:60px 1.1fr 1.6fr 160px 40px;gap:24px;align-items:center;padding:22px 0;border-bottom:1px solid var(--line);transition:background .3s,padding .35s}
+.er:hover{background:#f3efe7;padding-left:12px}
+.er .n{font-family:PM;font-size:11px;color:var(--or)}
+.er h4{font-weight:400;font-size:21px;text-transform:uppercase;letter-spacing:.02em}
+.er p{font-size:15.5px;color:#3a3936}
+.er .k{font-family:PM;font-size:10.5px;letter-spacing:.12em;color:var(--mut);text-transform:uppercase}
+.er .a{justify-self:end}
+.cta2{display:flex;justify-content:space-between;align-items:center;margin-top:140px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:56px 0}
+.cta2 h2{font-weight:300;font-size:clamp(40px,4.6vw,68px);text-transform:uppercase;line-height:1}
+.foot{border-top:1px solid var(--ink);display:grid;grid-template-columns:repeat(4,1fr);gap:40px;padding:40px 0 60px;margin-top:100px}
+.foot b{display:block;font-weight:400;font-size:15px;margin-top:12px;line-height:1.8}
+.rv{opacity:0;transform:translateY(24px);transition:opacity 1s cubic-bezier(.2,.8,.2,1),transform 1s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+@media (max-width:960px){
+ .wrap{padding:0 18px}.links,.srch .t{display:none}.srch{gap:6px;padding:8px 10px}.nr .pillb{display:none}
+ .ph{grid-template-columns:1fr;padding-top:50px}
+ .fr{grid-template-columns:1fr;gap:30px;padding:56px 0}.fr:nth-of-type(even) .vfw{order:0}
+ .stats{gap:26px;flex-wrap:wrap}
+ .studio{grid-template-columns:1fr}.studio .l{border-right:0;border-bottom:1px solid var(--ink);padding:28px}.studio .r{min-height:320px}
+ .grid{grid-template-columns:1fr}
+ .er{grid-template-columns:40px 1fr 30px}.er p,.er .k{display:none}
+ .cta2{flex-direction:column;align-items:flex-start;gap:24px}.foot{grid-template-columns:1fr 1fr}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}.ph h1 .ln>span{transform:none}}
+
+</style>
+
+
+
+
+<main class="wrap">
+ <section class="ph">
+  <div>
+   <div class="m">01 · Projects · 17 builds</div>
+   <h1><span class="ln"><span>Everything I've</span></span><span class="ln"><span>taken apart</span></span><span class="ln"><span>and built<span class="or">.</span></span></span></h1>
+   <p>AI systems that show their evidence, infrastructure that survives a crash, a database written from scratch and a real studio with real clients. Every one is built end to end. Open any project for the full story.</p>
+  </div>
+  <div class="idx rv">
+   <a href="#featured">Featured builds <span>04</span></a>
+   <a href="#studio">In the wild <span>01</span></a>
+   <a href="#more">More work <span>06</span></a>
+   <a href="#exp">Experiments <span>06</span></a>
+  </div>
+ </section>
+
+ <div class="lab m" id="featured"><span>Featured builds</span><span>04 of 17</span></div>
+
+ <section class="fr">
+  <a class="vfw rv" href="/projects/orion"><div class="vf"><span class="c tl"></span><span class="c tr"></span><span class="c bl"></span><span class="c br"></span><div class="hd"><span>BUILD 01</span><span>AI SYSTEMS</span></div><div class="ft"><span>EXAMPLE BRIEF</span><span>SYNTHETIC DEMO DATA</span></div>
+   <svg viewBox="0 0 400 300"><g fill="none" stroke="#111" stroke-width="1.1"><rect x="66" y="60" width="268" height="180"/><polyline points="92,186 136,174 178,180 218,162 258,210 300,202"/></g><circle cx="258" cy="210" r="5" fill="#ff5a1f"/><text x="268" y="200" font-family="PM" font-size="10" fill="#ff5a1f">−18%</text><text x="92" y="88" font-family="PM" font-size="8.5" letter-spacing="1.5" fill="#6f6d68">EXECUTIVE BRIEF</text><text x="92" y="112" font-family="JO" font-size="14.5" fill="#111">Why did revenue drop in July?</text><line x1="92" y1="222" x2="226" y2="222" stroke="#111" stroke-width="3"/><line x1="226" y1="222" x2="308" y2="222" stroke="#111" stroke-opacity=".15" stroke-width="3"/></svg></div></a>
+  <div class="rv d1">
+   <div class="meta m"><span class="n">01</span><span>AI systems</span><span><i></i>In active development</span></div>
+   <h2>ORION</h2>
+   <div class="tag">An AI analyst that refuses to guess.</div>
+   <p>Ask “Why did revenue drop in July?” and ORION plans an investigation, runs the numbers, records every piece of evidence and writes an executive brief. Every figure comes from a tool, never from the model. Take the evidence away and it refuses to invent a cause.</p>
+   <div class="chips"><span>FastAPI</span><span>PostgreSQL + pgvector</span><span>Celery</span><span>Next.js 15</span><span>OpenAI</span><span>GitHub Actions</span></div>
+   <div class="stats"><div><b>68</b><small>tests passing</small></div><div><b>88.9<em>%</em></b><small>of a decline traced</small></div><div><b>0.44</b><small>confidence cap, no evidence</small></div></div>
+   <div class="lk"><a class="p" href="/projects/orion">Case study <span class="arr"></span></a><a class="u" href="https://github.com/VishalkiranRaichur/orion">Source</a></div>
+  </div>
+ </section>
+
+ <section class="fr">
+  <a class="vfw rv" href="/projects/pulsegrid"><div class="vf"><span class="c tl"></span><span class="c tr"></span><span class="c bl"></span><span class="c br"></span><div class="hd"><span>BUILD 02</span><span>INFRASTRUCTURE</span></div><div class="ft"><span>PIPELINE · DAG</span><span>LEASE + HEARTBEAT</span></div>
+   <svg viewBox="0 0 400 300"><g fill="none" stroke="#111" stroke-width="1.1"><path d="M110 150 C140 150 140 105 160 105M110 150 C140 150 140 195 160 195M220 105 C250 105 250 150 270 150M220 195 C250 195 250 150 270 150"/><rect x="60" y="134" width="50" height="32"/><rect x="160" y="89" width="60" height="32"/><rect x="160" y="179" width="60" height="32"/><rect x="270" y="134" width="70" height="32" stroke="#ff5a1f"/></g><g font-family="PM" font-size="10" fill="#111" text-anchor="middle"><text x="85" y="154">push</text><text x="190" y="109">lint</text><text x="190" y="199">test</text><text x="305" y="154" fill="#ff5a1f">build</text></g></svg></div></a>
+  <div class="rv d1">
+   <div class="meta m"><span class="n">02</span><span>Infrastructure</span><span><i class="g"></i>Case study</span></div>
+   <h2>PulseGrid</h2>
+   <div class="tag">A CI platform that recovers when workers die.</div>
+   <p>A git push becomes a graph of Docker jobs. Workers pull only the work that fits their CPU and memory and hold it on a lease. If one dies mid-job, the job is reclaimed and retried, and duplicate webhooks never start a second run.</p>
+   <div class="chips"><span>Python</span><span>FastAPI</span><span>Docker</span><span>SQLite WAL</span><span>DAG YAML</span><span>GitHub webhooks</span></div>
+   <div class="stats"><div><b>DAG</b><small>pipeline scheduling</small></div><div><b>Pull</b><small>based workers</small></div><div><b>HMAC</b><small>verified webhooks</small></div></div>
+   <div class="lk"><a class="p" href="/projects/pulsegrid">Case study <span class="arr"></span></a><a class="u" href="https://github.com/VishalkiranRaichur/PulseGrid">Source</a></div>
+  </div>
+ </section>
+
+ <section class="fr">
+  <a class="vfw rv" href="/projects/forgedb"><div class="vf"><span class="c tl"></span><span class="c tr"></span><span class="c bl"></span><span class="c br"></span><div class="hd"><span>BUILD 03</span><span>SYSTEMS</span></div><div class="ft"><span>B+ TREE INDEX</span><span>4 KB PAGES</span></div>
+   <svg viewBox="0 0 400 300"><g fill="none" stroke="#111" stroke-width="1.1"><rect x="176" y="70" width="48" height="28" stroke="#ff5a1f"/><path d="M190 98 L120 140 M210 98 L280 140 M110 168 L80 210 M120 168 L120 210 M130 168 L160 210 M270 168 L240 210 M280 168 L280 210 M290 168 L320 210"/><rect x="90" y="140" width="60" height="28"/><rect x="250" y="140" width="60" height="28"/><rect x="64" y="210" width="32" height="22"/><rect x="104" y="210" width="32" height="22"/><rect x="144" y="210" width="32" height="22"/><rect x="224" y="210" width="32" height="22"/><rect x="264" y="210" width="32" height="22"/><rect x="304" y="210" width="32" height="22"/></g><g font-family="PM" font-size="10" text-anchor="middle"><text x="200" y="88" fill="#ff5a1f">42</text><text x="120" y="158">17 · 29</text><text x="280" y="158">58 · 77</text></g></svg></div></a>
+  <div class="rv d1">
+   <div class="meta m"><span class="n">03</span><span>Systems</span><span><i class="g"></i>Case study</span></div>
+   <h2>ForgeDB</h2>
+   <div class="tag">A database written from the disk page up.</div>
+   <p>Everyone uses databases. I wanted to know what happens underneath, so I built one: its own SQL parser, 4 KB pages, an LRU buffer pool and a B+ tree index stress-tested with 20,000 keys. No libraries, just how data actually gets stored.</p>
+   <div class="chips"><span>Java 17</span><span>SQL parser</span><span>B+ tree</span><span>Buffer pool</span><span>Zero dependencies</span></div>
+   <div class="stats"><div><b>20K</b><small>key stress test</small></div><div><b>4 KB</b><small>page size</small></div><div><b>0</b><small>dependencies</small></div></div>
+   <div class="lk"><a class="p" href="/projects/forgedb">Case study <span class="arr"></span></a><a class="u" href="https://github.com/VishalkiranRaichur/ForgeDB">Source</a></div>
+  </div>
+ </section>
+
+ <section class="fr">
+  <a class="vfw rv" href="/projects/job-beast"><div class="vf"><span class="c tl"></span><span class="c tr"></span><span class="c bl"></span><span class="c br"></span><div class="hd"><span>BUILD 04</span><span>AI SYSTEMS</span></div><div class="ft"><span>JOB RADAR</span><span>HUMAN IN THE LOOP</span></div>
+   <svg viewBox="0 0 400 300"><g fill="none" stroke="#111" stroke-width="1.1"><circle cx="200" cy="150" r="100"/><circle cx="200" cy="150" r="66" stroke-opacity=".5"/><circle cx="200" cy="150" r="32" stroke-opacity=".35"/><path d="M200 50 v200 M100 150 h200" stroke-opacity=".2"/></g><path d="M200 150 L284 96 A100 100 0 0 1 298 128 Z" fill="#ff5a1f" fill-opacity=".18"/><line x1="200" y1="150" x2="284" y2="96" stroke="#ff5a1f" stroke-width="1.4"/><circle cx="268" cy="112" r="5" fill="#ff5a1f"/><circle cx="150" cy="104" r="3.5" fill="#111"/><circle cx="236" cy="212" r="3.5" fill="#111"/><circle cx="148" cy="190" r="3.5" fill="#111"/><text x="276" y="108" font-family="PM" font-size="9" fill="#ff5a1f">FIT 86 · 2H AGO</text></svg></div></a>
+  <div class="rv d1">
+   <div class="meta m"><span class="n">04</span><span>AI systems</span><span><i class="g"></i>Built for my own search</span></div>
+   <h2>Job Beast</h2>
+   <div class="tag">The best internships disappear fast. It finds them first.</div>
+   <p>A job radar that spots high-fit roles within hours of posting, checks eligibility before doing any work, and tailors a résumé using only real experience. It never invents a skill, and it stops to ask whenever a decision is mine.</p>
+   <div class="chips"><span>Python</span><span>Agents</span><span>Browser extension</span><span>Evidence-grounded tailoring</span></div>
+   <div class="stats"><div><b>≤3<em>h</em></b><small>fast-lane window</small></div><div><b>70<em>+</em></b><small>fit score to fast-track</small></div><div><b>0</b><small>invented skills</small></div></div>
+   <div class="lk"><a class="p" href="/projects/job-beast">Case study <span class="arr"></span></a><a class="u" href="https://github.com/VishalkiranRaichur/VishalJobBeast">Source</a></div>
+  </div>
+ </section>
+
+ <section class="studio rv" id="studio">
+  <div class="l">
+   <div>
+    <div class="m">In the wild · a real business</div>
+    <h2>Most students build a portfolio. I started a studio<span class="or">.</span></h2>
+    <p>IVK Media helps San José shops get found online with websites, Google review stands and Instagram. I designed and hand-built its site with no frameworks: a storefront that fixes itself as you scroll and review stands you can grab and throw.</p>
+   </div>
+   <div>
+    <div class="facts"><div><span class="m">Status</span><b>Live</b></div><div><span class="m">Stack</span><b>HTML · CSS · JS</b></div><div><span class="m">Scroll</span><b>60 fps</b></div></div>
+    <div class="lk"><a class="p" href="https://ivkmedia.com">Visit ivkmedia.com <span class="arr"></span></a><a class="u" href="/projects/ivk-media">Case study</a></div>
+   </div>
+  </div>
+  <div class="r"><div class="vf"><span class="c tl"></span><span class="c tr"></span><span class="c bl"></span><span class="c br"></span><div class="hd"><span>IVKMEDIA.COM</span><span class="or">● LIVE</span></div><img src="/img/ivk_small.jpg" alt="IVK Media website"></div></div>
+ </section>
+
+ <div class="lab m" id="more"><span>More work</span><span>06</span></div>
+ <section class="grid">
+  <a class="mc rv" href="/projects/sla-copilot"><div class="vf"><span class="c tl"></span><span class="c tr"></span><span class="c bl"></span><span class="c br"></span><div class="hd"><span>05</span><span>AI SYSTEMS</span></div>
+   <svg viewBox="0 0 400 300"><g fill="none" stroke="#111" stroke-width="1.1"><rect x="40" y="120" width="68" height="44"/><rect x="128" y="120" width="68" height="44"/><rect x="216" y="120" width="68" height="44"/><rect x="304" y="120" width="68" height="44" stroke="#ff5a1f"/><path d="M108 142h20M196 142h20M284 142h20"/></g><g font-family="PM" font-size="8.5" text-anchor="middle" letter-spacing="1"><text x="74" y="146">INCIDENT</text><text x="162" y="146">BEHAVIOR</text><text x="250" y="146">POLICY</text><text x="338" y="146" fill="#ff5a1f">CREDIT</text></g><text x="40" y="200" font-family="PM" font-size="8.5" fill="#6f6d68" letter-spacing="1">MODEL INTERPRETS · POLICY DECIDES</text></svg></div>
+   <div class="row"><h3>SLA Copilot</h3><span class="m">Policy engine</span></div><div class="tg">When a service goes down, who gets their money back?</div><p>Joins incidents, real usage, plan rules and billing to find every account owed a credit, exactly once.</p><span class="go">Case study <span class="arr"></span></span></a>
+  <a class="mc rv d1" href="/projects/luminara"><div class="vf"><span class="c tl"></span><span class="c tr"></span><span class="c bl"></span><span class="c br"></span><div class="hd"><span>06</span><span>TEAM · RCC</span></div>
+   <svg viewBox="0 0 400 300"><g stroke="#111" stroke-width="1.1" fill="none"><rect x="50" y="70" width="130" height="160"/><rect x="230" y="100" width="130" height="100" stroke="#ff5a1f"/><path d="M190 150 h30" stroke="#ff5a1f"/></g><g stroke="#111" stroke-opacity=".5"><path d="M64 92h100M64 104h96M64 116h102M64 128h90M64 140h100M64 152h94M64 164h98M64 176h88M64 188h100M64 200h92M64 212h96"/></g><text x="246" y="138" font-family="JO" font-size="15" fill="#111">Short words.</text><text x="246" y="160" font-family="JO" font-size="15" fill="#111">Clear ideas.</text></svg></div>
+   <div class="row"><h3>Luminara</h3><span class="m">Readability</span></div><div class="tg">Dense writing in. Clear writing out.</div><p>A local-AI readability app for PDFs, slides, Word docs and photos. I built most of the Flask backend.</p><span class="go">Case study <span class="arr"></span></span></a>
+  <a class="mc rv d2" href="https://github.com/VishalkiranRaichur/rag-pdf-chatbot" target="_blank" rel="noopener"><div class="vf"><span class="c tl"></span><span class="c tr"></span><span class="c bl"></span><span class="c br"></span><div class="hd"><span>07</span><span>AI SYSTEMS</span></div>
+   <svg viewBox="0 0 400 300"><g fill="none" stroke="#111" stroke-width="1.1"><rect x="60" y="60" width="100" height="130"/><path d="M76 84h68M76 98h60M76 112h68M76 126h52" stroke-opacity=".5"/><path d="M76 146h60" stroke="#ff5a1f" stroke-width="2"/><rect x="190" y="84" width="160" height="38" rx="19"/><rect x="190" y="136" width="160" height="54" rx="19" stroke="#ff5a1f"/></g><text x="206" y="108" font-family="JO" font-size="12">What's the main finding?</text><text x="206" y="160" font-family="JO" font-size="12">Costs fell after the</text><text x="206" y="176" font-family="JO" font-size="12">vendor switch. (p.3)</text></svg></div>
+   <div class="row"><h3>RAG PDF Chatbot</h3><span class="m">Retrieval</span></div><div class="tg">Drop in a PDF. Ask it anything.</div><p>Finds the passages that matter and answers with GPT-4o-mini, showing the exact text it used.</p><span class="go">Source <span class="arr"></span></span></a>
+  <a class="mc rv" href="https://github.com/VishalkiranRaichur/stocktrend-project" target="_blank" rel="noopener"><div class="vf"><span class="c tl"></span><span class="c tr"></span><span class="c bl"></span><span class="c br"></span><div class="hd"><span>08</span><span>DATA · TEAM</span></div>
+   <svg viewBox="0 0 400 300"><g fill="none" stroke-width="1.3"><polyline points="50,200 90,180 130,190 170,150 210,160 250,120 290,130 330,96 350,104" stroke="#111"/><polyline points="50,214 90,204 130,206 170,188 210,192 250,170 290,174 330,152 350,156" stroke="#ff5a1f"/><path d="M50 230 H350" stroke="#111" stroke-opacity=".2"/></g><text x="50" y="80" font-family="PM" font-size="9" letter-spacing="1" fill="#6f6d68">AAA · 50-DAY MA · COMPARE</text></svg></div>
+   <div class="row"><h3>StockTrend</h3><span class="m">Dashboard</span></div><div class="tg">Years of market data, readable at a glance.</div><p>Interactive charts, moving averages and side-by-side comparisons. I built the dashboard and charts.</p><span class="go">Source <span class="arr"></span></span></a>
+  <a class="mc rv d1" href="https://github.com/VishalkiranRaichur/OpenNote" target="_blank" rel="noopener"><div class="vf"><span class="c tl"></span><span class="c tr"></span><span class="c bl"></span><span class="c br"></span><div class="hd"><span>09</span><span>WEB</span></div>
+   <svg viewBox="0 0 400 300"><g fill="none" stroke="#111" stroke-width="1.1"><rect x="80" y="84" width="90" height="120" transform="rotate(-6 125 144)"/><rect x="156" y="76" width="90" height="120" stroke="#ff5a1f"/><rect x="232" y="84" width="90" height="120" transform="rotate(6 277 144)"/></g><g stroke="#111" stroke-opacity=".45"><path d="M170 100h60M170 112h52M170 124h60M170 136h44"/></g><text x="170" y="178" font-family="PM" font-size="8.5" fill="#ff5a1f">♥ 24 · #cs146</text></svg></div>
+   <div class="row"><h3>OpenNote</h3><span class="m">Notes</span></div><div class="tg">Every student's best notes, in one place.</div><p>Upload, tag, search and share notes as Markdown, PDFs or images, with Google sign-in and trending.</p><span class="go">Source <span class="arr"></span></span></a>
+  <a class="mc rv d2" href="https://github.com/VishalkiranRaichur/Ecommerce-Platform" target="_blank" rel="noopener"><div class="vf"><span class="c tl"></span><span class="c tr"></span><span class="c bl"></span><span class="c br"></span><div class="hd"><span>10</span><span>WEB</span></div>
+   <svg viewBox="0 0 400 300"><g fill="none" stroke="#111" stroke-width="1.1"><path d="M90 80 h220" stroke-opacity=".4"/><path d="M130 80 v14 l-28 22 v84 h56 v-84 l-28 -22" /><path d="M200 80 v14 l-28 22 v84 h56 v-84 l-28 -22" stroke="#ff5a1f"/><path d="M270 80 v14 l-28 22 v84 h56 v-84 l-28 -22"/></g><text x="102" y="238" font-family="PM" font-size="8.5" letter-spacing="1" fill="#6f6d68">SEARCH · FILTER · ADMIN</text></svg></div>
+   <div class="row"><h3>Sujatha Boutique</h3><span class="m">Catalog</span></div><div class="tg">A boutique's whole collection, made for phones.</div><p>Search, filters, product pages, WhatsApp and Instagram contact, plus an admin panel for products and photos.</p><span class="go">Source <span class="arr"></span></span></a>
+ </section>
+
+ <div class="lab m" id="exp"><span>Experiments &amp; early builds</span><span>06</span></div>
+ <section class="ex">
+  <a class="er rv" href="https://github.com/VishalkiranRaichur/Spam-messages-clasifier" target="_blank" rel="noopener"><span class="n">11</span><h4>Spam Classifier</h4><p>Teaching a model to tell “you won!!” from “lunch at 1?”.</p><span class="k">Python · NLP</span><span class="a arr"></span></a>
+  <a class="er rv" href="https://github.com/VishalkiranRaichur/Twitter-sentament-annalises" target="_blank" rel="noopener"><span class="n">12</span><h4>Twitter Sentiment</h4><p>What is the internet feeling right now?</p><span class="k">Python · NLP</span><span class="a arr"></span></a>
+  <a class="er rv" href="https://github.com/VishalkiranRaichur/sudoku-solver" target="_blank" rel="noopener"><span class="n">13</span><h4>Sudoku Solver</h4><p>Hand it a puzzle. Get the answer back.</p><span class="k">Python · Search</span><span class="a arr"></span></a>
+  <div class="er rv"><span class="n">14</span><h4>Online Bookstore DB</h4><p>The database behind an online bookstore, built with my class team.</p><span class="k">SQL · Team</span><span class="a arr"></span></div>
+  <a class="er rv" href="/projects/ivk-media"><span class="n">15</span><h4>IVK Brand &amp; Feed</h4><p>A logo, a 9-post Instagram launch and a review stand from one idea.</p><span class="k">Design</span><span class="a arr"></span></a>
+  <a class="er rv" href="https://github.com/VishalkiranRaichur/pyGame_basics" target="_blank" rel="noopener"><span class="n">16</span><h4>Pygame Basics</h4><p>Where it started: my first games in Python.</p><span class="k">Python · Archive</span><span class="a arr"></span></a>
+ </section>
+
+ <section class="cta2 rv"><h2>Want the deep dive?</h2><div style="display:flex;gap:12px;flex-wrap:wrap"><a class="pillb solid" href="/projects/orion">Start with ORION <span class="arr"></span></a><a class="pillb" href="https://github.com/VishalkiranRaichur" target="_blank" rel="noopener">All code on GitHub</a></div></section>
+</main>
+<script is:inline>
+addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('sc',scrollY>10),{passive:true});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+</script>
+
+</Layout>

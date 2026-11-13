@@ -1,0 +1,529 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title='PulseGrid · Vishalkiran Raichur' description='A distributed CI platform with leases, heartbeats and crash recovery.' active="projects">
+<style is:global>
+
+
+
+
+.vf{position:relative;border:1px solid var(--ink);background:var(--paper)}
+.vf .c{position:absolute;width:16px;height:16px;border-color:var(--ink);border-style:solid;z-index:2}
+.vf .tl{left:10px;top:10px;border-width:1px 0 0 1px}.vf .tr{right:10px;top:10px;border-width:1px 1px 0 0}.vf .bl{left:10px;bottom:10px;border-width:0 0 1px 1px}.vf .br{right:10px;bottom:10px;border-width:0 1px 1px 0}
+.vf .hd,.vf .ft{display:flex;justify-content:space-between;gap:20px;padding:16px 34px;font-family:PM;font-size:10px;letter-spacing:.16em}
+.vf .ft{color:var(--mut)}
+.back{display:inline-flex;gap:10px;margin-top:56px;font-size:12px;letter-spacing:.2em;text-transform:uppercase}
+.meta{display:flex;gap:14px;align-items:center;margin-top:40px;flex-wrap:wrap}
+.meta .ln{width:34px;height:1px;background:var(--line)}
+.rec{width:6px;height:6px;border-radius:50%;background:var(--or);display:inline-block;margin-right:8px;animation:rec 1.6s steps(1) infinite}
+@keyframes rec{50%{opacity:.2}}
+h1{font-weight:300;font-size:clamp(90px,14vw,210px);line-height:.86;text-transform:uppercase;margin-top:18px}
+h1 .o{display:inline-block;width:.74em;height:.74em;border:.035em solid var(--ink);border-radius:50%;position:relative;vertical-align:-.02em}
+h1 .o::after{content:"";position:absolute;left:50%;top:50%;width:.12em;height:.12em;margin:-.06em;border-radius:50%;background:var(--or)}
+.top{display:grid;grid-template-columns:1fr 400px;gap:60px;align-items:end}
+.kick{font-weight:300;font-size:clamp(30px,3vw,44px);line-height:1.12;text-transform:uppercase;margin-top:30px;max-width:820px}
+.kick span{color:var(--mut)}
+.lede{font-size:20px;line-height:1.6;color:#2b2a28;margin-top:22px;max-width:720px}
+.acts{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+.facts{border-top:1px solid var(--ink)}
+.facts div{display:flex;justify-content:space-between;gap:20px;padding:13px 0;border-bottom:1px solid var(--line);font-size:15px;text-align:right}
+.facts div span:first-child{font-family:PM;font-size:10.5px;letter-spacing:.14em;color:var(--mut);text-transform:uppercase;padding-top:3px;text-align:left}
+/* section frame */
+.sec{margin-top:150px}
+.sl{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--ink);padding-top:16px}
+.sl .n{color:var(--or)}
+.sh{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:34px;align-items:end}
+.sh h2{font-weight:300;font-size:clamp(42px,4.8vw,72px);line-height:1;text-transform:uppercase}
+.sh p{font-size:18px;line-height:1.65;color:#2b2a28}
+.sh p b{font-weight:500}
+/* problem */
+.prob{display:grid;grid-template-columns:1.2fr 1fr;margin-top:50px;border:1px solid var(--ink)}
+.prob svg{width:100%;height:auto;display:block}
+.prob .r{border-left:1px solid var(--ink);padding:36px;display:flex;flex-direction:column;justify-content:space-between;background:#f6f2ea}
+.prob .q{font-weight:300;font-size:30px;line-height:1.2;margin-top:16px}
+.ppl{border-top:1px solid var(--line);margin-top:26px}
+.ppl div{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line);font-size:15px}
+.ppl div span:last-child{font-family:PM;font-size:10.5px;letter-spacing:.12em;color:var(--mut)}
+.prob .then{font-size:17px;line-height:1.6;margin-top:24px}
+.prob .then b{font-weight:500;border-bottom:1px solid var(--or)}
+/* product tabs */
+.tabs{display:flex;gap:0;margin-top:50px;border:1px solid var(--ink);border-bottom:0;width:max-content}
+.tabs button{all:unset;cursor:pointer;padding:14px 26px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;border-right:1px solid var(--ink);display:flex;gap:10px;align-items:center;transition:background .25s,color .25s}
+.tabs button:last-child{border-right:0}
+.tabs button sup{font-family:PM;font-size:9px;color:var(--dim)}
+.tabs button.on{background:var(--ink);color:var(--paper)}
+.tabs button.on sup{color:var(--or)}
+.screen{border:1px solid var(--ink);position:relative;background:var(--paper)}
+.screen .hd{border-bottom:1px solid var(--line)}
+.pane{display:none;padding:30px 34px 34px;min-height:520px;animation:fd .5s cubic-bezier(.2,.8,.2,1)}
+.pane.on{display:block}
+@keyframes fd{from{opacity:0;transform:translateY(10px)}}
+.cap{display:grid;grid-template-columns:1fr 1.4fr;gap:40px;margin-top:22px;align-items:start}
+.cap h4{font-weight:300;font-size:30px;text-transform:uppercase}
+.cap p{font-size:16.5px;line-height:1.6;color:#2b2a28}
+/* concept UI pieces */
+.ui{border:1px solid var(--line);background:#fff;border-radius:2px}
+.ui .bar{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);font-family:PM;font-size:10px;letter-spacing:.12em;color:var(--mut)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr)}
+.kpi{padding:18px 16px;border-right:1px solid var(--line)}.kpi:last-child{border:0}
+.kpi small{font-family:PM;font-size:9.5px;letter-spacing:.12em;color:var(--mut)}
+.kpi b{display:block;font-weight:300;font-size:32px;margin-top:8px}
+.kpi em{font-style:normal;font-family:PM;font-size:10.5px}
+.dn{color:var(--or)}.up{color:#1f7a4d}
+.dgrid{display:grid;grid-template-columns:1.6fr 1fr;border-top:1px solid var(--line)}
+.dgrid>div{padding:16px}
+.dgrid>div+div{border-left:1px solid var(--line)}
+.ins{border:1px solid var(--line);padding:12px;margin-top:10px;font-size:13.5px;line-height:1.5}
+.ins .t{font-family:PM;font-size:9.5px;letter-spacing:.12em;color:var(--or)}
+.ins b{font-weight:500}
+.askbox{border:1px solid var(--ink);padding:16px 18px;font-size:16px;display:flex;justify-content:space-between;align-items:center}
+.askbox .k{font-family:PM;font-size:10px;border:1px solid var(--ink);padding:6px 10px;background:var(--ink);color:#fff}
+.ans{display:grid;grid-template-columns:1.5fr 1fr;gap:0;margin-top:14px;border:1px solid var(--line)}
+.ans>div{padding:18px}.ans>div+div{border-left:1px solid var(--line);background:#faf8f3}
+.ans p{font-size:14.5px;line-height:1.65;color:#2b2a28}
+.ans sup{font-family:PM;font-size:9px;color:var(--or);margin-left:2px}
+.ans ul{list-style:none;margin-top:10px}
+.ans li{font-size:14px;padding:8px 0;border-top:1px solid var(--line);line-height:1.5}
+.src{display:flex;gap:10px;padding:10px 0;border-top:1px solid var(--line);font-size:13px;line-height:1.45}
+.src i{font-style:normal;font-family:PM;font-size:9.5px;color:var(--or);min-width:16px}
+.src small{display:block;font-family:PM;font-size:9.5px;color:var(--mut);letter-spacing:.06em}
+.conf{display:flex;gap:10px;align-items:center;margin-top:14px;font-family:PM;font-size:10px;letter-spacing:.12em;color:var(--mut)}
+.conf i{flex:1;height:4px;background:rgba(17,17,17,.1);position:relative}.conf i b{position:absolute;inset:0 auto 0 0;background:var(--ink)}
+.inv{display:grid;grid-template-columns:1fr 1.2fr;border:1px solid var(--line);margin-top:14px}
+.inv>div{padding:18px}.inv>div+div{border-left:1px solid var(--line);background:#faf8f3}
+.stp{display:grid;grid-template-columns:26px 1fr auto;gap:10px;padding:11px 0;border-top:1px solid var(--line);font-size:14px;align-items:center}
+.stp:first-of-type{border-top:0}
+.stp .n{font-family:PM;font-size:10px;color:var(--mut)}
+.stp .s{font-family:PM;font-size:9.5px;letter-spacing:.1em}
+.stp.dn2 .s{color:#1f7a4d}.stp.now .s{color:var(--or)}
+.stp.now{font-weight:500}
+.brf .r{display:grid;grid-template-columns:110px 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--line);font-size:14px;line-height:1.5}
+.brf .r small{font-family:PM;font-size:9px;letter-spacing:.12em;color:var(--mut);padding-top:3px}
+.brf .r b{font-weight:500}
+.lbl{font-family:PM;font-size:9.5px;letter-spacing:.14em;border:1px solid var(--or);color:var(--or);padding:3px 7px}
+/* built vs vision */
+.board{display:grid;grid-template-columns:1fr 1fr;margin-top:50px;border:1px solid var(--ink)}
+.board>div{padding:30px 34px}
+.board>div+div{border-left:1px solid var(--ink);background:#f6f2ea}
+.board h4{display:flex;justify-content:space-between;align-items:center;font-weight:300;font-size:30px;text-transform:uppercase}
+.board h4 span{font-family:PM;font-size:11px;letter-spacing:.14em;color:var(--mut)}
+.it{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:14px 0;border-top:1px solid var(--line);font-size:16.5px}
+.it:first-of-type{margin-top:20px}
+.it .s{font-family:PM;font-size:10px;letter-spacing:.12em;white-space:nowrap}
+.it .s.b::before{content:"● ";color:var(--or)}
+.it .s.p::before{content:"○ ";color:var(--mut)}
+.proof{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--ink);border-top:0}
+.proof div{padding:26px 28px;border-right:1px solid var(--line)}.proof div:last-child{border:0}
+.proof b{display:block;font-weight:300;font-size:54px;line-height:1}
+.proof b em{font-style:normal;color:var(--or)}
+.proof small{display:block;font-size:14.5px;color:#3a3936;margin-top:10px;line-height:1.45}
+/* control */
+.duo{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}
+.brief{padding:26px 34px 30px}
+.brief+.brief{border-left:1px solid var(--line);background:#f6f2ea}
+.brief .q{font-size:21px;margin-top:10px}
+.brief .r{display:grid;grid-template-columns:130px 1fr;gap:14px;padding:12px 0;border-top:1px solid var(--line);font-size:15px;line-height:1.5;color:#2b2a28}
+.brief .r:first-of-type{margin-top:16px}
+.brief .r small{font-family:PM;font-size:9.5px;letter-spacing:.14em;color:var(--mut);padding-top:4px}
+.brief .r b{font-weight:500;color:var(--ink)}
+.brief .x{color:var(--or)}
+.mtr{display:flex;align-items:center;gap:12px}.mtr i{flex:1;height:4px;background:rgba(17,17,17,.1);position:relative}.mtr i b{position:absolute;inset:0 auto 0 0;background:var(--ink)}
+.brief+.brief .mtr i b{background:var(--or)}
+.note{margin-top:22px;display:grid;grid-template-columns:200px 1fr;gap:40px;border-top:1px solid var(--line);padding-top:20px}
+.note p{font-size:16.5px;line-height:1.65;color:#2b2a28;max-width:820px}
+.note p b{font-weight:500}
+/* six capabilities */
+.six{display:grid;grid-template-columns:repeat(3,1fr);margin-top:50px;border-top:1px solid var(--ink);border-left:1px solid var(--ink)}
+.cp{border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:26px 26px 30px;min-height:300px;display:flex;flex-direction:column;transition:background .3s}
+.cp:hover{background:#f6f2ea}
+.cp .h{display:flex;justify-content:space-between;align-items:center}
+.cp .h .n{font-family:PM;font-size:11px;color:var(--or);letter-spacing:.1em}
+.st{font-family:PM;font-size:9.5px;letter-spacing:.12em;padding:4px 8px;border:1px solid var(--ink)}
+.st.b{background:var(--ink);color:var(--paper)}
+.st.f{border-style:dashed;color:var(--mut);border-color:var(--dim)}
+.cp h4{font-weight:300;font-size:30px;text-transform:uppercase;margin-top:44px;line-height:1.05}
+.cp p{font-size:15.5px;line-height:1.6;color:#3a3936;margin-top:12px}
+.cp .ex{margin-top:auto;padding-top:18px;font-family:PM;font-size:11px;color:var(--mut);line-height:1.55}
+.cp .ex b{color:var(--ink);font-weight:400}
+.alert{border:1px solid var(--or);padding:12px 14px;margin-top:18px;background:#fff}
+.alert .t{display:flex;justify-content:space-between;font-family:PM;font-size:9.5px;letter-spacing:.12em;color:var(--or)}
+.alert b{display:block;font-weight:500;font-size:15px;margin-top:6px}
+.alert p{font-size:13px!important;margin-top:4px!important}
+/* arch */
+.arch{display:grid;grid-template-columns:1.3fr 1fr;gap:60px;margin-top:50px;align-items:start}
+.layers{border:1px solid var(--ink)}
+.ly{display:grid;grid-template-columns:44px 1fr auto;gap:16px;align-items:center;padding:20px 22px;border-bottom:1px solid var(--line);position:relative}
+.ly:last-child{border:0}
+.ly .n{font-family:PM;font-size:10.5px;color:var(--mut)}
+.ly h5{font-weight:400;font-size:19px;text-transform:uppercase;letter-spacing:.03em}
+.ly p{font-family:PM;font-size:11px;color:var(--mut);margin-top:4px;letter-spacing:.02em}
+.ly.core{background:#f6f2ea}
+.surf{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--ink)}
+.surf div{padding:16px;text-align:center;font-size:14px;letter-spacing:.16em;text-transform:uppercase;border-right:1px solid var(--line)}.surf div:last-child{border:0;color:var(--mut)}
+.prin{border-top:1px solid var(--ink)}
+.prin div{display:grid;grid-template-columns:34px 1fr;padding:16px 0;border-bottom:1px solid var(--line);font-size:17px}
+.prin span{font-family:PM;font-size:10.5px;color:var(--or);padding-top:4px}
+/* users + chatgpt */
+.users{display:grid;grid-template-columns:repeat(5,1fr);margin-top:50px;border-top:1px solid var(--ink)}
+.users div{padding:22px 20px 0 0}
+.users h5{font-weight:400;font-size:18px;text-transform:uppercase;letter-spacing:.03em}
+.users p{font-size:14.5px;line-height:1.55;color:#3a3936;margin-top:8px}
+.vs{display:grid;grid-template-columns:1fr 1fr;margin-top:50px;border:1px solid var(--ink)}
+.vs>div{padding:30px 34px}.vs>div+div{border-left:1px solid var(--ink);background:var(--ink);color:var(--paper)}
+.vs h5{font-family:PM;font-size:10.5px;letter-spacing:.16em;font-weight:400;color:var(--mut)}
+.vs>div+div h5{color:var(--or)}
+.vs ul{list-style:none;margin-top:16px}
+.vs li{padding:12px 0;border-top:1px solid var(--line);font-size:16px}
+.vs>div+div li{border-color:rgba(255,255,255,.15)}
+.claim{margin-top:60px;text-align:center;font-weight:300;font-size:clamp(34px,4vw,58px);line-height:1.1;text-transform:uppercase;max-width:1100px;margin-left:auto;margin-right:auto}
+.claim span{color:var(--or)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:30px;justify-content:center}
+.chips span{font-family:PM;font-size:11px;border:1px solid var(--line);border-radius:999px;padding:6px 12px;color:#3a3936}
+.next{display:grid;grid-template-columns:1fr auto;align-items:end;margin-top:140px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:44px 0;transition:padding .4s}
+.next:hover{padding-left:16px}
+.next h2{font-weight:300;font-size:clamp(56px,9vw,140px);line-height:.9;text-transform:uppercase;margin-top:16px}
+.next p{font-family:PM;font-size:13px;color:var(--mut);margin-top:14px}
+.bigarr{width:84px;height:84px;border:1px solid var(--ink);border-radius:50%;display:grid;place-items:center;transition:.3s}
+.next:hover .bigarr{background:var(--ink);color:var(--paper)}
+.foot{border-top:1px solid var(--ink);display:grid;grid-template-columns:repeat(4,1fr);gap:40px;padding:40px 0 60px;margin-top:100px}
+.foot b{display:block;font-weight:400;font-size:15px;margin-top:12px;line-height:1.8}
+.rv{opacity:0;transform:translateY(24px);transition:opacity 1s cubic-bezier(.2,.8,.2,1),transform 1s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}.d1{transition-delay:.1s}.d2{transition-delay:.2s}
+@media (max-width:960px){
+ .wrap{padding:0 18px}.links,.srch .t{display:none}.srch{gap:6px;padding:8px 10px}.nr .pillb{display:none}
+ h1{font-size:76px}.top,.sh,.prob,.cap,.board,.arch,.vs,.note{grid-template-columns:1fr;gap:28px}
+ .prob .r,.board>div+div,.vs>div+div{border-left:0;border-top:1px solid var(--ink)}
+ .tabs{width:100%}.tabs button{flex:1;justify-content:center;padding:12px 8px;font-size:10.5px;letter-spacing:.1em}.tabs button sup{display:none}
+ .pane{padding:18px}.kpis{grid-template-columns:1fr 1fr}.kpi:nth-child(2){border:0}.dgrid,.ans,.inv{grid-template-columns:1fr}.dgrid>div+div,.ans>div+div,.inv>div+div{border-left:0;border-top:1px solid var(--line)}
+ .proof{grid-template-columns:1fr 1fr}.duo{grid-template-columns:1fr}.brief+.brief{border-left:0}.brief{padding:20px 18px}.brief .r{grid-template-columns:1fr;gap:4px}
+ .six{grid-template-columns:1fr}.cp{min-height:0}.users{grid-template-columns:1fr 1fr;gap:10px}
+ .next{grid-template-columns:1fr;gap:20px}.bigarr{width:56px;height:56px}.foot{grid-template-columns:1fr 1fr}.vf .hd,.vf .ft{padding:14px 18px;flex-wrap:wrap}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+
+/* pulsegrid extras */
+.path{display:flex;flex-wrap:wrap;gap:0;margin-top:50px;border:1px solid var(--ink)}
+.path div{flex:1 1 0;min-width:120px;padding:18px 16px 20px;border-right:1px solid var(--line);position:relative}
+.path div:last-child{border:0;background:var(--ink);color:var(--paper)}
+.path small{font-family:PM;font-size:9.5px;letter-spacing:.12em;color:var(--or)}
+.path b{display:block;font-weight:400;font-size:15.5px;margin-top:22px;text-transform:uppercase;letter-spacing:.04em}
+.path p{font-size:12.5px;color:var(--mut);margin-top:6px;line-height:1.45}
+.path div:last-child p{color:#bdbab3}
+.path .on{background:#f6f2ea}
+/* run view */
+.run{display:grid;grid-template-columns:1fr 1.2fr;border:1px solid var(--line);background:#fff}
+.run>div{padding:18px;min-width:0}.logs{overflow-x:auto}.run>div+div{border-left:1px solid var(--line);background:#14130f;color:#e9e6df}
+.rh{display:flex;justify-content:space-between;align-items:baseline}
+.rh b{font-weight:400;font-size:22px}
+.rm{font-family:PM;font-size:10.5px;color:var(--mut);margin-top:6px;letter-spacing:.06em}
+.job{display:grid;grid-template-columns:22px 1fr auto;gap:10px;padding:12px 0;border-top:1px solid var(--line);font-size:15px;align-items:center;cursor:default}
+.job:first-of-type{margin-top:16px}
+.job i{font-style:normal;font-family:PM;font-size:13px}
+.job .t{font-family:PM;font-size:11px;color:var(--mut)}
+.ok i{color:#1f7a4d}.go i{color:var(--or);animation:rec 1.2s steps(1) infinite}.wt i{color:var(--dim)}
+.job.sel{background:#f6f2ea;margin:0 -18px;padding-left:18px;padding-right:18px}
+.logs{font-family:PM;font-size:12px;line-height:1.75;white-space:pre;overflow:hidden}
+.logs .d{color:#8f8b82}.logs .g{color:#7fd19b}.logs .o{color:#ff8a5c}
+.fleet{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);background:#fff}
+.wk{padding:18px;border-right:1px solid var(--line)}.wk:last-child{border:0}
+.wk .h{display:flex;justify-content:space-between;align-items:center}
+.wk b{font-weight:400;font-size:20px;text-transform:uppercase}
+.hl{font-family:PM;font-size:9.5px;letter-spacing:.12em}
+.bar2{margin-top:14px}
+.bar2 small{display:flex;justify-content:space-between;font-family:PM;font-size:9.5px;color:var(--mut);letter-spacing:.08em}
+.bar2 i{display:block;height:5px;background:rgba(17,17,17,.08);margin-top:5px;position:relative}.bar2 i b{position:absolute;inset:0 auto 0 0;background:var(--ink)}
+.wk .cur{margin-top:16px;padding-top:12px;border-top:1px solid var(--line);font-family:PM;font-size:11px;color:#3a3936}
+.gh{border:1px solid var(--line);background:#fff}
+.gh .cm{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.gh .cm b{font-weight:500;font-size:15px}
+.gh .cm span{font-family:PM;font-size:11px;color:var(--mut)}
+.chk{display:grid;grid-template-columns:20px 1fr auto;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line);font-size:14.5px;align-items:center}
+.chk:last-child{border:0}
+.chk i{font-style:normal;font-family:PM}
+/* lease sim */
+.sim{display:grid;grid-template-columns:1.25fr 1fr;border:1px solid var(--ink);margin-top:50px}
+.stage{padding:30px 34px;position:relative;min-height:420px}
+.stage svg{width:100%;height:auto;display:block}
+.ctrl{border-left:1px solid var(--ink);padding:30px 34px;background:#f6f2ea;display:flex;flex-direction:column}
+.ev{display:grid;grid-template-columns:28px 1fr;gap:12px;padding:11px 0;border-top:1px solid var(--line);font-size:14.5px;line-height:1.45;opacity:.28;transition:opacity .4s}
+.ev.on{opacity:1}
+.ev.on.cur{font-weight:500}
+.ev span{font-family:PM;font-size:10px;color:var(--or);padding-top:3px}
+.ev.fence span{color:var(--ink)}
+.btnrow{display:flex;gap:10px;margin-top:auto;padding-top:22px}
+.btnrow button{font:inherit;cursor:pointer}
+.btnrow .pillb:not(.solid){background:transparent;color:var(--ink)}
+.sim .lbl{display:inline-block}
+.n_w{transition:all .5s}
+/* dag */
+.dag{display:grid;grid-template-columns:1fr 1.3fr;border:1px solid var(--ink);margin-top:50px}
+.dag pre{font-family:PM;font-size:13px;line-height:1.75;padding:28px 30px;background:#14130f;color:#e9e6df;overflow:auto}
+.dag pre .k{color:#ff8a5c}.dag pre .c{color:#8f8b82}
+.dag .g{padding:28px 30px}
+.dag .g svg{width:100%;height:auto}
+.rules{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);margin-top:14px}
+.rules div{padding:14px 14px 0 0;font-size:14px;line-height:1.5;color:#3a3936}
+.rules b{display:block;font-family:PM;font-size:10px;letter-spacing:.12em;font-weight:400;color:var(--ink);margin-bottom:4px}
+/* topology */
+.topo{border:1px solid var(--ink);margin-top:50px;padding:30px}
+.topo svg{width:100%;height:auto;display:block}
+/* roadmap chips */
+.road{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink);border-left:1px solid var(--ink);margin-top:50px}
+.road div{border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:20px 20px 22px;min-height:150px}
+.road small{font-family:PM;font-size:9.5px;letter-spacing:.12em;color:var(--mut)}
+.road h5{font-weight:400;font-size:19px;text-transform:uppercase;letter-spacing:.03em;margin-top:26px}
+.road p{font-size:14px;color:#3a3936;margin-top:6px;line-height:1.5}
+@media (max-width:960px){
+ .path div{flex-basis:45%}.run,.sim,.dag{grid-template-columns:1fr}.run>div+div,.ctrl{border-left:0;border-top:1px solid var(--line)}
+ .fleet{grid-template-columns:1fr}.wk{border-right:0;border-bottom:1px solid var(--line)}
+ .stage,.ctrl{padding:20px 18px}.road{grid-template-columns:1fr 1fr}.rules{grid-template-columns:1fr}.topo{padding:14px}
+}
+
+</style>
+
+
+
+
+<main class="wrap">
+ <a class="back" href="/projects">← All projects</a>
+ <div class="meta m"><span style="color:var(--ink)">Build 02</span><span class="ln"></span><span>Distributed CI/CD platform</span><span class="ln"></span><span><span class="rec"></span>Execution core built · GitHub runtime live</span></div>
+
+ <!-- HERO -->
+ <section class="top">
+  <div>
+   <h1 style="font-size:clamp(76px,11.5vw,176px)">PulseGrid</h1>
+   <div class="kick">“I pushed my code and it got tested.” <span>I built everything underneath that sentence.</span></div>
+   <p class="lede">A lightweight distributed CI platform, like GitHub Actions or Buildkite, where I built the infrastructure myself: webhooks, a DAG workflow engine, a resource-aware scheduler, pull-based Docker workers, and leases that survive crashes.</p>
+   <div class="acts"><a class="pillb solid" href="#crash">Crash a worker <span class="arr"></span></a><a class="pillb" href="#built">What's built</a><a class="pillb" href="https://github.com/VishalkiranRaichur/PulseGrid">Source</a></div>
+  </div>
+  <div class="facts rv">
+   <div><span>Role</span><span>Solo · systems design to code</span></div>
+   <div><span>Like</span><span>GitHub Actions · Buildkite</span></div>
+   <div><span>Core</span><span>Scheduler · Workers · Leases</span></div>
+   <div><span>Tested by</span><span>Chaos demo · e2e acceptance</span></div>
+   <div><span>Stack</span><span>Python · FastAPI · SQLite WAL · Docker</span></div>
+  </div>
+ </section>
+
+ <!-- 01 IDEA -->
+ <section class="sec">
+  <div class="sl m"><span><span class="n">01</span> · The idea</span><span>Push to result</span></div>
+  <div class="sh"><h2 class="rv">The infrastructure behind CI, not the UI around it.</h2><p class="rv d1">Everyone uses CI. Few people know what happens between <b>git push</b> and a green check. I wanted to build that part myself, end to end, so every step below is real code in PulseGrid.</p></div>
+  <div class="path rv">
+   <div><small>01</small><b>GitHub push</b><p>A developer pushes code</p></div>
+   <div><small>02</small><b>Webhook</b><p>Signature verified, retries de-duplicated</p></div>
+   <div class="on"><small>03</small><b>Control plane</b><p>Finds the repo and exact commit</p></div>
+   <div class="on"><small>04</small><b>Workflow DAG</b><p>Jobs with real dependencies</p></div>
+   <div class="on"><small>05</small><b>Scheduler</b><p>Matches jobs to CPU, memory, GPU</p></div>
+   <div><small>06</small><b>Worker</b><p>Checks out the exact SHA</p></div>
+   <div><small>07</small><b>Docker</b><p>Isolated run, logs back</p></div>
+   <div><small>08</small><b>Result</b><p>Back to the developer</p></div>
+  </div>
+ </section>
+
+ <!-- 02 PRODUCT -->
+ <section class="sec">
+  <div class="sl m"><span><span class="n">02</span> · The experience</span><span>What a developer sees</span></div>
+  <div class="sh"><h2 class="rv">Simple on top. Serious underneath.</h2><p class="rv d1">Connect a repo, add a small workflow file, push. From there it's a live view of every job, the machines running them and the result back on GitHub.</p></div>
+  <div class="tabs rv" id="tabs"><button class="on" data-p="0"><sup>01</sup>Workflow run</button><button data-p="1"><sup>02</sup>Workers</button><button data-p="2"><sup>03</sup>On GitHub</button></div>
+  <div class="screen rv">
+   <span class="c tl"></span>
+   <div class="hd" style="display:flex;justify-content:space-between;padding:14px 34px;font-family:PM;font-size:10px;letter-spacing:.16em"><span id="ptitle">PULSEGRID · WORKFLOW RUN</span><span class="lbl">CONCEPT UI · ILLUSTRATIVE DATA</span></div>
+   <div class="pane on">
+    <div class="run">
+     <div><div class="rh"><b>Workflow #1842</b><span class="hl or">● RUNNING</span></div><div class="rm">COMMIT a31d92f · BRANCH main · ci.yml</div>
+      <div class="job ok"><i>✓</i><span>lint</span><span class="t">11s</span></div>
+      <div class="job ok"><i>✓</i><span>tests</span><span class="t">43s</span></div>
+      <div class="job go sel"><i>●</i><span>build</span><span class="t">running · worker-b</span></div>
+      <div class="job wt"><i>○</i><span>deploy</span><span class="t">waiting on build</span></div></div>
+     <div><div class="m" style="color:#8f8b82">BUILD · LIVE LOGS</div><div class="logs" style="margin-top:14px"><span class="d">00:00</span> claimed by worker-b <span class="o">lease 7f3c…</span>
+<span class="d">00:01</span> git checkout <span class="g">a31d92f</span> (exact SHA ✓)
+<span class="d">00:02</span> docker run python:3.12-slim
+<span class="d">00:02</span> mount /workspace (read-only)
+<span class="d">00:04</span> pip install -r requirements.txt
+<span class="d">00:19</span> building wheel…
+<span class="d">00:21</span> heartbeat ✓ lease renewed
+<span class="d">00:26</span> <span class="o">▌</span></div></div>
+    </div>
+    <div class="cap"><h4>Watch every job live</h4><p>Each run shows the exact commit, every job's state and timing, and real-time logs for any job you open.</p></div>
+   </div>
+   <div class="pane">
+    <div class="fleet">
+     <div class="wk"><div class="h"><b>Worker A</b><span class="hl" style="color:#1f7a4d">● HEALTHY</span></div><div class="bar2"><small><span>CPU</span><span>3 / 4</span></small><i><b style="width:75%"></b></i></div><div class="bar2"><small><span>MEMORY</span><span>5 / 8 GB</span></small><i><b style="width:62%"></b></i></div><div class="cur">running · tests #1843</div></div>
+     <div class="wk"><div class="h"><b>Worker B</b><span class="hl" style="color:#1f7a4d">● HEALTHY</span></div><div class="bar2"><small><span>CPU</span><span>6 / 8</span></small><i><b style="width:75%"></b></i></div><div class="bar2"><small><span>MEMORY</span><span>9 / 16 GB</span></small><i><b style="width:56%"></b></i></div><div class="cur">running · build #1842</div></div>
+     <div class="wk"><div class="h"><b>Worker C</b><span class="hl" style="color:var(--mut)">○ IDLE</span></div><div class="bar2"><small><span>GPU</span><span>0 / 1</span></small><i><b style="width:0"></b></i></div><div class="bar2"><small><span>MEMORY</span><span>0 / 32 GB</span></small><i><b style="width:0"></b></i></div><div class="cur">waiting for GPU jobs</div></div>
+    </div>
+    <div class="cap"><h4>See the machines</h4><p>Workers advertise CPU, memory, GPU and health. The scheduler only hands a job to a worker that can actually fit it.</p></div>
+   </div>
+   <div class="pane">
+    <div class="gh">
+     <div class="cm"><b>fix: retry flaky upload test</b><span>a31d92f · main</span></div>
+     <div class="chk"><i class="or">●</i><span>PulseGrid CI — Pending</span><span class="hl" style="color:var(--mut)">ON PUSH</span></div>
+     <div class="chk"><i style="color:#1f7a4d">✓</i><span>PulseGrid CI — Passed</span><span class="hl" style="color:#1f7a4d">WHEN IT FINISHES</span></div>
+     <div class="chk"><i class="or">✗</i><span>PulseGrid CI — Failed</span><span class="hl or">OR THIS</span></div>
+    </div>
+    <div class="cap"><h4>Results where you work</h4><p>Status goes back to the commit on GitHub, with durable delivery: if GitHub is down, the update retries, and an old result can never overwrite a newer one.</p></div>
+   </div>
+   <div class="ft" style="display:flex;justify-content:space-between;padding:14px 34px;font-family:PM;font-size:10px;letter-spacing:.16em;color:var(--mut);border-top:1px solid var(--line)"><span>PRODUCT DIRECTION · DESIGNED FOR THIS PAGE</span><span>TODAY: API + CLI</span></div>
+  </div>
+ </section>
+
+ <!-- 03 CRASH SIM -->
+ <section class="sec" id="crash">
+  <div class="sl m"><span><span class="n">03</span> · The part I care about most</span><span>Failure handling</span></div>
+  <div class="sh"><h2 class="rv">Go ahead. Crash a worker.</h2><p class="rv d1">I didn't want a system that only works when everything behaves. <b>Every job runs on a lease.</b> Workers must keep renewing it with heartbeats, or PulseGrid takes the job back and gives it to someone else.</p></div>
+  <div class="sim rv">
+   <div class="stage">
+    <div class="m" style="display:flex;justify-content:space-between"><span>Job 42 · build</span><span id="clock">T+00s</span></div>
+    <svg viewBox="0 0 520 330" id="simsvg">
+     <rect x="190" y="20" width="140" height="56" fill="#fcfaf6" stroke="#111"/>
+     <text x="260" y="44" text-anchor="middle" font-family="JO" font-size="14" letter-spacing="1.5">CONTROL PLANE</text>
+     <text x="260" y="62" text-anchor="middle" font-family="PM" font-size="9.5" fill="#6f6d68" id="lease">LEASE: —</text>
+     <path id="la" d="M230 76 C200 140 120 160 110 220" fill="none" stroke="#111" stroke-dasharray="3 5"/>
+     <path id="lb" d="M290 76 C320 140 400 160 410 220" fill="none" stroke="#111" stroke-dasharray="3 5" opacity=".25"/>
+     <g id="wa" class="n_w"><rect x="40" y="220" width="140" height="70" fill="#fcfaf6" stroke="#111"/><text x="110" y="246" text-anchor="middle" font-family="JO" font-size="14" letter-spacing="1.5">WORKER A</text><text x="110" y="268" text-anchor="middle" font-family="PM" font-size="9.5" fill="#6f6d68" id="wat">IDLE</text></g>
+     <g id="wb" class="n_w" opacity=".35"><rect x="340" y="220" width="140" height="70" fill="#fcfaf6" stroke="#111"/><text x="410" y="246" text-anchor="middle" font-family="JO" font-size="14" letter-spacing="1.5">WORKER B</text><text x="410" y="268" text-anchor="middle" font-family="PM" font-size="9.5" fill="#6f6d68" id="wbt">IDLE</text></g>
+     <circle id="pulse" r="5" fill="#ff5a1f" opacity="0"/>
+     <text id="x" x="110" y="214" text-anchor="middle" font-family="PM" font-size="11" fill="#ff5a1f" opacity="0">✕ CRASHED</text>
+     <text id="fence" x="110" y="314" text-anchor="middle" font-family="PM" font-size="10" fill="#111" opacity="0">STALE RESULT → REJECTED</text>
+    </svg>
+   </div>
+   <div class="ctrl">
+    <div class="m">What happens</div>
+    <div class="ev" data-s="1"><span>01</span><div>Worker A pulls Job 42 and gets lease <b>7f3c</b></div></div>
+    <div class="ev" data-s="2"><span>02</span><div>Heartbeats renew the lease while it runs</div></div>
+    <div class="ev" data-s="3"><span>03</span><div>Worker A crashes. Heartbeats stop.</div></div>
+    <div class="ev" data-s="4"><span>04</span><div>Lease expires. Resources released exactly once.</div></div>
+    <div class="ev" data-s="5"><span>05</span><div>Job 42 requeued, retry count +1, new lease <b>9a1e</b></div></div>
+    <div class="ev" data-s="6"><span>06</span><div>Worker B runs Job 42 and finishes</div></div>
+    <div class="ev fence" data-s="7"><span>07</span><div>Worker A comes back with old lease 7f3c. <b>Fenced out.</b></div></div>
+    <div class="btnrow"><button class="pillb solid" id="go">Crash worker A <span class="arr"></span></button><button class="pillb" id="rs">Reset</button></div>
+   </div>
+  </div>
+  <div class="note rv"><div class="m">Why it matters</div><p>The tricky part isn't retrying. It's making sure <b>the old worker can't come back and overwrite the new result</b>. Every heartbeat, log and completion call carries its lease ID, so a stale attempt is rejected. A chaos demo in the repo reassigns a job with a new lease after a worker expires.</p></div>
+ </section>
+
+ <!-- 04 DAG -->
+ <section class="sec">
+  <div class="sl m"><span><span class="n">04</span> · Workflows as graphs</span><span>Not a list of commands</span></div>
+  <div class="sh"><h2 class="rv">It understands which job waits for which.</h2><p class="rv d1">A small YAML file becomes a <b>directed acyclic graph</b>. Lint and tests run in parallel, build waits for both, deploy waits for build. The engine decides what's ready, the scheduler decides where it fits.</p></div>
+  <div class="dag rv">
+<pre><span class="c"># .pulsegrid/workflow.yml</span>
+<span class="k">name</span>: ci
+<span class="k">jobs</span>:
+  <span class="k">lint</span>:
+    image: python:3.12-slim
+    command: ruff check .
+  <span class="k">tests</span>:
+    image: python:3.12-slim
+    command: pytest
+  <span class="k">build</span>:
+    image: python:3.12-slim
+    command: python -m build
+    needs: [lint, tests]
+  <span class="k">deploy</span>:
+    image: alpine:3.20
+    command: ./deploy.sh
+    needs: [build]</pre>
+   <div class="g">
+    <svg viewBox="0 0 460 220"><g fill="none" stroke="#111" stroke-width="1.1"><rect x="20" y="40" width="90" height="38"/><rect x="20" y="140" width="90" height="38"/><rect x="190" y="90" width="90" height="38" stroke="#ff5a1f"/><rect x="350" y="90" width="90" height="38" stroke-dasharray="4 4"/><path d="M110 59 C150 59 150 109 190 109M110 159 C150 159 150 109 190 109M280 109 H350"/></g><g font-family="PM" font-size="11" text-anchor="middle"><text x="65" y="63">lint ✓</text><text x="65" y="163">tests ✓</text><text x="235" y="113" fill="#ff5a1f">build ●</text><text x="395" y="113" fill="#6f6d68">deploy ○</text></g><g font-family="PM" font-size="9" fill="#6f6d68" letter-spacing="1"><text x="20" y="28">QUEUED → DONE</text><text x="190" y="80">READY WHEN BOTH PASS</text><text x="350" y="80">BLOCKED</text></g></svg>
+    <div class="rules"><div><b>NO PARENTS</b>Start queued immediately</div><div><b>HAS PARENTS</b>Blocked until every parent succeeds</div><div><b>PARENT FAILS</b>Descendants skipped, other branches keep going</div></div>
+   </div>
+  </div>
+ </section>
+
+ <!-- 05 BUILT -->
+ <section class="sec" id="built">
+  <div class="sl m"><span><span class="n">05</span> · Built vs. vision</span><span>No overselling</span></div>
+  <div class="sh"><h2 class="rv">The hard infrastructure already runs.</h2><p class="rv d1">The execution core and the GitHub runtime are working today. The product layer that teams would pay for comes next.</p></div>
+  <div class="board rv">
+   <div><h4>Built <span>08</span></h4>
+    <div class="it">Control plane with durable job queue<span class="s b">LIVE</span></div>
+    <div class="it">Pull-based Docker workers, CPU/memory/GPU matching<span class="s b">LIVE</span></div>
+    <div class="it">Leases, heartbeats &amp; stale-worker fencing<span class="s b">LIVE</span></div>
+    <div class="it">Crash recovery with retry budgets<span class="s b">LIVE</span></div>
+    <div class="it">YAML workflows as a DAG<span class="s b">LIVE</span></div>
+    <div class="it">Verified GitHub webhooks, no duplicate runs<span class="s b">LIVE</span></div>
+    <div class="it">Exact-SHA checkout, read-only workspace<span class="s b">LIVE</span></div>
+    <div class="it">Container logs to the control plane<span class="s b">LIVE</span></div></div>
+   <div><h4>Next <span>06</span></h4>
+    <div class="it">Commit status on GitHub with durable delivery<span class="s p">NEXT</span></div>
+    <div class="it">Live dashboard &amp; real-time log streaming<span class="s p">PLANNED</span></div>
+    <div class="it">Workers on separate Linux machines<span class="s p">PLANNED</span></div>
+    <div class="it">Sign-in, organizations, GitHub App<span class="s p">PLANNED</span></div>
+    <div class="it">Private repos &amp; encrypted secrets<span class="s p">PLANNED</span></div>
+    <div class="it">Autoscaling workers<span class="s p">FUTURE</span></div></div>
+  </div>
+  <div class="proof rv"><div><b>1<em>×</em></b><small>resources released exactly once on every recovery</small></div><div><b>0</b><small>duplicate workflows from GitHub retries</small></div><div><b>SHA</b><small>tests the exact pushed commit, never “latest”</small></div><div><b>Chaos</b><small>demo reassigns a job after a worker dies</small></div></div>
+ </section>
+
+ <!-- 06 ARCH -->
+ <section class="sec">
+  <div class="sl m"><span><span class="n">06</span> · Architecture</span><span>Control plane + workers</span></div>
+  <div class="sh"><h2 class="rv">The brain coordinates. Workers just run.</h2><p class="rv d1">The control plane owns workflow state, scheduling, leases, retries and GitHub. Workers only provide compute and run jobs safely. <b>That split is what lets it grow from three workers to hundreds</b> without changing anything for the developer.</p></div>
+  <div class="topo rv">
+   <svg viewBox="0 0 1000 330">
+    <rect x="300" y="10" width="400" height="76" fill="#14130f"/><text x="500" y="44" text-anchor="middle" font-family="JO" font-size="17" letter-spacing="2" fill="#fcfaf6">CONTROL PLANE</text><text x="500" y="66" text-anchor="middle" font-family="PM" font-size="10" fill="#bdbab3" letter-spacing="1">STATE · SCHEDULER · LEASES · RETRIES · GITHUB</text>
+    <g fill="none" stroke="#111" stroke-dasharray="3 5"><path d="M440 86 C400 140 200 150 170 190"/><path d="M500 86 V190"/><path d="M560 86 C600 140 800 150 830 190"/></g>
+    <text x="300" y="150" font-family="PM" font-size="9.5" fill="#ff5a1f" letter-spacing="1">PULL · HEARTBEAT</text>
+    <g font-family="PM" font-size="10.5" text-anchor="middle" letter-spacing="1">
+     <rect x="80" y="190" width="180" height="120" fill="#fcfaf6" stroke="#111"/><text x="170" y="220" font-family="JO" font-size="15">WORKER A</text><text x="170" y="246" fill="#6f6d68">4 CPU · 8 GB</text><rect x="110" y="262" width="120" height="30" fill="none" stroke="#111" stroke-opacity=".4"/><text x="170" y="282">DOCKER</text>
+     <rect x="410" y="190" width="180" height="120" fill="#fcfaf6" stroke="#111"/><text x="500" y="220" font-family="JO" font-size="15">WORKER B</text><text x="500" y="246" fill="#6f6d68">8 CPU · 16 GB</text><rect x="440" y="262" width="120" height="30" fill="none" stroke="#111" stroke-opacity=".4"/><text x="500" y="282">DOCKER</text>
+     <rect x="740" y="190" width="180" height="120" fill="#fcfaf6" stroke="#ff5a1f"/><text x="830" y="220" font-family="JO" font-size="15">WORKER C</text><text x="830" y="246" fill="#ff5a1f">GPU · 32 GB</text><rect x="770" y="262" width="120" height="30" fill="none" stroke="#111" stroke-opacity=".4"/><text x="830" y="282">DOCKER</text>
+    </g>
+    <text x="960" y="250" font-family="PM" font-size="22" fill="#a19e97" text-anchor="middle">+</text>
+   </svg>
+  </div>
+ </section>
+
+ <!-- 07 VISION -->
+ <section class="sec">
+  <div class="sl m"><span><span class="n">07</span> · The vision</span><span>What a serious CI needs</span></div>
+  <div class="sh"><h2 class="rv">Everything developers expect, on the same core.</h2><p class="rv d1">The production version adds the features teams rely on, plus <b>observability</b>, so when a pipeline suddenly takes ten minutes you can see why.</p></div>
+  <div class="road">
+   <div class="rv"><small>SECURITY</small><h5>Secrets &amp; private repos</h5><p>Encrypted secrets, private checkout, scoped GitHub App access</p></div>
+   <div class="rv d1"><small>SPEED</small><h5>Caching &amp; artifacts</h5><p>Dependency and Docker-layer caches, build artifacts</p></div>
+   <div class="rv d2"><small>CONTROL</small><h5>Limits &amp; rules</h5><p>Cancellation, timeouts, concurrency limits, branch rules</p></div>
+   <div class="rv"><small>SCALE</small><h5>Autoscaling</h5><p>Add compute when the queue is busy, shut it down when quiet</p></div>
+   <div class="rv"><small>REUSE</small><h5>Reusable workflows</h5><p>Shared pipelines across repositories</p></div>
+   <div class="rv d1"><small>TEAMS</small><h5>Orgs &amp; sign-in</h5><p>Organizations, roles, repository permissions</p></div>
+   <div class="rv d2"><small>INSIGHT</small><h5>Observability</h5><p>Queue depth, worker health, utilization, failure and retry rates</p></div>
+   <div class="rv"><small>HISTORY</small><h5>Analytics</h5><p>Workflow duration and performance over time</p></div>
+  </div>
+  <p class="claim rv">Not just a script that runs Docker. <span>A small, real distributed execution platform.</span></p>
+  <div class="chips rv"><span>Python</span><span>FastAPI</span><span>SQLite WAL</span><span>Docker</span><span>YAML DAGs</span><span>GitHub webhooks</span><span>HMAC-SHA256</span><span>GitHub Contents API</span></div>
+ </section>
+
+ <a class="next rv" href="/projects/forgedb"><div><div class="m">Next project · Build 03</div><h2>ForgeDB</h2><p>A database written from the disk page up.</p></div><span class="bigarr"><span class="arr"></span></span></a>
+</main>
+<script is:inline>
+addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('sc',scrollY>10),{passive:true});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+const T=['PULSEGRID · WORKFLOW RUN','PULSEGRID · WORKERS','PULSEGRID · ON GITHUB'];
+const bs=[...document.querySelectorAll('#tabs button')],ps=[...document.querySelectorAll('.pane')];
+bs.forEach(b=>b.onclick=()=>{const i=+b.dataset.p;bs.forEach(x=>x.classList.toggle('on',x===b));ps.forEach((p,j)=>p.classList.toggle('on',j===i));document.getElementById('ptitle').textContent=T[i]});
+// ---- crash simulation ----
+const $=id=>document.getElementById(id),evs=[...document.querySelectorAll('.ev')];
+let timers=[],hb=null;
+function pulseAlong(pathId){const p=$(pathId),L=p.getTotalLength(),dot=$('pulse');let t0=performance.now();dot.setAttribute('opacity',1);
+ cancelAnimationFrame(hb);(function f(t){const k=((t-t0)%900)/900,pt=p.getPointAtLength(L*(1-k));dot.setAttribute('cx',pt.x);dot.setAttribute('cy',pt.y);hb=requestAnimationFrame(f)})(t0)}
+function stopPulse(){cancelAnimationFrame(hb);$('pulse').setAttribute('opacity',0)}
+function step(n){evs.forEach(e=>{const s=+e.dataset.s;e.classList.toggle('on',s<=n);e.classList.toggle('cur',s===n)});$('clock').textContent='T+'+String([0,0,8,14,44,45,52,60][n]).padStart(2,'0')+'s'}
+function reset(){timers.forEach(clearTimeout);timers=[];stopPulse();step(0);
+ $('lease').textContent='LEASE: —';$('wat').textContent='IDLE';$('wbt').textContent='IDLE';$('wa').setAttribute('opacity',1);$('wb').setAttribute('opacity',.35);
+ $('la').setAttribute('opacity',1);$('lb').setAttribute('opacity',.25);$('x').setAttribute('opacity',0);$('fence').setAttribute('opacity',0);$('la').setAttribute('stroke','#111')}
+function run(){reset();const at=(ms,f)=>timers.push(setTimeout(f,ms));
+ at(200,()=>{step(1);$('lease').textContent='LEASE 7f3c → WORKER A';$('wat').textContent='JOB 42 · RUNNING'});
+ at(1300,()=>{step(2);pulseAlong('la')});
+ at(3300,()=>{step(3);stopPulse();$('x').setAttribute('opacity',1);$('wa').setAttribute('opacity',.35);$('wat').textContent='NO HEARTBEAT';$('la').setAttribute('stroke','#ff5a1f')});
+ at(4800,()=>{step(4);$('lease').textContent='LEASE 7f3c EXPIRED';$('la').setAttribute('opacity',.15)});
+ at(6000,()=>{step(5);$('lease').textContent='LEASE 9a1e → WORKER B';$('wb').setAttribute('opacity',1);$('lb').setAttribute('opacity',1);$('wbt').textContent='JOB 42 · RETRY 1'});
+ at(6800,()=>pulseAlong('lb'));
+ at(8600,()=>{step(6);stopPulse();$('wbt').textContent='JOB 42 · PASSED ✓'});
+ at(9800,()=>{step(7);$('x').setAttribute('opacity',0);$('wa').setAttribute('opacity',1);$('wat').textContent='BACK · OLD LEASE 7f3c';$('fence').setAttribute('opacity',1)});
+}
+$('go').onclick=run;$('rs').onclick=reset;reset();
+</script>
+
+</Layout>

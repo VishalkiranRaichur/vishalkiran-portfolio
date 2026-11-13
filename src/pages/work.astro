@@ -1,0 +1,324 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title='Work · Vishalkiran Raichur' description='Experience, community and leadership: RCC, Relling Systems, SJSU SCE, Corizo, The Creative Crowd and more.' active="work">
+<style is:global>
+
+
+
+.ph{padding:90px 0 0;display:grid;grid-template-columns:1fr 420px;gap:60px;align-items:end}
+.ph h1{font-weight:300;font-size:clamp(54px,7.4vw,108px);line-height:.98;text-transform:uppercase;margin-top:26px}
+.ph h1 .ln{display:block;overflow:hidden}.ph h1 .ln>span{display:inline-block;transform:translateY(102%);animation:up 1s cubic-bezier(.2,.8,.2,1) forwards}
+.ph h1 .ln:nth-child(2)>span{animation-delay:.08s}
+@keyframes up{to{transform:none}}
+.ph p{font-size:19px;line-height:1.65;color:#2b2a28;margin-top:28px;max-width:640px}
+.sum{border-top:1px solid var(--ink)}
+.sum div{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line);font-size:15px}
+.sum div span:first-child{font-family:PM;font-size:10.5px;letter-spacing:.14em;color:var(--mut);text-transform:uppercase;padding-top:3px}
+/* logo tiles */
+.lt{display:inline-grid;place-items:center;width:46px;height:46px;border:1px solid var(--ink);background:#fff;overflow:hidden;flex:none;margin-bottom:16px}
+.lt img{width:100%;height:100%;object-fit:cover}
+.lt.mono{font-family:PM;font-size:11px;letter-spacing:.06em;background:var(--paper)}
+.lt.w{background:#fff}
+.lt.big{width:64px;height:64px;margin:0;border-color:rgba(255,255,255,.25)}
+.when .lt{display:grid}
+.strip2{margin-top:70px;border-top:1px solid var(--ink);border-bottom:1px solid var(--line);padding:18px 0;display:grid;grid-template-columns:150px 1fr;gap:16px;align-items:center}
+.logos{display:flex;flex-wrap:wrap;gap:10px 16px}
+.li{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;color:#3a3936}
+.li .lt{width:34px;height:34px;margin:0}.li .lt.mono{font-size:9px}.li .lt svg{width:16px;height:16px}
+@media (max-width:960px){.strip2{grid-template-columns:1fr}}
+/* timeline */
+.tlw{margin-top:30px;border:1px solid var(--ink);padding:26px 30px 30px}
+.tlh{display:flex;justify-content:space-between}
+.axis{position:relative;height:150px;margin-top:22px}
+.yr{position:absolute;top:0;bottom:22px;border-left:1px dashed var(--line)}
+.yr span{position:absolute;bottom:-22px;left:-14px;font-family:PM;font-size:10px;color:var(--mut);letter-spacing:.1em}
+.bar{position:absolute;min-width:max-content;height:26px;border:1px solid var(--ink);background:#fff;display:flex;align-items:center;padding:0 10px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;overflow:hidden;cursor:pointer;transition:background .25s,color .25s}
+.bar:hover,.bar.hot{background:var(--ink);color:var(--paper)}
+.bar.or{border-color:var(--or)}.bar.or:hover,.bar.or.hot{background:var(--or);color:#fff}
+.bar.open{border-right:0;background:linear-gradient(90deg,#fff 70%,rgba(255,255,255,0))}
+.bar.open:hover,.bar.open.hot{background:var(--ink)}
+.now{position:absolute;top:-6px;bottom:16px;width:1px;background:var(--or)}
+.now span{position:absolute;top:-16px;left:-14px;font-family:PM;font-size:9.5px;color:var(--or);letter-spacing:.1em}
+/* entries */
+.lab{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--ink);padding-top:16px;margin-top:110px}
+.job{display:grid;grid-template-columns:230px 1fr 300px;gap:44px;padding:48px 0;border-bottom:1px solid var(--line);transition:background .3s}
+.job.hot{background:#f6f2ea}
+.when b{display:block;font-weight:400;font-size:17px}
+.when .m{display:block;margin-top:10px;line-height:1.9}
+.tag{display:inline-block;font-family:PM;font-size:9.5px;letter-spacing:.12em;border:1px solid var(--ink);padding:3px 7px;margin-top:12px}
+.org{font-family:PM;font-size:11px;letter-spacing:.14em;color:var(--or);text-transform:uppercase}
+.job h3{font-weight:300;font-size:clamp(34px,3.4vw,50px);line-height:1.02;text-transform:uppercase;margin-top:12px}
+.job .role{font-size:16px;color:var(--mut);margin-top:10px}
+.job .one{font-size:19px;line-height:1.55;color:#2b2a28;margin-top:22px;max-width:680px}
+.job ul{list-style:none;margin-top:20px;border-top:1px solid var(--line)}
+.job li{font-size:16px;line-height:1.6;color:#2b2a28;padding:12px 0 12px 26px;border-bottom:1px solid var(--line);position:relative}
+.job li::before{content:"";position:absolute;left:0;top:24px;width:12px;height:1px;background:var(--or)}
+.job li b{font-weight:500}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.chips span{font-family:PM;font-size:11px;border:1px solid var(--line);border-radius:999px;padding:6px 12px;color:#3a3936}
+.lnk{display:inline-flex;gap:10px;align-items:center;margin-top:22px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;border-bottom:1px solid var(--ink);padding-bottom:5px}
+.stats{display:grid;gap:10px;align-content:start}
+.st{border:1px solid var(--ink);padding:18px 20px;background:var(--paper)}
+.st b{display:block;font-weight:300;font-size:44px;line-height:1}
+.st b em{font-style:normal;color:var(--or)}
+.st small{display:block;font-family:PM;font-size:10px;letter-spacing:.12em;color:var(--mut);text-transform:uppercase;margin-top:8px}
+/* TCC feature */
+.tcc{display:grid;grid-template-columns:1.25fr 1fr;border:1px solid var(--ink);margin-top:40px}
+.tcc .tl{background:var(--ink);color:var(--paper);padding:40px 42px}
+.tcc .org{font-family:PM;font-size:11px;letter-spacing:.14em;color:var(--or);text-transform:uppercase}
+.tcc h3{font-weight:300;font-size:clamp(36px,3.8vw,56px);line-height:1.02;text-transform:uppercase;margin-top:14px}
+.tcc p{font-size:17.5px;line-height:1.65;color:#d9d5cc;margin-top:22px;max-width:640px}
+.tcc p b{color:#fff;font-weight:500}
+.tmeta{display:flex;gap:22px;flex-wrap:wrap;margin-top:28px;color:#9c988f!important}
+.tn{display:grid;grid-template-columns:1fr 1fr}
+.tn div{padding:28px 26px;border-left:1px solid var(--ink);border-bottom:1px solid var(--line)}
+.tn b{display:block;font-weight:300;font-size:58px;line-height:1}
+.tn b em{font-style:normal;color:var(--or)}
+.tn small{display:block;font-family:PM;font-size:10px;letter-spacing:.12em;color:var(--mut);text-transform:uppercase;margin-top:10px}
+.tul{grid-column:1/-1;list-style:none;border-top:1px solid var(--ink);display:grid;grid-template-columns:repeat(3,1fr)}
+.tul li{padding:20px 24px;font-size:15.5px;line-height:1.55;color:#2b2a28;border-right:1px solid var(--line)}
+.tul li:last-child{border:0}.tul li b{font-weight:500}
+.tcc.hot .tl{background:#000}
+@media (max-width:960px){.tcc{grid-template-columns:1fr}.tcc .tl{padding:26px 20px}.tn div{border-left:0;border-right:1px solid var(--line)}.tn b{font-size:42px}.tul{grid-template-columns:1fr}.tul li{border-right:0;border-bottom:1px solid var(--line)}}
+/* education */
+.edu{display:grid;grid-template-columns:230px 1fr 300px;gap:44px;padding:44px 0;border-bottom:1px solid var(--line);align-items:start}
+.edu h3{font-weight:300;font-size:clamp(30px,3vw,44px);text-transform:uppercase;line-height:1.05}
+.edu p{font-size:16.5px;color:#3a3936;margin-top:10px;line-height:1.6}
+.course{border-top:1px solid var(--ink)}
+.course div{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line);font-size:15px}
+.course span:last-child{font-family:PM;font-size:10.5px;color:var(--mut);letter-spacing:.08em;padding-top:3px}
+.cta{margin-top:120px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:40px;border:1px solid var(--ink);padding:44px 48px}
+.cta h2{font-weight:300;font-size:clamp(40px,4.6vw,68px);text-transform:uppercase;line-height:1}
+.cta p{font-size:17px;color:#3a3936;margin-top:14px}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.foot{border-top:1px solid var(--ink);display:grid;grid-template-columns:repeat(4,1fr);gap:40px;padding:40px 0 60px;margin-top:100px}
+.foot b{display:block;font-weight:400;font-size:15px;margin-top:12px;line-height:1.8}
+.rv{opacity:0;transform:translateY(24px);transition:opacity 1s cubic-bezier(.2,.8,.2,1),transform 1s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}.d1{transition-delay:.1s}.d2{transition-delay:.2s}
+@media (max-width:960px){
+ .wrap{padding:0 18px}.links,.srch .t{display:none}.srch{gap:6px;padding:8px 10px}.nr .pillb{display:none}
+ .ph{grid-template-columns:1fr;padding-top:50px;gap:34px}
+ .tlw{padding:18px 14px;overflow-x:auto}.axis{min-width:900px}
+ .job,.edu{grid-template-columns:1fr;gap:22px;padding:36px 0}.stats{grid-template-columns:1fr 1fr}
+ .cta{grid-template-columns:1fr;padding:26px}.foot{grid-template-columns:1fr 1fr}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}.ph h1 .ln>span{transform:none}}
+
+</style>
+
+
+
+
+<main class="wrap">
+ <section class="ph">
+  <div>
+   <div class="m">02 · Work · Experience</div>
+   <h1><span class="ln"><span>Where I've</span></span><span class="ln"><span>shipped<span class="or">.</span></span></span></h1>
+   <p>Real teams, real users, real deadlines. From building a global student community in high school, to AI work at an EdTech startup, to backend systems in San José and San Francisco, and now a studio of my own.</p>
+  </div>
+  <div class="sum rv">
+   <div><span>Roles</span><span>4 engineering · 4 leadership</span></div>
+   <div><span>Venture</span><span>Founder, IVK Media</span></div>
+   <div><span>Studying</span><span>B.S. Data Science, SJSU · 2028</span></div>
+   <div><span>Looking for</span><span>SWE · AI/ML · Backend internships</span></div>
+  </div>
+ </section>
+
+
+ <div class="strip2 rv">
+  <span class="m">Teams &amp; communities</span>
+  <div class="logos">
+   <span class="li"><span class="lt"><img src="/img/tcc_mark.jpg" alt=""></span>The Creative Crowd</span>
+   <span class="li"><span class="lt"><img src="/img/lg_corizo.jpg" alt=""></span>Corizo</span>
+   <span class="li"><span class="lt"><img src="/img/lg_sce.jpg" alt=""></span>SJSU SCE</span>
+   <span class="li"><span class="lt w"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="#fa0f00" d="M13.966 22.624l-1.69-4.281H8.122l3.892-9.144 5.662 13.425zM8.884 1.376H0v21.248zm15.116 0h-8.884L24 22.624Z"/></svg></span>Adobe</span>
+   <span class="li"><span class="lt"><img src="/img/lg_braven.jpg" alt=""></span>Braven</span>
+   <span class="li"><span class="lt"><img src="/img/lg_relling.jpg" alt=""></span>Relling Systems</span>
+   <span class="li"><span class="lt"><img src="/img/lg_rcc.jpg" alt=""></span>RCC · SJSU</span>
+   <span class="li"><span class="lt"><img src="/img/lg_ideas.jpg" alt=""></span>Ideas Club</span>
+   <span class="li"><span class="lt"><img src="/img/ivk_mark.jpg" alt=""></span>IVK Media</span>
+  </div>
+ </div>
+ <!-- timeline -->
+ <div class="tlw rv">
+  <div class="tlh m"><span>Timeline · hover a role</span><span>2022 → now</span></div>
+  <div class="axis" id="axis"></div>
+ </div>
+
+ <div class="lab m"><span>Experience</span><span>03</span></div>
+
+ <article class="job" id="j-rcc">
+  <div class="when"><span class="lt"><img src="/img/lg_rcc.jpg" alt=""></span><b>Jan – May 2026</b><span class="m">San José, CA<br>Team of 6</span><span class="tag">ON-SITE</span></div>
+  <div>
+   <div class="org">Responsible Computing Club · SJSU</div>
+   <h3>Backend lead, Luminara</h3>
+   <div class="role">Software Engineering Intern</div>
+   <p class="one">Led the backend of an app that makes academic reading accessible: dense text in, clear text out, with the meaning kept.</p>
+   <ul>
+    <li>Built most of the <b>Flask backend</b>: file conversion for PDFs, slides, Word docs and photos (with OCR), and back to the original format.</li>
+    <li>Designed the pipeline so a <b>local AI model rewrites only flagged spans</b>, never the whole document, after NLP finds the hard parts.</li>
+    <li>Built secure sign-in with JWT, <b>disposable-email blocking and login rate limiting</b>, plus a personal-dictionary API.</li>
+    <li>Helped teammates with their code and Figma designs, and shipped it all with Docker Compose.</li>
+   </ul>
+   <div class="chips"><span>Python</span><span>Flask</span><span>spaCy</span><span>Ollama</span><span>Docker</span></div>
+   <a class="lnk" href="/projects/luminara">Read the Luminara case study <span class="arr"></span></a>
+  </div>
+  <div class="stats rv"><div class="st"><b>6</b><small>teammates</small></div><div class="st"><b>Local <em>AI</em></b><small>documents stay on the machine</small></div></div>
+ </article>
+
+ <article class="job" id="j-rel">
+  <div class="when"><span class="lt"><img src="/img/lg_relling.jpg" alt=""></span><b>Dec 2025 – Feb 2026</b><span class="m">San Francisco, CA<br>Project-based</span><span class="tag">ON-SITE</span></div>
+  <div>
+   <div class="org">Relling Systems</div>
+   <h3>Asset tracking for field teams</h3>
+   <div class="role">Project-Based Software Developer</div>
+   <p class="one">About 800 cameras, teams across the country, and no single place to see where anything was. So I built one.</p>
+   <ul>
+    <li>Built a <b>centralized web-based asset management system</b> for about 800 GoPro cameras used by field teams across the United States.</li>
+    <li>Designed an <b>asset identification and allocation workflow</b> that tracks who owns each camera, whether it's available, and which job site it's on.</li>
+    <li>Worked from the company's San Francisco office to learn the real workflow, then <b>iterated on the system from real-world use</b>.</li>
+   </ul>
+   <div class="chips"><span>Web app</span><span>Asset tracking</span><span>Workflow design</span></div>
+  </div>
+  <div class="stats rv"><div class="st"><b>~800</b><small>cameras tracked</small></div><div class="st"><b>US<em>-wide</em></b><small>field teams served</small></div></div>
+ </article>
+
+ <article class="job" id="j-sce">
+  <div class="when"><span class="lt"><img src="/img/lg_sce.jpg" alt=""></span><b>Jan – May 2025</b><span class="m">San José, CA<br>12-person team</span><span class="tag">ON-SITE</span></div>
+  <div>
+   <div class="org">SJSU Software &amp; Computer Engineering Society</div>
+   <h3>Features for 30,000+ students</h3>
+   <div class="role">Software Engineering Intern</div>
+   <p class="one">Shipped a feature for a platform the whole engineering student body can use, and a tool that cut most of the repeated config work.</p>
+   <ul>
+    <li>Built an <b>end-to-end professor review feature</b> for a platform serving 30,000+ students, combining student reviews with Rate My Professor data from a GraphQL/Python scraping pipeline.</li>
+    <li><b>Led a 3-person team</b> to build a Python/Grafanalib wrapper for server monitoring: 10 dashboards with about <b>70% less</b> repeated time-series config code.</li>
+    <li>Switched from Python into <b>React/JavaScript</b> to ship inside a 12-person engineering team, helping cut duplicate work across features.</li>
+   </ul>
+   <div class="chips"><span>React</span><span>JavaScript</span><span>Python</span><span>GraphQL</span><span>Grafanalib</span></div>
+  </div>
+  <div class="stats rv"><div class="st"><b>30K<em>+</em></b><small>students on the platform</small></div><div class="st"><b>~70<em>%</em></b><small>less repeated config</small></div><div class="st"><b>10</b><small>monitoring dashboards</small></div></div>
+ </article>
+
+
+ <article class="job" id="j-cor">
+  <div class="when"><span class="lt"><img src="/img/lg_corizo.jpg" alt=""></span><b>Apr – Jun 2023</b><span class="m">Remote · India<br>Internship</span><span class="tag">REMOTE</span></div>
+  <div>
+   <div class="org">Corizo EdTech</div>
+   <h3>Teaching models to see</h3>
+   <div class="role">AI Intern</div>
+   <p class="one">My first real AI work: cleaning large image datasets and training models to classify them, before I'd even started college.</p>
+   <ul>
+    <li>Built end-to-end <b>Python pipelines with Pandas and OpenCV</b> to process and clean large image datasets.</li>
+    <li>Implemented and tuned <b>image-classification models</b>, reaching over <b>85% validation accuracy</b>.</li>
+    <li>Automated <b>data-visualization dashboards</b> summarizing key image metrics, so project leads got insights faster.</li>
+   </ul>
+   <div class="chips"><span>Python</span><span>Pandas</span><span>OpenCV</span><span>Machine learning</span></div>
+  </div>
+  <div class="stats rv"><div class="st"><b>85<em>%+</em></b><small>validation accuracy</small></div></div>
+ </article>
+
+ <div class="lab m"><span>Community, venture &amp; leadership</span><span>05</span></div>
+
+ <article class="tcc rv" id="j-tcc">
+  <div class="tl">
+   <div style="display:flex;align-items:center;gap:16px"><span class="lt big"><img src="/img/tcc_mark.jpg" alt="The Creative Crowd logo"></span><div class="m" style="color:var(--paper)"><span class="or">●</span> The one I'm proudest of</div></div>
+   <div class="org" style="margin-top:22px">The Creative Crowd · TCC</div>
+   <h3>I built a global student community in high school<span class="or">.</span></h3>
+   <p>What started as a WhatsApp group grew into a community of <b>800+ students from 20+ countries</b>, one of the fastest-growing student communities on WhatsApp in India at the time. We ran workshops, career bootcamps and internship opportunities with industry mentors.</p>
+   <div class="tmeta m"><span>Founder</span><span>Jan 2022 – Mar 2025</span><span>Bengaluru, India</span></div>
+  </div>
+  <div class="tn">
+   <div><b>800<em>+</em></b><small>students in the community</small></div>
+   <div><b>20<em>+</em></b><small>countries</small></div>
+   <div><b>10<em>+</em></b><small>virtual events with industry mentors</small></div>
+   <div><b>95<em>%</em></b><small>satisfaction, with 80% attendance</small></div>
+  </div>
+  <ul class="tul">
+   <li>Founded and grew the community from zero while still in <b>high school</b>.</li>
+   <li>Organized <b>10+ virtual events</b> with industry mentors: workshops, internships and career bootcamps.</li>
+   <li>Led a <b>core team of 5</b>, and expanded members' access to resources by <b>50%</b> through partnerships and clear delegation.</li>
+  </ul>
+ </article>
+
+
+ <article class="job" id="j-ivk">
+  <div class="when"><span class="lt"><img src="/img/ivk_mark.jpg" alt=""></span><b>2026 – Present</b><span class="m">San José, CA<br>Founder</span><span class="tag" style="border-color:var(--or);color:var(--or)">● CURRENT</span></div>
+  <div>
+   <div class="org">IVK Media</div>
+   <h3>Founded a studio for local shops</h3>
+   <div class="role">Founder · design, code, content</div>
+   <p class="one">A San José studio that gets small businesses found online: websites, Google review stands, Google profiles and Instagram.</p>
+   <ul>
+    <li>Built the brand, domain, email and a <b>hand-coded website with a custom physics engine</b> that holds 60 fps.</li>
+    <li>Designed and wrote a 9-post Instagram launch and a <b>tap-or-scan Google review stand</b> product.</li>
+   </ul>
+   <a class="lnk" href="/projects/ivk-media">Read the IVK Media case study <span class="arr"></span></a>
+  </div>
+  <div class="stats rv"><div class="st"><b>Live</b><small>ivkmedia.com</small></div></div>
+ </article>
+
+ <article class="job" id="j-adobe">
+  <div class="when"><span class="lt w"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="#fa0f00" d="M13.966 22.624l-1.69-4.281H8.122l3.892-9.144 5.662 13.425zM8.884 1.376H0v21.248zm15.116 0h-8.884L24 22.624Z"/></svg></span><b>Feb 2025 – Present</b><span class="m">San José, CA<br>Campus program</span><span class="tag" style="border-color:var(--or);color:var(--or)">● CURRENT</span></div>
+  <div>
+   <div class="org">Adobe</div>
+   <h3>Showing students that good design is for everyone</h3>
+   <div class="role">Student Ambassador, SJSU</div>
+   <ul>
+    <li>Hosted <b>5+ UI/UX workshops</b> for SJSU students using Adobe Express.</li>
+   </ul>
+  </div>
+  <div class="stats rv"><div class="st"><b>5<em>+</em></b><small>UI/UX workshops</small></div></div>
+ </article>
+
+
+ <article class="job" id="j-brv">
+  <div class="when"><span class="lt"><img src="/img/lg_braven.jpg" alt=""></span><b>Jan – Jun 2025</b><span class="m">San José, CA<br>Cohort of 10</span><span class="tag">ON-SITE</span></div>
+  <div>
+   <div class="org">Braven · SJSU</div>
+   <h3>Leadership accelerator</h3>
+   <div class="role">Leadership Cohort Fellow</div>
+   <ul>
+    <li>Completed a semester-long leadership accelerator (SSCI 101), coached by professionals in a cohort of 10 peers.</li>
+    <li>Built career skills through mock interviews, networking and a <b>capstone project with employer feedback</b>.</li>
+   </ul>
+  </div>
+  <div class="stats rv"></div>
+ </article>
+
+ <article class="job" id="j-ideas">
+  <div class="when"><span class="lt"><img src="/img/lg_ideas.jpg" alt=""></span><b>SJSU</b><span class="m">San José, CA</span><span class="tag">MEMBER</span></div>
+  <div>
+   <div class="org">Ideas Club · SJSU</div>
+   <h3>Member</h3>
+   <p class="one">A campus community for students building new ideas and ventures.</p>
+  </div>
+  <div class="stats rv"></div>
+ </article>
+
+ <div class="lab m"><span>Education</span><span>01</span></div>
+ <article class="edu">
+  <div class="when"><span class="lt"><img src="/img/lg_sjsu.jpg" alt=""></span><b>Expected May 2028</b><span class="m">San José, CA</span></div>
+  <div><div class="org">San José State University</div><h3 style="margin-top:12px">B.S. Data Science</h3><p>Studying how to turn data into decisions, and building the systems that make it possible.</p></div>
+  <div class="course"><div><span>Intro to Artificial Intelligence</span><span>CS 156</span></div><div><span>Machine Learning</span><span>COURSEWORK</span></div><div><span>Data Structures &amp; Algorithms</span><span>COURSEWORK</span></div><div><span>Statistics</span><span>COURSEWORK</span></div><div><span>Java · Python</span><span>COURSEWORK</span></div></div>
+ </article>
+
+ <section class="cta rv"><div><div class="m"><span class="or">●</span> Open to internships</div><h2 style="margin-top:14px">Want the one-page version?</h2><p>Same story, résumé format.</p></div><div class="btns"><a class="pillb solid" href="/resume">Download résumé <span class="arr"></span></a><a class="pillb" href="/contact">Get in touch</a></div></section>
+</main>
+<script is:inline>
+addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('sc',scrollY>10),{passive:true});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+// timeline: months from Jan 2025 (0) to Dec 2026 (23)
+const NOW=58.4,MAX=60;
+const R=[['The Creative Crowd · founder',0,38.9,0,'j-tcc','or'],['Corizo · AI intern',15,17.9,1,'j-cor',''],['SCE',36,40.9,1,'j-sce',''],['Adobe · Ambassador',37,NOW,2,'j-adobe','open'],['Braven',36,41.9,3,'j-brv',''],['Relling',47,49.9,3,'j-rel',''],['RCC · Luminara',48,52.9,1,'j-rcc',''],['IVK',58,NOW,0,'j-ivk','or']];
+const ax=document.getElementById('axis'),pct=m=>m/MAX*100;
+ax.innerHTML=['2022','2023','2024','2025','2026','2027'].map((y,i)=>`<div class="yr" style="left:${pct(i*12)}%"><span>${y}</span></div>`).join('')+
+ R.map(r=>{const short=r[2]-r[1]<2.5;const pos=short?`right:${100-pct(NOW)}%`:`left:${pct(r[1])}%;width:${pct(r[2]-r[1])}%`;return `<div class="bar ${r[5]}" data-j="${r[4]}" style="${pos};top:${r[3]*32}px" title="${r[0]}">${r[0]}</div>`}).join('')+`<div class="now" style="left:${pct(NOW)}%"><span>NOW</span></div>`;
+ax.querySelectorAll('.bar').forEach(b=>{const j=document.getElementById(b.dataset.j);
+ b.onmouseenter=()=>{j.classList.add('hot');b.classList.add('hot')};b.onmouseleave=()=>{j.classList.remove('hot');b.classList.remove('hot')};
+ b.onclick=()=>j.scrollIntoView({behavior:'smooth',block:'start'})});
+</script>
+
+</Layout>

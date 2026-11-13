@@ -1,0 +1,496 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title='ForgeDB · Vishalkiran Raichur' description='A relational database engine in Java, built from the disk page up.' active="projects">
+<style is:global>
+
+
+
+
+.vf{position:relative;border:1px solid var(--ink);background:var(--paper)}
+.vf .c{position:absolute;width:16px;height:16px;border-color:var(--ink);border-style:solid;z-index:2}
+.vf .tl{left:10px;top:10px;border-width:1px 0 0 1px}.vf .tr{right:10px;top:10px;border-width:1px 1px 0 0}.vf .bl{left:10px;bottom:10px;border-width:0 0 1px 1px}.vf .br{right:10px;bottom:10px;border-width:0 1px 1px 0}
+.vf .hd,.vf .ft{display:flex;justify-content:space-between;gap:20px;padding:16px 34px;font-family:PM;font-size:10px;letter-spacing:.16em}
+.vf .ft{color:var(--mut)}
+.back{display:inline-flex;gap:10px;margin-top:56px;font-size:12px;letter-spacing:.2em;text-transform:uppercase}
+.meta{display:flex;gap:14px;align-items:center;margin-top:40px;flex-wrap:wrap}
+.meta .ln{width:34px;height:1px;background:var(--line)}
+.rec{width:6px;height:6px;border-radius:50%;background:var(--or);display:inline-block;margin-right:8px;animation:rec 1.6s steps(1) infinite}
+@keyframes rec{50%{opacity:.2}}
+h1{font-weight:300;font-size:clamp(90px,14vw,210px);line-height:.86;text-transform:uppercase;margin-top:18px}
+h1 .o{display:inline-block;width:.74em;height:.74em;border:.035em solid var(--ink);border-radius:50%;position:relative;vertical-align:-.02em}
+h1 .o::after{content:"";position:absolute;left:50%;top:50%;width:.12em;height:.12em;margin:-.06em;border-radius:50%;background:var(--or)}
+.top{display:grid;grid-template-columns:1fr 400px;gap:60px;align-items:end}
+.kick{font-weight:300;font-size:clamp(30px,3vw,44px);line-height:1.12;text-transform:uppercase;margin-top:30px;max-width:820px}
+.kick span{color:var(--mut)}
+.lede{font-size:20px;line-height:1.6;color:#2b2a28;margin-top:22px;max-width:720px}
+.acts{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+.facts{border-top:1px solid var(--ink)}
+.facts div{display:flex;justify-content:space-between;gap:20px;padding:13px 0;border-bottom:1px solid var(--line);font-size:15px;text-align:right}
+.facts div span:first-child{font-family:PM;font-size:10.5px;letter-spacing:.14em;color:var(--mut);text-transform:uppercase;padding-top:3px;text-align:left}
+/* section frame */
+.sec{margin-top:150px}
+.sl{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--ink);padding-top:16px}
+.sl .n{color:var(--or)}
+.sh{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:34px;align-items:end}
+.sh h2{font-weight:300;font-size:clamp(42px,4.8vw,72px);line-height:1;text-transform:uppercase}
+.sh p{font-size:18px;line-height:1.65;color:#2b2a28}
+.sh p b{font-weight:500}
+/* problem */
+.prob{display:grid;grid-template-columns:1.2fr 1fr;margin-top:50px;border:1px solid var(--ink)}
+.prob svg{width:100%;height:auto;display:block}
+.prob .r{border-left:1px solid var(--ink);padding:36px;display:flex;flex-direction:column;justify-content:space-between;background:#f6f2ea}
+.prob .q{font-weight:300;font-size:30px;line-height:1.2;margin-top:16px}
+.ppl{border-top:1px solid var(--line);margin-top:26px}
+.ppl div{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line);font-size:15px}
+.ppl div span:last-child{font-family:PM;font-size:10.5px;letter-spacing:.12em;color:var(--mut)}
+.prob .then{font-size:17px;line-height:1.6;margin-top:24px}
+.prob .then b{font-weight:500;border-bottom:1px solid var(--or)}
+/* product tabs */
+.tabs{display:flex;gap:0;margin-top:50px;border:1px solid var(--ink);border-bottom:0;width:max-content}
+.tabs button{all:unset;cursor:pointer;padding:14px 26px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;border-right:1px solid var(--ink);display:flex;gap:10px;align-items:center;transition:background .25s,color .25s}
+.tabs button:last-child{border-right:0}
+.tabs button sup{font-family:PM;font-size:9px;color:var(--dim)}
+.tabs button.on{background:var(--ink);color:var(--paper)}
+.tabs button.on sup{color:var(--or)}
+.screen{border:1px solid var(--ink);position:relative;background:var(--paper)}
+.screen .hd{border-bottom:1px solid var(--line)}
+.pane{display:none;padding:30px 34px 34px;min-height:520px;animation:fd .5s cubic-bezier(.2,.8,.2,1)}
+.pane.on{display:block}
+@keyframes fd{from{opacity:0;transform:translateY(10px)}}
+.cap{display:grid;grid-template-columns:1fr 1.4fr;gap:40px;margin-top:22px;align-items:start}
+.cap h4{font-weight:300;font-size:30px;text-transform:uppercase}
+.cap p{font-size:16.5px;line-height:1.6;color:#2b2a28}
+/* concept UI pieces */
+.ui{border:1px solid var(--line);background:#fff;border-radius:2px}
+.ui .bar{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);font-family:PM;font-size:10px;letter-spacing:.12em;color:var(--mut)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr)}
+.kpi{padding:18px 16px;border-right:1px solid var(--line)}.kpi:last-child{border:0}
+.kpi small{font-family:PM;font-size:9.5px;letter-spacing:.12em;color:var(--mut)}
+.kpi b{display:block;font-weight:300;font-size:32px;margin-top:8px}
+.kpi em{font-style:normal;font-family:PM;font-size:10.5px}
+.dn{color:var(--or)}.up{color:#1f7a4d}
+.dgrid{display:grid;grid-template-columns:1.6fr 1fr;border-top:1px solid var(--line)}
+.dgrid>div{padding:16px}
+.dgrid>div+div{border-left:1px solid var(--line)}
+.ins{border:1px solid var(--line);padding:12px;margin-top:10px;font-size:13.5px;line-height:1.5}
+.ins .t{font-family:PM;font-size:9.5px;letter-spacing:.12em;color:var(--or)}
+.ins b{font-weight:500}
+.askbox{border:1px solid var(--ink);padding:16px 18px;font-size:16px;display:flex;justify-content:space-between;align-items:center}
+.askbox .k{font-family:PM;font-size:10px;border:1px solid var(--ink);padding:6px 10px;background:var(--ink);color:#fff}
+.ans{display:grid;grid-template-columns:1.5fr 1fr;gap:0;margin-top:14px;border:1px solid var(--line)}
+.ans>div{padding:18px}.ans>div+div{border-left:1px solid var(--line);background:#faf8f3}
+.ans p{font-size:14.5px;line-height:1.65;color:#2b2a28}
+.ans sup{font-family:PM;font-size:9px;color:var(--or);margin-left:2px}
+.ans ul{list-style:none;margin-top:10px}
+.ans li{font-size:14px;padding:8px 0;border-top:1px solid var(--line);line-height:1.5}
+.src{display:flex;gap:10px;padding:10px 0;border-top:1px solid var(--line);font-size:13px;line-height:1.45}
+.src i{font-style:normal;font-family:PM;font-size:9.5px;color:var(--or);min-width:16px}
+.src small{display:block;font-family:PM;font-size:9.5px;color:var(--mut);letter-spacing:.06em}
+.conf{display:flex;gap:10px;align-items:center;margin-top:14px;font-family:PM;font-size:10px;letter-spacing:.12em;color:var(--mut)}
+.conf i{flex:1;height:4px;background:rgba(17,17,17,.1);position:relative}.conf i b{position:absolute;inset:0 auto 0 0;background:var(--ink)}
+.inv{display:grid;grid-template-columns:1fr 1.2fr;border:1px solid var(--line);margin-top:14px}
+.inv>div{padding:18px}.inv>div+div{border-left:1px solid var(--line);background:#faf8f3}
+.stp{display:grid;grid-template-columns:26px 1fr auto;gap:10px;padding:11px 0;border-top:1px solid var(--line);font-size:14px;align-items:center}
+.stp:first-of-type{border-top:0}
+.stp .n{font-family:PM;font-size:10px;color:var(--mut)}
+.stp .s{font-family:PM;font-size:9.5px;letter-spacing:.1em}
+.stp.dn2 .s{color:#1f7a4d}.stp.now .s{color:var(--or)}
+.stp.now{font-weight:500}
+.brf .r{display:grid;grid-template-columns:110px 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--line);font-size:14px;line-height:1.5}
+.brf .r small{font-family:PM;font-size:9px;letter-spacing:.12em;color:var(--mut);padding-top:3px}
+.brf .r b{font-weight:500}
+.lbl{font-family:PM;font-size:9.5px;letter-spacing:.14em;border:1px solid var(--or);color:var(--or);padding:3px 7px}
+/* built vs vision */
+.board{display:grid;grid-template-columns:1fr 1fr;margin-top:50px;border:1px solid var(--ink)}
+.board>div{padding:30px 34px}
+.board>div+div{border-left:1px solid var(--ink);background:#f6f2ea}
+.board h4{display:flex;justify-content:space-between;align-items:center;font-weight:300;font-size:30px;text-transform:uppercase}
+.board h4 span{font-family:PM;font-size:11px;letter-spacing:.14em;color:var(--mut)}
+.it{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:14px 0;border-top:1px solid var(--line);font-size:16.5px}
+.it:first-of-type{margin-top:20px}
+.it .s{font-family:PM;font-size:10px;letter-spacing:.12em;white-space:nowrap}
+.it .s.b::before{content:"● ";color:var(--or)}
+.it .s.p::before{content:"○ ";color:var(--mut)}
+.proof{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--ink);border-top:0}
+.proof div{padding:26px 28px;border-right:1px solid var(--line)}.proof div:last-child{border:0}
+.proof b{display:block;font-weight:300;font-size:54px;line-height:1}
+.proof b em{font-style:normal;color:var(--or)}
+.proof small{display:block;font-size:14.5px;color:#3a3936;margin-top:10px;line-height:1.45}
+/* control */
+.duo{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}
+.brief{padding:26px 34px 30px}
+.brief+.brief{border-left:1px solid var(--line);background:#f6f2ea}
+.brief .q{font-size:21px;margin-top:10px}
+.brief .r{display:grid;grid-template-columns:130px 1fr;gap:14px;padding:12px 0;border-top:1px solid var(--line);font-size:15px;line-height:1.5;color:#2b2a28}
+.brief .r:first-of-type{margin-top:16px}
+.brief .r small{font-family:PM;font-size:9.5px;letter-spacing:.14em;color:var(--mut);padding-top:4px}
+.brief .r b{font-weight:500;color:var(--ink)}
+.brief .x{color:var(--or)}
+.mtr{display:flex;align-items:center;gap:12px}.mtr i{flex:1;height:4px;background:rgba(17,17,17,.1);position:relative}.mtr i b{position:absolute;inset:0 auto 0 0;background:var(--ink)}
+.brief+.brief .mtr i b{background:var(--or)}
+.note{margin-top:22px;display:grid;grid-template-columns:200px 1fr;gap:40px;border-top:1px solid var(--line);padding-top:20px}
+.note p{font-size:16.5px;line-height:1.65;color:#2b2a28;max-width:820px}
+.note p b{font-weight:500}
+/* six capabilities */
+.six{display:grid;grid-template-columns:repeat(3,1fr);margin-top:50px;border-top:1px solid var(--ink);border-left:1px solid var(--ink)}
+.cp{border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:26px 26px 30px;min-height:300px;display:flex;flex-direction:column;transition:background .3s}
+.cp:hover{background:#f6f2ea}
+.cp .h{display:flex;justify-content:space-between;align-items:center}
+.cp .h .n{font-family:PM;font-size:11px;color:var(--or);letter-spacing:.1em}
+.st{font-family:PM;font-size:9.5px;letter-spacing:.12em;padding:4px 8px;border:1px solid var(--ink)}
+.st.b{background:var(--ink);color:var(--paper)}
+.st.f{border-style:dashed;color:var(--mut);border-color:var(--dim)}
+.cp h4{font-weight:300;font-size:30px;text-transform:uppercase;margin-top:44px;line-height:1.05}
+.cp p{font-size:15.5px;line-height:1.6;color:#3a3936;margin-top:12px}
+.cp .ex{margin-top:auto;padding-top:18px;font-family:PM;font-size:11px;color:var(--mut);line-height:1.55}
+.cp .ex b{color:var(--ink);font-weight:400}
+.alert{border:1px solid var(--or);padding:12px 14px;margin-top:18px;background:#fff}
+.alert .t{display:flex;justify-content:space-between;font-family:PM;font-size:9.5px;letter-spacing:.12em;color:var(--or)}
+.alert b{display:block;font-weight:500;font-size:15px;margin-top:6px}
+.alert p{font-size:13px!important;margin-top:4px!important}
+/* arch */
+.arch{display:grid;grid-template-columns:1.3fr 1fr;gap:60px;margin-top:50px;align-items:start}
+.layers{border:1px solid var(--ink)}
+.ly{display:grid;grid-template-columns:44px 1fr auto;gap:16px;align-items:center;padding:20px 22px;border-bottom:1px solid var(--line);position:relative}
+.ly:last-child{border:0}
+.ly .n{font-family:PM;font-size:10.5px;color:var(--mut)}
+.ly h5{font-weight:400;font-size:19px;text-transform:uppercase;letter-spacing:.03em}
+.ly p{font-family:PM;font-size:11px;color:var(--mut);margin-top:4px;letter-spacing:.02em}
+.ly.core{background:#f6f2ea}
+.surf{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--ink)}
+.surf div{padding:16px;text-align:center;font-size:14px;letter-spacing:.16em;text-transform:uppercase;border-right:1px solid var(--line)}.surf div:last-child{border:0;color:var(--mut)}
+.prin{border-top:1px solid var(--ink)}
+.prin div{display:grid;grid-template-columns:34px 1fr;padding:16px 0;border-bottom:1px solid var(--line);font-size:17px}
+.prin span{font-family:PM;font-size:10.5px;color:var(--or);padding-top:4px}
+/* users + chatgpt */
+.users{display:grid;grid-template-columns:repeat(5,1fr);margin-top:50px;border-top:1px solid var(--ink)}
+.users div{padding:22px 20px 0 0}
+.users h5{font-weight:400;font-size:18px;text-transform:uppercase;letter-spacing:.03em}
+.users p{font-size:14.5px;line-height:1.55;color:#3a3936;margin-top:8px}
+.vs{display:grid;grid-template-columns:1fr 1fr;margin-top:50px;border:1px solid var(--ink)}
+.vs>div{padding:30px 34px}.vs>div+div{border-left:1px solid var(--ink);background:var(--ink);color:var(--paper)}
+.vs h5{font-family:PM;font-size:10.5px;letter-spacing:.16em;font-weight:400;color:var(--mut)}
+.vs>div+div h5{color:var(--or)}
+.vs ul{list-style:none;margin-top:16px}
+.vs li{padding:12px 0;border-top:1px solid var(--line);font-size:16px}
+.vs>div+div li{border-color:rgba(255,255,255,.15)}
+.claim{margin-top:60px;text-align:center;font-weight:300;font-size:clamp(34px,4vw,58px);line-height:1.1;text-transform:uppercase;max-width:1100px;margin-left:auto;margin-right:auto}
+.claim span{color:var(--or)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:30px;justify-content:center}
+.chips span{font-family:PM;font-size:11px;border:1px solid var(--line);border-radius:999px;padding:6px 12px;color:#3a3936}
+.next{display:grid;grid-template-columns:1fr auto;align-items:end;margin-top:140px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:44px 0;transition:padding .4s}
+.next:hover{padding-left:16px}
+.next h2{font-weight:300;font-size:clamp(56px,9vw,140px);line-height:.9;text-transform:uppercase;margin-top:16px}
+.next p{font-family:PM;font-size:13px;color:var(--mut);margin-top:14px}
+.bigarr{width:84px;height:84px;border:1px solid var(--ink);border-radius:50%;display:grid;place-items:center;transition:.3s}
+.next:hover .bigarr{background:var(--ink);color:var(--paper)}
+.foot{border-top:1px solid var(--ink);display:grid;grid-template-columns:repeat(4,1fr);gap:40px;padding:40px 0 60px;margin-top:100px}
+.foot b{display:block;font-weight:400;font-size:15px;margin-top:12px;line-height:1.8}
+.rv{opacity:0;transform:translateY(24px);transition:opacity 1s cubic-bezier(.2,.8,.2,1),transform 1s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}.d1{transition-delay:.1s}.d2{transition-delay:.2s}
+@media (max-width:960px){
+ .wrap{padding:0 18px}.links,.srch .t{display:none}.srch{gap:6px;padding:8px 10px}.nr .pillb{display:none}
+ h1{font-size:76px}.top,.sh,.prob,.cap,.board,.arch,.vs,.note{grid-template-columns:1fr;gap:28px}
+ .prob .r,.board>div+div,.vs>div+div{border-left:0;border-top:1px solid var(--ink)}
+ .tabs{width:100%}.tabs button{flex:1;justify-content:center;padding:12px 8px;font-size:10.5px;letter-spacing:.1em}.tabs button sup{display:none}
+ .pane{padding:18px}.kpis{grid-template-columns:1fr 1fr}.kpi:nth-child(2){border:0}.dgrid,.ans,.inv{grid-template-columns:1fr}.dgrid>div+div,.ans>div+div,.inv>div+div{border-left:0;border-top:1px solid var(--line)}
+ .proof{grid-template-columns:1fr 1fr}.duo{grid-template-columns:1fr}.brief+.brief{border-left:0}.brief{padding:20px 18px}.brief .r{grid-template-columns:1fr;gap:4px}
+ .six{grid-template-columns:1fr}.cp{min-height:0}.users{grid-template-columns:1fr 1fr;gap:10px}
+ .next{grid-template-columns:1fr;gap:20px}.bigarr{width:56px;height:56px}.foot{grid-template-columns:1fr 1fr}.vf .hd,.vf .ft{padding:14px 18px;flex-wrap:wrap}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+
+/* query journey */
+.qj{display:grid;grid-template-columns:1fr 1.15fr;border:1px solid var(--ink);margin-top:50px}
+.qpick{padding:28px 30px;border-right:1px solid var(--ink);background:#f6f2ea;display:flex;flex-direction:column}
+.qb{all:unset;cursor:pointer;display:block;font-family:PM;font-size:13px;padding:14px 16px;border:1px solid var(--line);background:#fff;margin-top:10px;transition:.25s}
+.qb:hover{border-color:var(--ink)}
+.qb.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.qb small{display:block;font-size:9.5px;letter-spacing:.14em;color:var(--mut);margin-top:6px}
+.qb.on small{color:var(--or)}
+.qexp{margin-top:auto;padding-top:22px;font-size:16px;line-height:1.6;color:#2b2a28}
+.qexp b{font-weight:500}
+.stack{padding:22px 30px}
+.lyr{display:grid;grid-template-columns:30px 1fr auto;gap:14px;align-items:center;padding:12px 14px;border:1px solid var(--line);margin-top:8px;transition:all .35s;opacity:.35}
+.lyr.on{opacity:1;border-color:var(--ink);background:#fff}
+.lyr.hot{border-color:var(--or);box-shadow:inset 3px 0 0 var(--or)}
+.lyr .n{font-family:PM;font-size:10px;color:var(--mut)}
+.lyr h5{font-weight:400;font-size:16px;text-transform:uppercase;letter-spacing:.04em}
+.lyr p{font-family:PM;font-size:10.5px;color:var(--mut);margin-top:3px}
+.lyr .t{font-family:PM;font-size:10px;letter-spacing:.1em;color:var(--or)}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.split .lyr{margin-top:8px}
+/* page diagram */
+.pg{border:1px solid var(--ink);margin-top:50px;padding:34px}
+.bytes{display:grid;grid-template-columns:repeat(3,90px) 1fr;border:1px solid var(--ink);height:120px}
+.bytes div{border-right:1px solid var(--ink);padding:12px;display:flex;flex-direction:column;justify-content:space-between}
+.bytes div:last-child{border:0;background:repeating-linear-gradient(90deg,#fff 0 calc(25% - 1px),rgba(17,17,17,.25) calc(25% - 1px) 25%)}
+.bytes small{font-family:PM;font-size:9.5px;color:var(--mut);letter-spacing:.06em}
+.bytes b{font-weight:400;font-size:15px;text-transform:uppercase;letter-spacing:.03em}
+.bytes .h{background:#f6f2ea}
+.bytes div:last-child{display:block;padding:0}.rows{display:flex;flex-direction:row;align-items:center;justify-content:space-around;height:100%}
+.rows span{font-family:PM;font-size:11px;background:#fff;padding:2px 6px}
+.ruler{display:flex;justify-content:space-between;font-family:PM;font-size:10px;color:var(--mut);margin-top:8px}
+.chain{display:flex;align-items:center;gap:0;margin-top:44px}
+.pbox{border:1px solid var(--ink);padding:14px 16px;min-width:130px;background:#fff}
+.pbox small{font-family:PM;font-size:9.5px;color:var(--mut);letter-spacing:.1em}
+.pbox b{display:block;font-weight:400;font-size:18px;margin-top:6px}
+.pbox.e{border-style:dashed;background:transparent}
+.pbox.e b{color:var(--or)}
+.lnk{flex:1;height:1px;background:var(--ink);position:relative;min-width:30px}
+.lnk::after{content:"⇄";position:absolute;left:50%;top:-11px;transform:translateX(-50%);font-size:13px;background:var(--paper);padding:0 4px}
+/* btree */
+.bt{display:grid;grid-template-columns:1.5fr 1fr;border:1px solid var(--ink);margin-top:50px}
+.bt .g{padding:28px 30px}
+.bt svg{width:100%;height:auto;display:block}
+.bt .s{border-left:1px solid var(--ink);padding:28px 30px;background:#f6f2ea;display:flex;flex-direction:column}
+.nd rect{fill:#fff;stroke:#111;transition:all .35s}
+.nd.hit rect{stroke:#ff5a1f;stroke-width:2;fill:#fff3ec}
+.ed{stroke:#111;stroke-opacity:.35;transition:all .35s}
+.ed.hit{stroke:#ff5a1f;stroke-opacity:1;stroke-width:2}
+.findrow{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
+.findrow button{all:unset;cursor:pointer;font-family:PM;font-size:12px;border:1px solid var(--ink);padding:8px 12px;background:#fff}
+.findrow button:hover{background:var(--ink);color:var(--paper)}
+.out{font-family:PM;font-size:12.5px;line-height:1.8;margin-top:18px;min-height:110px;color:#2b2a28}
+.out .o{color:var(--or)}
+/* buffer pool */
+.bp{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--ink);margin-top:50px}
+.bp>div{padding:28px 30px}.bp>div+div{border-left:1px solid var(--ink);background:#f6f2ea}
+.slots{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
+.slot{border:1px solid var(--ink);height:96px;display:flex;flex-direction:column;justify-content:space-between;padding:10px;background:#fff;transition:all .3s}
+.slot small{font-family:PM;font-size:9px;color:var(--mut);letter-spacing:.1em}
+.slot b{font-weight:300;font-size:26px}
+.slot.new{border-color:var(--or);box-shadow:inset 0 -3px 0 var(--or)}
+.slot.hitp{background:#eef7f1;border-color:#1f7a4d}
+.slot.dirty small{color:var(--or)}
+.slot.empty{border-style:dashed;background:transparent}
+.reqs{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.reqs button{all:unset;cursor:pointer;font-family:PM;font-size:12px;border:1px solid var(--ink);padding:8px 12px;background:#fff}
+.reqs button:hover{background:var(--ink);color:var(--paper)}
+.tally{display:flex;gap:30px;margin-top:20px}
+.tally b{display:block;font-weight:300;font-size:40px}
+.tally small{font-family:PM;font-size:9.5px;letter-spacing:.12em;color:var(--mut)}
+.blog{font-family:PM;font-size:12px;line-height:1.8;margin-top:14px;color:#2b2a28;min-height:90px}
+/* tests */
+.tests{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink);border-left:1px solid var(--ink);margin-top:50px}
+.tc{border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:24px 24px 28px;min-height:260px;display:flex;flex-direction:column}
+.tc b{font-weight:300;font-size:56px;line-height:1}
+.tc b em{font-style:normal;color:var(--or)}
+.tc h5{font-weight:400;font-size:18px;text-transform:uppercase;letter-spacing:.03em;margin-top:22px}
+.tc p{font-size:14.5px;line-height:1.55;color:#3a3936;margin-top:8px}
+/* terminal */
+.term{border:1px solid var(--ink);margin-top:50px;background:#14130f;color:#e9e6df}
+.term .tb{display:flex;justify-content:space-between;padding:12px 18px;border-bottom:1px solid rgba(255,255,255,.12);font-family:PM;font-size:10px;letter-spacing:.14em;color:#8f8b82}
+.term pre{font-family:PM;font-size:13.5px;line-height:1.75;padding:22px 26px;min-height:420px;white-space:pre-wrap}
+.term .p{color:#ff8a5c}.term .d{color:#8f8b82}.term .g{color:#7fd19b}
+.cur{display:inline-block;width:8px;height:15px;background:#ff8a5c;vertical-align:-2px;animation:rec 1s steps(1) infinite}
+.credit{margin-top:40px;display:grid;grid-template-columns:200px 1fr;gap:40px;border:1px solid var(--line);padding:22px 26px}
+.credit p{font-size:15.5px;line-height:1.65;color:#3a3936}
+.credit b{font-weight:500}
+@media (max-width:960px){
+ .qj,.bt,.bp{grid-template-columns:1fr}.qpick,.bt .s,.bp>div+div{border-right:0;border-left:0;border-top:1px solid var(--ink)}.qpick{border-top:0;border-bottom:1px solid var(--ink)}
+ .stack,.qpick,.bt .g,.bt .s,.bp>div{padding:20px 18px}.split{grid-template-columns:1fr}
+ .pg{padding:18px}.bytes{grid-template-columns:repeat(3,1fr);height:auto}.bytes div:last-child{grid-column:1/-1;border-top:1px solid var(--ink);height:70px}
+ .chain{flex-wrap:wrap;gap:10px}.lnk{display:none}.pbox{min-width:0;flex:1 1 40%}
+ .tests{grid-template-columns:1fr 1fr}.tc{min-height:0}.credit{grid-template-columns:1fr;gap:10px}.term pre{font-size:12px;padding:16px}
+}
+
+</style>
+
+
+
+
+<main class="wrap">
+ <a class="back" href="/projects">← All projects</a>
+ <div class="meta m"><span style="color:var(--ink)">Build 03</span><span class="ln"></span><span>Relational database engine</span><span class="ln"></span><span><span class="rec" style="animation:none;background:var(--ink)"></span>v1.0 · CI passing</span></div>
+
+ <section class="top">
+  <div>
+   <h1 style="font-size:clamp(76px,12vw,184px)">ForgeDB</h1>
+   <div class="kick">Everyone uses databases. <span>I built one to see what happens inside.</span></div>
+   <p class="lede">A relational database engine in Java with no third-party libraries: its own SQL parser, binary records in 4 KB disk pages, an LRU buffer pool, persistent metadata and a B+ tree index. Every row is stored, found, updated and deleted by code I wrote.</p>
+   <div class="acts"><a class="pillb solid" href="#query">Follow a query <span class="arr"></span></a><a class="pillb" href="#try">Try the shell</a><a class="pillb" href="https://github.com/VishalkiranRaichur/ForgeDB">Source</a></div>
+  </div>
+  <div class="facts rv">
+   <div><span>Role</span><span>Solo · Java rebuild + tests</span></div>
+   <div><span>Language</span><span>Java 17</span></div>
+   <div><span>Dependencies</span><span>Zero</span></div>
+   <div><span>Tested</span><span>20,000-key tree · restart persistence</span></div>
+   <div><span>Runs as</span><span>Interactive SQL shell</span></div>
+  </div>
+ </section>
+
+ <!-- 01 QUERY JOURNEY -->
+ <section class="sec" id="query">
+  <div class="sl m"><span><span class="n">01</span> · Follow a query</span><span>Pick one</span></div>
+  <div class="sh"><h2 class="rv">One line of SQL. Seven layers of engine.</h2><p class="rv d1">Most projects talk to a database through a driver. ForgeDB goes one layer deeper. <b>Pick a query to see which parts of the engine it touches</b>, and why some queries are fast.</p></div>
+  <div class="qj rv">
+   <div class="qpick">
+    <div class="m">Queries</div>
+    <button class="qb on" data-q="0">SELECT * FROM students WHERE id = 2;<small>INDEXED LOOKUP</small></button>
+    <button class="qb" data-q="1">SELECT * FROM students WHERE gpa &gt;= 3.5;<small>FULL SCAN</small></button>
+    <button class="qb" data-q="2">INSERT INTO students VALUES (4, 3.6, 'Dev');<small>WRITE</small></button>
+    <p class="qexp" id="qexp"></p>
+   </div>
+   <div class="stack" id="stack">
+    <div class="lyr" data-l="shell"><span class="n">01</span><div><h5>Shell</h5><p>Interactive prompt, EXEC file.sql</p></div><span class="t"></span></div>
+    <div class="lyr" data-l="parser"><span class="n">02</span><div><h5>SQL parser</h5><p>Text → immutable statement objects</p></div><span class="t"></span></div>
+    <div class="lyr" data-l="engine"><span class="n">03</span><div><h5>Engine</h5><p>Routes each statement</p></div><span class="t"></span></div>
+    <div class="split"><div class="lyr" data-l="catalog"><span class="n">04</span><div><h5>Catalog</h5><p>Schemas, keys, indexes</p></div><span class="t"></span></div><div class="lyr" data-l="record"><span class="n">05</span><div><h5>Record manager</h5><p>Rows ↔ binary</p></div><span class="t"></span></div></div>
+    <div class="split"><div class="lyr" data-l="index"><span class="n">06</span><div><h5>B+ tree index</h5><p>Key → page + slot</p></div><span class="t"></span></div><div class="lyr" data-l="buffer"><span class="n">07</span><div><h5>Buffer pool</h5><p>LRU pages in memory</p></div><span class="t"></span></div></div>
+    <div class="lyr" data-l="disk"><span class="n">08</span><div><h5>4 KB pages on disk</h5><p>students.records · students_pk.index</p></div><span class="t"></span></div>
+   </div>
+  </div>
+ </section>
+
+ <!-- 02 PAGE -->
+ <section class="sec">
+  <div class="sl m"><span><span class="n">02</span> · Inside a page</span><span>Exactly 4,096 bytes</span></div>
+  <div class="sh"><h2 class="rv">Every table is a chain of 4 KB pages.</h2><p class="rv d1">Rows are encoded as fixed-length binary records. Each page starts with a <b>12-byte header</b> that links it to its neighbors and counts its rows. When deletes empty a page, ForgeDB <b>reuses it</b> instead of growing the file.</p></div>
+  <div class="pg rv">
+   <div class="m" style="margin-bottom:14px">One page</div>
+   <div class="bytes"><div class="h"><small>BYTES 0–3</small><b>Prev page</b></div><div class="h"><small>BYTES 4–7</small><b>Next page</b></div><div class="h"><small>BYTES 8–11</small><b>Row count</b></div><div><div class="rows"><span>row 1</span><span>row 2</span><span>row 3</span><span>…</span></div></div></div>
+   <div class="ruler"><span>0</span><span>12</span><span>FIXED-LENGTH ROWS (INT · FLOAT · CHAR(N))</span><span>4095</span></div>
+   <div class="chain"><div class="pbox"><small>PAGE 0</small><b>prev −1</b></div><span class="lnk"></span><div class="pbox"><small>PAGE 1</small><b>full of rows</b></div><span class="lnk"></span><div class="pbox e"><small>PAGE 2</small><b>empty → reused</b></div><span class="lnk"></span><div class="pbox"><small>PAGE 3</small><b>next −1</b></div></div>
+  </div>
+ </section>
+
+ <!-- 03 BTREE -->
+ <section class="sec">
+  <div class="sl m"><span><span class="n">03</span> · The B+ tree</span><span>Try a lookup</span></div>
+  <div class="sh"><h2 class="rv">Find one row without reading every page.</h2><p class="rv d1">Each table gets a B+ tree on its primary key, with sorted, linked leaves and real leaf and internal splits as it grows. <b>An equality lookup walks a few nodes instead of scanning the whole table.</b></p></div>
+  <div class="bt rv">
+   <div class="g">
+    <svg viewBox="0 0 560 260" id="tree">
+     <g id="edges"></g><g id="nodes"></g>
+    </svg>
+   </div>
+   <div class="s">
+    <div class="m">Look up a key</div>
+    <div class="findrow"><button data-k="7">id = 7</button><button data-k="33">id = 33</button><button data-k="58">id = 58</button><button data-k="91">id = 91</button><button data-k="40">id = 40</button></div>
+    <div class="out" id="out">Pick a key to watch the search path.</div>
+    <div style="margin-top:auto;padding-top:18px;border-top:1px solid var(--line);font-size:14.5px;line-height:1.6;color:#3a3936"><b style="font-weight:500">Design trade-off:</b> after deletes or primary-key changes, ForgeDB rebuilds the index. Simpler to reason about, while insert and search stay real B+ tree algorithms.</div>
+   </div>
+  </div>
+ </section>
+
+ <!-- 04 BUFFER POOL -->
+ <section class="sec">
+  <div class="sl m"><span><span class="n">04</span> · The buffer pool</span><span>Least recently used</span></div>
+  <div class="sh"><h2 class="rv">Disk is slow. So keep the hot pages close.</h2><p class="rv d1">Recently used pages stay in memory. When the pool is full, the <b>least recently used</b> page is evicted, and if it was changed it's written back to disk first. Click pages to read or write them.</p></div>
+  <div class="bp rv">
+   <div><div class="m">Buffer pool · 4 slots</div><div class="slots" id="slots"></div>
+    <div class="tally"><div><b id="hits">0</b><small>HITS</small></div><div><b id="miss">0</b><small>DISK READS</small></div><div><b id="fl">0</b><small>DIRTY FLUSHES</small></div></div></div>
+   <div><div class="m">Request a page</div>
+    <div class="reqs"><button data-p="1">read 1</button><button data-p="2">read 2</button><button data-p="3">read 3</button><button data-p="4">read 4</button><button data-p="5">read 5</button><button data-p="2" data-w="1">write 2</button><button data-p="6" data-w="1">write 6</button><button id="bpr" style="border-style:dashed">reset</button></div>
+    <div class="blog" id="blog">Pool is empty. Every first read goes to disk.</div></div>
+  </div>
+ </section>
+
+ <!-- 05 TESTS -->
+ <section class="sec">
+  <div class="sl m"><span><span class="n">05</span> · Proof</span><span>Tests + CI</span></div>
+  <div class="sh"><h2 class="rv">Tested where databases usually break.</h2><p class="rv d1">Tree splits, page boundaries, deletes and restarts are where storage bugs hide, so that's where the tests push. <b>They run on every push with GitHub Actions.</b></p></div>
+  <div class="tests">
+   <div class="tc rv"><b>20<em>K</em></b><h5>Deep B+ tree</h5><p>20,000 keys with a tiny tree order to force internal splits and root growth.</p></div>
+   <div class="tc rv d1"><b>1,000</b><h5>Storage stress</h5><p>Rows across many pages: deletes, page reuse, a primary-key update and an index rebuild.</p></div>
+   <div class="tc rv d2"><b>↻</b><h5>Restart persistence</h5><p>Close the engine, reopen it, and verify every row and index survived.</p></div>
+   <div class="tc rv"><b>SQL</b><h5>End-to-end smoke</h5><p>Create, insert, select, update and delete through the real parser and shell.</p></div>
+  </div>
+ </section>
+
+ <!-- 06 TRY -->
+ <section class="sec" id="try">
+  <div class="sl m"><span><span class="n">06</span> · Try it</span><span>A real session</span></div>
+  <div class="sh"><h2 class="rv">It's a real shell. Here's a session.</h2><p class="rv d1">Build it with one script, no Maven required, and run <b>java -jar build/forgedb.jar</b>. This replays the demo from the repo.</p></div>
+  <div class="term rv"><div class="tb"><span>FORGEDB 1.0.0</span><span id="replay" style="cursor:pointer;color:#ff8a5c">↻ REPLAY</span></div><pre id="tty"></pre></div>
+ </section>
+
+ <!-- 07 SCOPE -->
+ <section class="sec">
+  <div class="sl m"><span><span class="n">07</span> · Scope</span><span>What's in, what's next</span></div>
+  <div class="sh"><h2 class="rv">Small on purpose. Honest about it.</h2><p class="rv d1">ForgeDB covers the core path from SQL to bytes on disk. The features real databases add on top are the natural next steps, and <b>the hardest ones are the ones I'd build next</b>.</p></div>
+  <div class="board rv">
+   <div><h4>Built <span>08</span></h4>
+    <div class="it">SQL subset: CREATE, INSERT, SELECT, UPDATE, DELETE<span class="s b">LIVE</span></div>
+    <div class="it">WHERE with = &lt;&gt; &lt; &gt; &lt;= &gt;= and AND<span class="s b">LIVE</span></div>
+    <div class="it">INT, FLOAT, CHAR(N) · primary-key checks<span class="s b">LIVE</span></div>
+    <div class="it">Binary records in linked 4 KB pages<span class="s b">LIVE</span></div>
+    <div class="it">Empty-page reuse after deletes<span class="s b">LIVE</span></div>
+    <div class="it">LRU buffer pool with dirty flushing<span class="s b">LIVE</span></div>
+    <div class="it">B+ tree primary-key index, indexed lookups<span class="s b">LIVE</span></div>
+    <div class="it">Persistent catalog, records and index files<span class="s b">LIVE</span></div></div>
+   <div><h4>Next <span>06</span></h4>
+    <div class="it">Write-ahead log &amp; crash recovery<span class="s p">NEXT</span></div>
+    <div class="it">Transactions &amp; rollback<span class="s p">PLANNED</span></div>
+    <div class="it">Concurrent clients &amp; locking<span class="s p">PLANNED</span></div>
+    <div class="it">Joins and column projection<span class="s p">PLANNED</span></div>
+    <div class="it">Query planning &amp; cost optimization<span class="s p">PLANNED</span></div>
+    <div class="it">Variable-length records<span class="s p">PLANNED</span></div></div>
+  </div>
+  <p class="claim rv">Not another app on top of a database. <span>The database itself, page by page.</span></p>
+  <div class="chips rv"><span>Java 17</span><span>SQL parser</span><span>B+ tree</span><span>LRU buffer pool</span><span>Binary storage</span><span>GitHub Actions</span><span>Zero dependencies</span></div>
+ </section>
+
+ <a class="next rv" href="/projects/job-beast"><div><div class="m">Next project · Build 04</div><h2>Job Beast</h2><p>The best internships disappear fast. It finds them first.</p></div><span class="bigarr"><span class="arr"></span></span></a>
+</main>
+<script is:inline>
+addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('sc',scrollY>10),{passive:true});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+const $=id=>document.getElementById(id);
+// ---------- query journey ----------
+const Q=[
+ {path:{shell:'',parser:'',engine:'',catalog:'IS ID INDEXED? YES',index:'WALK TREE → 1 ROW',buffer:'1–2 PAGES',disk:'ONLY IF NOT CACHED'},hot:['index'],
+  txt:'<b>Fast path.</b> The catalog says <b>id</b> is the primary key with a B+ tree, so the engine walks the tree straight to the one row. The record manager is skipped for searching.'},
+ {path:{shell:'',parser:'',engine:'',catalog:'IS GPA INDEXED? NO',record:'DECODE EVERY ROW',buffer:'EVERY PAGE',disk:'WHOLE PAGE CHAIN'},hot:['record'],
+  txt:'<b>Full scan.</b> <b>gpa</b> has no index, so the record manager reads every page in the chain and checks each row against the condition.'},
+ {path:{shell:'',parser:'',engine:'',catalog:'CHECK SCHEMA + KEY',record:'ENCODE ROW → SLOT',index:'INSERT KEY 4',buffer:'MARK PAGE DIRTY',disk:'FLUSHED ON EVICT'},hot:['record','index'],
+  txt:'<b>Write path.</b> The catalog checks the schema and that key 4 is unique. The row is encoded into a free slot, the key goes into the B+ tree, and the page is marked <b>dirty</b> until it\'s flushed.'}];
+const lyrs=[...document.querySelectorAll('.lyr')];
+function showQ(i){document.querySelectorAll('.qb').forEach((b,j)=>b.classList.toggle('on',j===i));const q=Q[i];
+ lyrs.forEach(l=>{l.classList.remove('on','hot');l.querySelector('.t').textContent=''});
+ lyrs.forEach((l,k)=>{const key=l.dataset.l;if(key in q.path){setTimeout(()=>{l.classList.add('on');if(q.hot.includes(key))l.classList.add('hot');l.querySelector('.t').textContent=q.path[key]},k*90)}});
+ $('qexp').innerHTML=q.txt}
+document.querySelectorAll('.qb').forEach(b=>b.onclick=()=>showQ(+b.dataset.q));showQ(0);
+// ---------- B+ tree ----------
+const N={r:{x:230,y:20,k:[40]},a:{x:100,y:100,k:[17,29]},b:{x:360,y:100,k:[58,77]},
+ l1:{x:10,y:190,k:[3,7,12]},l2:{x:120,y:190,k:[17,22]},l3:{x:210,y:190,k:[29,33]},l4:{x:300,y:190,k:[40,51]},l5:{x:390,y:190,k:[58,63]},l6:{x:470,y:190,k:[77,91]}};
+const E=[['r','a'],['r','b'],['a','l1'],['a','l2'],['a','l3'],['b','l4'],['b','l5'],['b','l6']];
+const w=n=>N[n].k.length*26+18;
+$('edges').innerHTML=E.map(([p,c])=>`<line class="ed" id="e_${p}_${c}" x1="${N[p].x+w(p)/2}" y1="${N[p].y+30}" x2="${N[c].x+w(c)/2}" y2="${N[c].y}"/>`).join('')+
+ ['l1','l2','l3','l4','l5'].map((n,i,a)=>{const m=['l2','l3','l4','l5','l6'][i];return `<line x1="${N[n].x+w(n)}" y1="${N[n].y+15}" x2="${N[m].x}" y2="${N[m].y+15}" stroke="#111" stroke-opacity=".25" stroke-dasharray="2 3"/>`}).join('');
+$('nodes').innerHTML=Object.entries(N).map(([id,n])=>`<g class="nd" id="n_${id}"><rect x="${n.x}" y="${n.y}" width="${w(id)}" height="30"/>${n.k.map((k,i)=>`<text x="${n.x+9+i*26+10}" y="${n.y+20}" font-family="PM" font-size="11.5" text-anchor="middle">${k}</text>`).join('')}</g>`).join('')+
+ `<text x="10" y="248" font-family="PM" font-size="9.5" fill="#6f6d68" letter-spacing="1">LEAVES LINKED FOR RANGE WALKS · ILLUSTRATIVE ORDER</text>`;
+function find(k){document.querySelectorAll('.nd,.ed').forEach(e=>e.classList.remove('hit'));
+ const inner=k<40?'a':'b',ks=N[inner].k;let leaf;
+ if(inner==='a')leaf=k<17?'l1':k<29?'l2':'l3';else leaf=k<58?'l4':k<77?'l5':'l6';
+ const steps=[['r',`root [40] → ${k}${k<40?' < ':' ≥ '}40, go ${k<40?'left':'right'}`],[inner,`internal [${ks.join(', ')}] → child for ${k}`],[leaf,N[leaf].k.includes(k)?`<span class="o">leaf hit: ${k} → page + slot ✓</span>`:`<span class="o">leaf [${N[leaf].k.join(', ')}]: ${k} not found</span>`]];
+ $('out').innerHTML='';steps.forEach((s,i)=>setTimeout(()=>{$('n_'+s[0]).classList.add('hit');if(i)$(`e_${steps[i-1][0]}_${s[0]}`).classList.add('hit');$('out').innerHTML+=`${i+1}. ${s[1]}<br>`;if(i===2)$('out').innerHTML+=`<br>3 nodes visited instead of scanning every row.`},i*420))}
+document.querySelectorAll('.findrow button').forEach(b=>b.onclick=()=>find(+b.dataset.k));
+// ---------- buffer pool ----------
+let pool=[],hits=0,miss=0,fl=0;
+function drawPool(flash){$('slots').innerHTML=[0,1,2,3].map(i=>{const s=pool[i];if(!s)return `<div class="slot empty"><small>EMPTY</small><b></b></div>`;
+ return `<div class="slot ${s.d?'dirty':''} ${flash&&flash.p===s.p?(flash.h?'hitp':'new'):''}"><small>${s.d?'DIRTY':'CLEAN'}${i===0?' · LRU':''}</small><b>p${s.p}</b></div>`}).join('');$('hits').textContent=hits;$('miss').textContent=miss;$('fl').textContent=fl}
+function req(p,wr){let msg;const i=pool.findIndex(s=>s.p===p);
+ if(i>=0){const s=pool.splice(i,1)[0];if(wr)s.d=true;pool.push(s);hits++;msg=`page ${p}: <b style="color:#1f7a4d">hit</b>, already in memory${wr?', now dirty':''}`;drawPool({p,h:1})}
+ else{miss++;msg=`page ${p}: miss, read from disk`;if(pool.length===4){const ev=pool.shift();msg+=`<br>pool full → evict LRU page ${ev.p}`;if(ev.d){fl++;msg+=` <span style="color:var(--or)">(dirty: flushed to disk first)</span>`}}
+  pool.push({p,d:!!wr});drawPool({p,h:0})}
+ $('blog').innerHTML=msg}
+document.querySelectorAll('.reqs button[data-p]').forEach(b=>b.onclick=()=>req(+b.dataset.p,b.dataset.w));
+$('bpr').onclick=()=>{pool=[];hits=miss=fl=0;drawPool();$('blog').textContent='Pool is empty. Every first read goes to disk.'};drawPool();
+// ---------- terminal replay ----------
+const S=[['p','forgedb> '],['c','CREATE DATABASE college;\n'],['d','OK\n'],['p','forgedb> '],['c','USE college;\n'],['p','forgedb> '],['c','CREATE TABLE students (id INT, gpa FLOAT, name CHAR(32), PRIMARY KEY (id));\n'],['d','OK\n'],
+ ['p','forgedb> '],['c',"INSERT INTO students VALUES (1, 3.70, 'Alice');\n"],['p','forgedb> '],['c',"INSERT INTO students VALUES (2, 3.90, 'Bob');\n"],['p','forgedb> '],['c',"INSERT INTO students VALUES (3, 3.20, 'Carol');\n"],
+ ['p','forgedb> '],['c','CREATE INDEX students_pk ON students (id);\n'],['p','forgedb> '],['c','SELECT * FROM students WHERE id = 2;\n'],['g','  2 | 3.90 | Bob\n'],
+ ['p','forgedb> '],['c','UPDATE students SET gpa = 3.95 WHERE id = 3;\n'],['p','forgedb> '],['c','DELETE FROM students WHERE id = 1;\n'],['p','forgedb> '],['c','SELECT * FROM students WHERE gpa >= 3.5;\n'],['g','  2 | 3.90 | Bob\n  3 | 3.95 | Carol\n'],['p','forgedb> ']];
+let tt=[];function play(){tt.forEach(clearTimeout);tt=[];const el=$('tty');let html='<span class="d">ForgeDB 1.0.0 — type HELP; for commands.</span>\n',t=300;el.innerHTML=html+'<span class="cur"></span>';
+ S.forEach(([k,s])=>{if(k==='c'){for(let i=1;i<=s.length;i++){const part=s.slice(0,i),base=html;tt.push(setTimeout(()=>{el.innerHTML=base+esc(part)+'<span class="cur"></span>'},t));t+=14}html+=esc(s);t+=160}
+  else{const cls=k==='p'?'p':k==='g'?'g':'d';html+=`<span class="${cls}">${esc(s)}</span>`;const h=html;tt.push(setTimeout(()=>{el.innerHTML=h+'<span class="cur"></span>'},t));t+=k==='p'?120:260}})}
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+$('replay').onclick=play;
+new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){play();o.disconnect()}}),{threshold:.3}).observe($('tty'));
+</script>
+
+</Layout>
